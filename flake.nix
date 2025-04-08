@@ -23,9 +23,13 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    zdotdir = {
+      url = "github:tolkonepiu/zdotdir";
+      flake = false;
+    };
   };
 
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, zdotdir } @inputs:
     let
       user = "chchmthrfckr";
       darwinSystems = [ "aarch64-darwin" ];

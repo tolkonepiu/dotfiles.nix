@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ config, pkgs, lib, home-manager, zdotdir, ... }:
 
 let
   user = "chchmthrfckr";
@@ -47,7 +47,7 @@ in
         packages = pkgs.callPackage ./packages.nix {};
         stateVersion = "23.11";
       };
-      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib zdotdir; };
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
@@ -63,6 +63,7 @@ in
     { path = "/Applications/Arc.app"; }
     { path = "/Applications/Visual Studio Code.app"; }
     { path = "/Applications/ChatGPT.app"; }
+    { path = "/Applications/Mattermost.app"; }
   ];
 
 }

@@ -1,13 +1,24 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, zdotdir, ... }:
 
 let name = "Pavel Popov";
     user = "chchmthrfckr";
     email = "me@popov.wtf";
+    antidotePath = builtins.toString pkgs.antidote;
  in
 {
   # Shared shell configuration
   zsh = {
     enable = true;
+    enableCompletion = false;
+    dotDir = ".config/zsh";
+    initExtraFirst = ''
+      # Source zdotdir configuration from https://github.com/tolkonepiu/zdotdir
+      source "${zdotdir}/.zshrc"
+    '';
+    envExtra = ''
+      export ZSH_CONFIG_PATH="${zdotdir}"
+      export ANTIDOTE_PATH="${antidotePath}/share/antidote/"
+    '';
   };
 
   git = {
@@ -17,6 +28,10 @@ let name = "Pavel Popov";
     userEmail = email;
     lfs = {
       enable = true;
+    };
+    signing = {
+      format = "openpgp";
+      signByDefault = true;
     };
     extraConfig = {
       init.defaultBranch = "main";
