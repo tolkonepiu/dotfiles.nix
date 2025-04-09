@@ -63,6 +63,7 @@ in
     { path = "/Applications/Arc.app"; }
     { path = "/Applications/Visual Studio Code.app"; }
     { path = "/Applications/ChatGPT.app"; }
+    { path = "/Applications/Telegram.app"; }
     { path = "/Applications/Mattermost.app"; }
   ];
 
