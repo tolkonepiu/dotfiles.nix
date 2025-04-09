@@ -15,6 +15,7 @@ with pkgs; [
   # Terminal utilities
   antidote
   autojump
+  wakatime-cli
 
   # Fonts
   meslo-lgs-nf
