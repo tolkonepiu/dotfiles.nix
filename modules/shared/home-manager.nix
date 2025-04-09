@@ -18,6 +18,9 @@ let name = "Pavel Popov";
     envExtra = ''
       export ZSH_CONFIG_PATH="${zdotdir}"
       export ANTIDOTE_PATH="${antidotePath}/share/antidote/"
+
+      # Source zdotdir env from https://github.com/tolkonepiu/zdotdir
+      source "${zdotdir}/.zshenv"
     '';
   };
 
