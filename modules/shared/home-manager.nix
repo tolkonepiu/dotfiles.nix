@@ -3,7 +3,6 @@
 let name = "Pavel Popov";
     user = "chchmthrfckr";
     email = "me@popov.wtf";
-    antidotePath = builtins.toString pkgs.antidote;
  in
 {
   # Shared shell configuration
@@ -16,8 +15,9 @@ let name = "Pavel Popov";
       source "${zdotdir}/.zshrc"
     '';
     envExtra = ''
+      export ZDOTDIR_SKIP_UPDATE=1
       export ZSH_CONFIG_PATH="${zdotdir}"
-      export ANTIDOTE_PATH="${antidotePath}/share/antidote/"
+      export ANTIDOTE_PATH="${pkgs.antidote}/share/antidote/"
 
       # Source zdotdir env from https://github.com/tolkonepiu/zdotdir
       source "${zdotdir}/.zshenv"
