@@ -3,7 +3,7 @@
   extends: ["config:recommended"],
   dependencyDashboard: true,
   nix: {
-    enabled: true
+    enabled: true,
   },
   customManagers: [
     {
