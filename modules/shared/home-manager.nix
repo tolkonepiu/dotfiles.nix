@@ -1,9 +1,16 @@
-{ config, pkgs, lib, zdotdir, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  zdotdir,
+  ...
+}:
 
-let name = "Pavel Popov";
-    user = "chchmthrfckr";
-    email = "me@popov.wtf";
- in
+let
+  name = "Pavel Popov";
+  user = "chchmthrfckr";
+  email = "me@popov.wtf";
+in
 {
   # Shared shell configuration
   zsh = {
@@ -39,7 +46,7 @@ let name = "Pavel Popov";
     extraConfig = {
       init.defaultBranch = "main";
       core = {
-	    editor = "vim";
+        editor = "vim";
         autocrlf = "input";
       };
       pull.rebase = false;
@@ -49,12 +56,8 @@ let name = "Pavel Popov";
   ssh = {
     enable = true;
     includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-        "/home/${user}/.ssh/config_external"
-      )
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-        "/Users/${user}/.ssh/config_external"
-      )
+      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/config_external")
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/config_external")
     ];
   };
 }

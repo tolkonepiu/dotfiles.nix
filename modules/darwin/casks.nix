@@ -1,21 +1,24 @@
 _:
 
 [
-  # Development Tools
+  # Development tools
   "visual-studio-code"
-
-  # Entertainment Tools
-  "vlc"
-
-  # Terminals
   "iterm2"
 
-  # Security Tools
+  # Privacy and security
   "secretive"
+  "tailscale"
 
-  # AI Prompts
+  # Productivity and note-taking
+  "obsidian"
   "chatgpt"
 
-  # Browsers
+  # Media and entertainment
+  "vlc"
+
+  # Web and browsing
   "arc"
+
+  # System utilities
+  "appcleaner"
 ]

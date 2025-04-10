@@ -1,8 +1,13 @@
 { pkgs }:
 
-with pkgs; [
-  # General packages for development and system management
+with pkgs;
+[
+  # System monitoring and performance tools
   fastfetch
+  htop
+
+  # Nix ecosystem tools
+  nixfmt-rfc-style
 
   # Encryption and security tools
   gnupg
@@ -15,6 +20,7 @@ with pkgs; [
   # Terminal utilities
   antidote
   autojump
+  gum
   wakatime-cli
 
   # Fonts

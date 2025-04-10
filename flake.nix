@@ -8,9 +8,7 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-    };
+    nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew"; };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -29,42 +27,46 @@
     };
   };
 
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, zdotdir } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core
+    , homebrew-cask, home-manager, nixpkgs, zdotdir }@inputs:
     let
       user = "chchmthrfckr";
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (darwinSystems) f;
-      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        default = with pkgs; mkShell {
-          nativeBuildInputs = with pkgs; [ bashInteractive git ];
-          shellHook = with pkgs; ''
-            export EDITOR=vim
-          '';
+      devShell = system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in {
+          default = with pkgs;
+            mkShell {
+              nativeBuildInputs = with pkgs; [ bashInteractive git ];
+              shellHook = with pkgs; ''
+                export EDITOR=vim
+              '';
+            };
         };
-      };
       mkApp = scriptName: system: {
         type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-          #!/usr/bin/env bash
-          PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
-        '')}/bin/${scriptName}";
+        program = "${
+            (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+              #!/usr/bin/env bash
+              PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
+              echo "Running ${scriptName} for ${system}"
+              exec ${self}/apps/${system}/${scriptName}
+            '')
+          }/bin/${scriptName}";
       };
       mkDarwinApps = system: {
         "build" = mkApp "build" system;
         "build-switch" = mkApp "build-switch" system;
         "rollback" = mkApp "rollback" system;
       };
-    in
-    {
+    in {
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system: let
-        user = "chchmthrfckr";
-      in
-        darwin.lib.darwinSystem {
+      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
+        let user = "chchmthrfckr";
+        in darwin.lib.darwinSystem {
           inherit system;
           specialArgs = inputs;
           modules = [
@@ -85,7 +87,6 @@
             }
             ./hosts/darwin
           ];
-        }
-      );
-  };
+        });
+    };
 }
