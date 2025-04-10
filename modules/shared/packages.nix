@@ -9,6 +9,9 @@ with pkgs;
   # Nix ecosystem tools
   nixfmt-rfc-style
 
+  # Development tools
+  kubectl
+
   # Encryption and security tools
   gnupg
   gopass
