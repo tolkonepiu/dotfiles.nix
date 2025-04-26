@@ -17,7 +17,7 @@ in
     enable = true;
     enableCompletion = false;
     dotDir = ".config/zsh";
-    initExtraFirst = ''
+    initContent = lib.mkBefore ''
       # Source zdotdir configuration from https://github.com/tolkonepiu/zdotdir
       source "${zdotdir}/.zshrc"
     '';
@@ -34,7 +34,10 @@ in
 
   git = {
     enable = true;
-    ignores = [ "*.swp" ];
+    ignores = [
+      "*.swp"
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin ".DS_Store")
+    ];
     userName = name;
     userEmail = email;
     lfs = {
@@ -50,7 +53,7 @@ in
         editor = "vim";
         autocrlf = "input";
       };
-      pull.rebase = false;
+      pull.rebase = true;
     };
   };
 
