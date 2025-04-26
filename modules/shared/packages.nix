@@ -7,6 +7,7 @@ with pkgs;
   htop
 
   # Nix ecosystem tools
+  nix-direnv
   nixfmt-rfc-style
 
   # Development tools
@@ -23,6 +24,7 @@ with pkgs;
   # Terminal utilities
   antidote
   autojump
+  direnv
   gum
   wakatime-cli
 

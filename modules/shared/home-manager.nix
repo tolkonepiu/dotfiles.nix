@@ -24,7 +24,7 @@ in
     envExtra = ''
       # Source zdotdir env from https://github.com/tolkonepiu/zdotdir
       source "${zdotdir}/.zshenv"
-    '';g
+    '';
 
     sessionVariables = {
       ZDOTDIR_SKIP_UPDATE = "1";
