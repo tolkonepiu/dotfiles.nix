@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 GREEN='\033[1;32m'
-YELLOW='\033[1;33m'
 NC='\033[0m'
 
 FLAKE="macos"
@@ -12,7 +11,7 @@ GEN_NUM=$(/run/current-system/sw/bin/darwin-rebuild --list-generations \
     | awk '{print $1}'
 )
 
-echo "${YELLOW}Rolling back to generation $GEN_NUM...${NC}"
+gum spin --spinner dot --title "Rolling back to generation $GEN_NUM..." -- \
 /run/current-system/sw/bin/darwin-rebuild switch --flake .#$FLAKE --switch-generation $GEN_NUM
 
 echo "${GREEN}Rollback to generation $GEN_NUM complete!${NC}"
