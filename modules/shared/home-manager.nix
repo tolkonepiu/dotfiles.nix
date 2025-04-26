@@ -22,14 +22,16 @@ in
       source "${zdotdir}/.zshrc"
     '';
     envExtra = ''
-      export ZDOTDIR_SKIP_UPDATE=1
-      export ZSH_CONFIG_PATH="${zdotdir}"
-      export ANTIDOTE_STATIC_FILE="/tmp/tmp-hm-antidote-static-${zdotdir.rev}"
-      export ANTIDOTE_PATH="${pkgs.antidote}/share/antidote/"
-
       # Source zdotdir env from https://github.com/tolkonepiu/zdotdir
       source "${zdotdir}/.zshenv"
-    '';
+    '';g
+
+    sessionVariables = {
+      ZDOTDIR_SKIP_UPDATE = "1";
+      ZSH_CONFIG_PATH = "${zdotdir}";
+      ANTIDOTE_STATIC_FILE = "/tmp/tmp-hm-antidote-static-${zdotdir.rev}";
+      ANTIDOTE_PATH = "${pkgs.antidote}/share/antidote/";
+    };
   };
 
   git = {
