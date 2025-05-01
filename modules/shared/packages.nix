@@ -21,6 +21,9 @@ with pkgs;
   python3
   virtualenv
 
+  # Node.js development tools
+  nodejs
+
   # Terminal utilities
   antidote
   autojump

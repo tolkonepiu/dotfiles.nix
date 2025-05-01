@@ -2,16 +2,17 @@ _:
 
 [
   # Development tools
-  "visual-studio-code"
   "iterm2"
+  "visual-studio-code"
+  "visual-studio-code@insiders"
 
   # Privacy and security
   "secretive"
   "tailscale"
 
   # Productivity and note-taking
-  "obsidian"
   "chatgpt"
+  "obsidian"
 
   # Media and entertainment
   "vlc"

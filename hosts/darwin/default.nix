@@ -52,7 +52,7 @@ let user = "chchmthrfckr"; in
         show-recents = false;
         launchanim = true;
         orientation = "bottom";
-        tilesize = 48;
+        tilesize = 64;
       };
 
       finder = {
