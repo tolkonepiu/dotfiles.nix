@@ -1,7 +1,7 @@
-<!-- filepath: /Users/chchmthrfckr/Projects/dotfiles/modules/darwin/dock/README.md -->
 # macOS Dock Configuration Module
 
-This module provides declarative configuration for the macOS Dock, allowing you to define exactly which applications appear in the Dock and in what order.
+This module provides declarative configuration for the macOS Dock, allowing you
+to define exactly which applications appear in the Dock and in what order.
 
 ## Overview
 
@@ -14,7 +14,8 @@ The Dock module:
 
 ## Usage
 
-To use this module, configure the `local.dock` options in your Nix configuration:
+To use this module, configure the `local.dock` options in your Nix
+configuration:
 
 ```nix
 local.dock.enable = true;
@@ -34,7 +35,8 @@ Enables or disables the Dock management. Defaults to true on Darwin systems.
 
 ### `local.dock.entries`
 
-A list of attribute sets representing applications to add to the Dock. Each entry can have:
+A list of attribute sets representing applications to add to the Dock. Each
+entry can have:
 
 - `path`: Path to the application (required)
 - `section`: Section to add the app to (default: "apps")
@@ -42,7 +44,8 @@ A list of attribute sets representing applications to add to the Dock. Each entr
 
 ## Implementation
 
-This module uses [dockutil](https://github.com/kcrawford/dockutil) to manage the Dock. It:
+This module uses [dockutil](https://github.com/kcrawford/dockutil) to manage the
+Dock. It:
 
 1. Compares the current Dock with the desired configuration
 2. Only rebuilds the Dock when changes are detected
@@ -50,4 +53,6 @@ This module uses [dockutil](https://github.com/kcrawford/dockutil) to manage the
 
 ## Credits
 
-This module is based on a [gist by antifuchs](https://gist.github.com/antifuchs/10138c4d838a63c0a05e725ccd7bccdd) with modifications for this configuration system.
+This module is based on a
+[gist by antifuchs](https://gist.github.com/antifuchs/10138c4d838a63c0a05e725ccd7bccdd)
+with modifications for this configuration system.
