@@ -44,7 +44,7 @@ If you're setting up a new macOS system:
 
 ```bash
 # Clone the repository
-git clone https://github.com/chchmthrfckr/dotfiles.git
+git clone https://github.com/tolkonepiu/dotfiles.git
 cd dotfiles
 
 # Install Nix (Determinate Nix)
