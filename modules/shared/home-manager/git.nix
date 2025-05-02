@@ -14,7 +14,6 @@ in
     enable = true;
     ignores = [
       "*.swp"
-      # Removed Darwin-specific .DS_Store ignore
     ];
     userName = name;
     userEmail = email;

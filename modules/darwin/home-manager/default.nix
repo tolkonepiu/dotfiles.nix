@@ -14,7 +14,5 @@
     # Include Darwin-specific modules
     ./git.nix
     ./ssh.nix
-    ./zsh.nix
-    ./direnv.nix
   ];
 }
