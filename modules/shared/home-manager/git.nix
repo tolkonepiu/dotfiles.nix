@@ -2,21 +2,18 @@
   config,
   pkgs,
   lib,
+  userConfig,
   ...
 }:
 
-let
-  name = "Pavel Popov";
-  email = "me@popov.wtf";
-in
 {
   programs.git = {
     enable = true;
     ignores = [
       "*.swp"
     ];
-    userName = name;
-    userEmail = email;
+    userName = userConfig.name;
+    userEmail = userConfig.email;
     lfs = {
       enable = true;
     };

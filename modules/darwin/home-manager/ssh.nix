@@ -2,15 +2,13 @@
   config,
   pkgs,
   lib,
+  userConfig,
   ...
 }:
 
-let
-  user = "chchmthrfckr";
-in
 {
   # Extend with Darwin-specific settings
   programs.ssh.includes = [
-    "/Users/${user}/.ssh/config_external"
+    "/Users/${userConfig.username}/.ssh/config_external"
   ];
 }

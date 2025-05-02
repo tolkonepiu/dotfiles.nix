@@ -30,7 +30,11 @@
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core
     , homebrew-cask, home-manager, nixpkgs, zdotdir }@inputs:
     let
-      user = "chchmthrfckr";
+      userConfig = {
+        name = "Pavel Popov";
+        email = "me@popov.wtf";
+        username = "chchmthrfckr";
+      };
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (darwinSystems) f;
       devShell = system:
@@ -65,16 +69,15 @@
       apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
       darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
-        let user = "chchmthrfckr";
-        in darwin.lib.darwinSystem {
+        darwin.lib.darwinSystem {
           inherit system;
-          specialArgs = inputs;
+          specialArgs = inputs // { inherit userConfig; };
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
-                inherit user;
+                user = userConfig.username;
                 enable = true;
                 taps = {
                   "homebrew/homebrew-core" = homebrew-core;

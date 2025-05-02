@@ -24,6 +24,7 @@ The repository is organized into these main directories:
 
 - **Modular Design**: Clear separation between shared and platform-specific
   configurations
+- **Centralized User Configuration**: Personal details defined once in flake.nix and referenced throughout
 - **Declarative System Configuration**: Complete system setup declared in code
 - **Homebrew Integration**: Manages macOS applications via Homebrew casks
 - **Dock Configuration**: Declarative macOS dock setup
@@ -38,15 +39,26 @@ The repository is organized into these main directories:
 > Instead, use this repository as a reference or source of inspiration for
 > building your own setup.
 
+### Customizing User Information
+
+To use this configuration with your own personal details, modify the `userConfig` object in `flake.nix`:
+
+```nix
+# In flake.nix
+userConfig = {
+  name = "Your Name";
+  email = "your.email@example.com";
+  username = "yourusername";
+};
+```
+
+This centralized approach ensures your personal information is defined in one place and referenced throughout the configuration.
+
 ### Initial Setup
 
 If you're setting up a new macOS system:
 
 ```bash
-# Clone the repository
-git clone https://github.com/tolkonepiu/dotfiles.git
-cd dotfiles
-
 # Install Nix (Determinate Nix)
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 

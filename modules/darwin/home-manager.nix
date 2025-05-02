@@ -4,19 +4,17 @@
   lib,
   home-manager,
   zdotdir,
+  userConfig,
   ...
 }:
 
-let
-  user = "chchmthrfckr";
-in
 {
   imports = [ ./dock ];
 
   # It me
-  users.users.${user} = {
-    name = "${user}";
-    home = "/Users/${user}";
+  users.users.${userConfig.username} = {
+    name = "${userConfig.username}";
+    home = "/Users/${userConfig.username}";
     isHidden = false;
     shell = pkgs.zsh;
   };
@@ -47,7 +45,7 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} =
+    users.${userConfig.username} =
       {
         pkgs,
         config,
@@ -56,7 +54,10 @@ in
       }:
       {
         # Pass the zdotdir parameter explicitly to the home-manager modules
-        _module.args.zdotdir = zdotdir;
+        _module.args = {
+          zdotdir = zdotdir;
+          userConfig = userConfig;
+        };
 
         home = {
           enableNixpkgsReleaseCheck = false;

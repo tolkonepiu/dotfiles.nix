@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  userConfig,
+  ...
+}:
 
-let
-  user = "chchmthrfckr";
-in
 {
   imports = [
     ../../modules/darwin
@@ -15,7 +17,7 @@ in
     settings = {
       trusted-users = [
         "@admin"
-        "${user}"
+        "${userConfig.username}"
       ];
       substituters = [
         "https://nix-community.cachix.org"
