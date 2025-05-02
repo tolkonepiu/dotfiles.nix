@@ -1,5 +1,3 @@
-<!-- filepath: /Users/chchmthrfckr/Projects/dotfiles/modules/shared/home-manager/README.md -->
-
 # Shared Home Manager Modules
 
 This directory contains platform-agnostic Home Manager configurations that serve
