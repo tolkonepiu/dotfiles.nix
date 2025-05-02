@@ -4,7 +4,7 @@ let user = "chchmthrfckr"; in
 
 {
   imports = [
-    ../../modules/darwin/home-manager.nix
+    ../../modules/darwin
     ../../modules/shared
   ];
 

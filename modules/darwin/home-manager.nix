@@ -55,21 +55,18 @@ in
         ...
       }:
       {
+        # Pass the zdotdir parameter explicitly to the home-manager modules
+        _module.args.zdotdir = zdotdir;
+        
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };
           stateVersion = "23.11";
         };
-        programs =
-          { }
-          // import ../shared/home-manager.nix {
-            inherit
-              config
-              pkgs
-              lib
-              zdotdir
-              ;
-          };
+        programs = { };
+        imports = [
+          ./home-manager
+        ];
 
         # Marked broken Oct 20, 2022 check later to remove this
         # https://github.com/nix-community/home-manager/issues/3344
