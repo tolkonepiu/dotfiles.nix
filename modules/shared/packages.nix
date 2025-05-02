@@ -29,6 +29,7 @@ with pkgs;
   autojump
   direnv
   gum
+  uv
   wakatime-cli
 
   # Fonts
