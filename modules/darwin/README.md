@@ -14,7 +14,7 @@ The Darwin modules handle:
 
 ## Directory Structure
 
-```
+```sh
 .
 ├── dock/               # MacOS dock configuration module
 │   └── default.nix     # Dock settings and application list
