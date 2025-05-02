@@ -24,7 +24,10 @@ The repository is organized into these main directories:
 
 - **Modular Design**: Clear separation between shared and platform-specific
   configurations
-- **Centralized User Configuration**: Personal details defined once in flake.nix and referenced throughout
+- **Centralized User Configuration**: Personal details defined once in flake.nix
+  and referenced throughout
+- **Touch ID for sudo**: Use fingerprint authentication instead of typing
+  passwords for sudo commands
 - **Declarative System Configuration**: Complete system setup declared in code
 - **Homebrew Integration**: Manages macOS applications via Homebrew casks
 - **Dock Configuration**: Declarative macOS dock setup
@@ -41,7 +44,8 @@ The repository is organized into these main directories:
 
 ### Customizing User Information
 
-To use this configuration with your own personal details, modify the `userConfig` object in `flake.nix`:
+To use this configuration with your own personal details, modify the
+`userConfig` object in `flake.nix`:
 
 ```nix
 # In flake.nix
@@ -52,7 +56,8 @@ userConfig = {
 };
 ```
 
-This centralized approach ensures your personal information is defined in one place and referenced throughout the configuration.
+This centralized approach ensures your personal information is defined in one
+place and referenced throughout the configuration.
 
 ### Initial Setup
 
