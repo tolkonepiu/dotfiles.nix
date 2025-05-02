@@ -57,7 +57,7 @@ in
       {
         # Pass the zdotdir parameter explicitly to the home-manager modules
         _module.args.zdotdir = zdotdir;
-        
+
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };
@@ -81,7 +81,7 @@ in
     { path = "/Applications/iTerm.app"; }
     { path = "/Applications/Arc.app"; }
     { path = "/Applications/Obsidian.app"; }
-    { path = "/Applications/Visual Studio Code.app"; }
+    { path = "/Applications/Visual Studio Code - Insiders.app"; }
     { path = "/Applications/ChatGPT.app"; }
     { path = "/Applications/Telegram.app"; }
     { path = "/Applications/Mattermost.app"; }
