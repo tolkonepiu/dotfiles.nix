@@ -14,10 +14,13 @@ with pkgs;
   kubectl
 
   # Encryption and security tools
+  age
   gnupg
   gopass
+  sops
 
   # Python packages
+  pipx
   python3
   virtualenv
 
