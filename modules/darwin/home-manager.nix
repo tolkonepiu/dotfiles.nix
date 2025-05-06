@@ -8,6 +8,17 @@
   ...
 }:
 
+let
+  sharedFiles = import ../shared/files.nix { inherit config pkgs; };
+  additionalFiles = import ./files.nix {
+    inherit
+      lib
+      userConfig
+      config
+      pkgs
+      ;
+  };
+in
 {
   imports = [ ./dock ];
 
@@ -62,6 +73,10 @@
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };
+          file = lib.mkMerge [
+            sharedFiles
+            additionalFiles
+          ];
           stateVersion = "23.11";
         };
         programs = { };

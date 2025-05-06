@@ -1,15 +1,17 @@
 {
-  user,
+  userConfig,
   config,
   pkgs,
+  lib,
   ...
 }:
 
-let
-  xdg_configHome = "${config.users.users.${user}.home}/.config";
-  xdg_dataHome = "${config.users.users.${user}.home}/.local/share";
-  xdg_stateHome = "${config.users.users.${user}.home}/.local/state";
-in
 {
-
+  # Create the Secretive SSH configuration (only for Apple Silicon)
+  ".ssh/config_secretive" = lib.mkIf pkgs.stdenv.hostPlatform.isAarch64 {
+    text = ''
+      Host *
+        IdentityAgent /Users/${userConfig.username}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+    '';
+  };
 }

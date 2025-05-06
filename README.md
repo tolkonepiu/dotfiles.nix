@@ -32,6 +32,9 @@ The repository is organized into these main directories:
 - **Homebrew Integration**: Manages macOS applications via Homebrew casks
 - **Dock Configuration**: Declarative macOS dock setup
 - **Reproducible Environment**: Consistent development environment
+- **Secretive Integration**: Secure SSH key management with
+  [Apple's Secure Enclave](https://popov.wtf/secure-ssh-keys-with-secure-enclave-on-macos)
+  (Apple Silicon only)
 
 ## Usage
 
