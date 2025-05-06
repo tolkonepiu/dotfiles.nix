@@ -69,9 +69,6 @@ If you're setting up a new macOS system:
 ```bash
 # Install Nix (Determinate Nix)
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-
-# Build and switch to the configuration
-nix run .#build-switch
 ```
 
 > [!IMPORTANT]
@@ -80,6 +77,12 @@ nix run .#build-switch
 > it
 > [currently conflicts](https://github.com/dustinlyons/nixos-config/issues/146)
 > with `nix-darwin`.
+
+Make [apps](./apps) executable:
+
+```sh
+find apps/$(uname -m | sed 's/arm64/aarch64/')-darwin -type f \( -name apply -o -name build -o -name build-switch -o -name rollback \) -exec chmod +x
+```
 
 ### Managing Configuration
 
