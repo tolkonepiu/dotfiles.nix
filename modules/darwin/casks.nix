@@ -7,6 +7,7 @@ _:
   "visual-studio-code@insiders"
 
   # Privacy and security
+  "1password"
   "secretive"
   "tailscale"
 
