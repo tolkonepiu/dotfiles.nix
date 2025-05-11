@@ -1,33 +1,24 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:recommended',
-  ],
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended"],
   dependencyDashboard: true,
   nix: {
     enabled: true,
   },
   customManagers: [
     {
-      customType: 'regex',
-      fileMatch: [
-        '.+\\.ya?ml$',
-      ],
+      customType: "regex",
+      managerFilePatterns: ["/.+\\.ya?ml$/"],
       matchStrings: [
-        '# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?: (?<currentValue>.*)',
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?: (?<currentValue>.*)",
       ],
-      versioningTemplate: '{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}',
-      extractVersionTemplate: '^(v)?(?<version>.*)$',
+      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+      extractVersionTemplate: "^(v)?(?<version>.*)$",
     },
   ],
   packageRules: [
     {
-      matchUpdateTypes: [
-        'minor',
-        'patch',
-        'pin',
-        'digest',
-      ],
+      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
       automerge: true,
     },
   ],
