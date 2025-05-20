@@ -14,30 +14,37 @@ let
 in
 {
   options = {
-    local.dock.enable = mkOption {
-      description = "Enable dock";
-      default = stdenv.isDarwin;
-      example = false;
-    };
+    local.dock = {
+      enable = mkOption {
+        description = "Enable dock";
+        default = stdenv.isDarwin;
+        example = false;
+      };
 
-    local.dock.entries = mkOption {
-      description = "Entries on the Dock";
-      type =
-        with types;
-        listOf (submodule {
-          options = {
-            path = lib.mkOption { type = str; };
-            section = lib.mkOption {
-              type = str;
-              default = "apps";
+      entries = mkOption {
+        description = "Entries on the Dock";
+        type =
+          with types;
+          listOf (submodule {
+            options = {
+              path = lib.mkOption { type = str; };
+              section = lib.mkOption {
+                type = str;
+                default = "apps";
+              };
+              options = lib.mkOption {
+                type = str;
+                default = "";
+              };
             };
-            options = lib.mkOption {
-              type = str;
-              default = "";
-            };
-          };
-        });
-      readOnly = true;
+          });
+        readOnly = true;
+      };
+
+      username = mkOption {
+        description = "Username to apply the dock settings to";
+        type = types.str;
+      };
     };
   };
 
@@ -51,7 +58,7 @@ in
           [
             " "
             "!"
-            ''"''
+            "\""
             "#"
             "$"
             "%"
@@ -74,16 +81,16 @@ in
           ]
           (normalize path)
         );
-      wantURIs = concatMapStrings (entry: ''
-        ${entryURI entry.path}
-      '') cfg.entries;
-      createEntries = concatMapStrings (entry: ''
-        ${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}
-      '') cfg.entries;
+      wantURIs = concatMapStrings (entry: "${entryURI entry.path}\n") cfg.entries;
+      createEntries = concatMapStrings (
+        entry:
+        "${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n"
+      ) cfg.entries;
     in
     {
-      system.activationScripts.postUserActivation.text = ''
-        echo >&2 "Setting up the Dock..."
+      system.activationScripts.postActivation.text = ''
+          echo >&2 "Setting up the Dock for ${cfg.username}..."
+          su ${cfg.username} -s /bin/sh <<'USERBLOCK'
         haveURIs="$(${dockutil}/bin/dockutil --list | ${pkgs.coreutils}/bin/cut -f2)"
         if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
           echo >&2 "Resetting Dock."
@@ -93,6 +100,7 @@ in
         else
           echo >&2 "Dock setup complete."
         fi
+        USERBLOCK
       '';
     }
   );

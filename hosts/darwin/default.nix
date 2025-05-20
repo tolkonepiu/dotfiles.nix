@@ -41,14 +41,17 @@
     '';
   };
 
-  system.checks.verifyNixPath = false;
-
   # Enable Touch ID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
   security.pam.services.sudo_local.reattach = true; # Fix Touch ID in tmux/screen
 
   system = {
     stateVersion = 4;
+
+    primaryUser = "${userConfig.username}";
+    checks = {
+      verifyNixPath = false;
+    };
 
     defaults = {
       NSGlobalDomain = {
