@@ -37,4 +37,7 @@ with pkgs;
 
   # Fonts
   meslo-lgs-nf
+
+  # Web and browsing
+  firefox-devedition
 ]

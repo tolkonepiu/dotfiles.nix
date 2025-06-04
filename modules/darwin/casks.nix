@@ -18,9 +18,6 @@ _:
   # Media and entertainment
   "vlc"
 
-  # Web and browsing
-  "arc"
-
   # System utilities
   "appcleaner"
 ]

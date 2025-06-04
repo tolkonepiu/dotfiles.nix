@@ -97,7 +97,7 @@ in
     entries = [
       { path = "/System/Applications/Launchpad.app"; }
       { path = "/Applications/iTerm.app"; }
-      { path = "/Applications/Arc.app"; }
+      { path = "/${pkgs.firefox-devedition}/Applications/Firefox Developer Edition.app"; }
       { path = "/Applications/Obsidian.app"; }
       { path = "/Applications/Visual Studio Code - Insiders.app"; }
       { path = "/Applications/ChatGPT.app"; }
