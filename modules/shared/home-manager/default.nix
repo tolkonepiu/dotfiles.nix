@@ -9,6 +9,7 @@
 
 {
   imports = [
+    ./eza.nix
     ./git.nix
     ./zsh.nix
     ./ssh.nix

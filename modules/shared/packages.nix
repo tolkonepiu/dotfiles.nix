@@ -31,6 +31,7 @@ with pkgs;
   antidote
   autojump
   direnv
+  eza
   gum
   uv
   wakatime-cli
