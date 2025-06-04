@@ -28,6 +28,9 @@
         autocrlf = "input";
       };
       pull.rebase = true;
+      alias = {
+        lg = "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --decorate=full";
+      };
     };
   };
 }
