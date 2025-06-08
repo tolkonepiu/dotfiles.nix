@@ -8,6 +8,7 @@ _:
 
   # Privacy and security
   "1password"
+  "keybase"
   "secretive"
   "tailscale"
 
