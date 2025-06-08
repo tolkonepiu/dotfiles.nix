@@ -33,7 +33,7 @@ in
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
-    masApps = pkgs.callPackage ./appstore.nix { };
+    masApps = import ./appstore.nix { };
     # onActivation.cleanup = "uninstall";
   };
 
