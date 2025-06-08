@@ -29,7 +29,8 @@ The repository is organized into these main directories:
 - **Touch ID for sudo**: Use fingerprint authentication instead of typing
   passwords for sudo commands
 - **Declarative System Configuration**: Complete system setup declared in code
-- **Homebrew Integration**: Manages macOS applications via Homebrew casks
+- **Homebrew and Mac App Store Integration**: Manages macOS applications via
+  Homebrew casks and Mac App Store
 - **Dock Configuration**: Declarative macOS dock setup
 - **Reproducible Environment**: Consistent development environment
 - **Secretive Integration**: Secure SSH key management with
