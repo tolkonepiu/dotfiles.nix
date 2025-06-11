@@ -9,10 +9,13 @@
 
 {
   imports = [
-    ./eza.nix
-    ./git.nix
-    ./zsh.nix
-    ./ssh.nix
+    ./bat.nix
     ./direnv.nix
+    ./eza.nix
+    ./fd.nix
+    ./git.nix
+    ./ssh.nix
+    ./zoxide.nix
+    ./zsh.nix
   ];
 }

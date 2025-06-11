@@ -29,9 +29,6 @@ with pkgs;
 
   # Terminal utilities
   antidote
-  autojump
-  direnv
-  eza
   gum
   uv
   wakatime-cli
