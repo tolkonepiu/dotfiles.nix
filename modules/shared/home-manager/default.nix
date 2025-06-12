@@ -15,6 +15,7 @@
     ./fd.nix
     ./git.nix
     ./ssh.nix
+    ./stylix.nix
     ./zoxide.nix
     ./zsh.nix
   ];

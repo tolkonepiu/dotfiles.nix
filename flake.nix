@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +43,7 @@
       homebrew-cask,
       home-manager,
       nixpkgs,
+      stylix,
       zdotdir,
     }@inputs:
     let
@@ -118,6 +123,7 @@
                 autoMigrate = true;
               };
             }
+            stylix.darwinModules.stylix
             ./hosts/darwin
           ];
         }

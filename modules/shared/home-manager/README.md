@@ -25,6 +25,7 @@ Each application or tool has its own dedicated configuration file:
 ├── fd.nix              # Fd (find replacement) configuration
 ├── git.nix             # Git version control configuration
 ├── ssh.nix             # SSH client configuration
+├── stylix.nix          # Stylix system-wide theming configuration
 ├── zoxide.nix          # Zoxide (cd replacement) configuration
 └── zsh.nix             # ZSH shell configuration
 ```
