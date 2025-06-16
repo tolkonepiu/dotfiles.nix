@@ -6,6 +6,11 @@
 
   homebrew = {
     enable = true;
-    # onActivation.cleanup = "uninstall";
+    global.autoUpdate = false;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+      # cleanup = "zap";
+    };
   };
 }

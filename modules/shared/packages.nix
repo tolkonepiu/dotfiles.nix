@@ -7,7 +7,6 @@ with pkgs;
   htop
 
   # Nix ecosystem tools
-  nix-direnv
   nixfmt-rfc-style
 
   # Development tools
@@ -28,14 +27,10 @@ with pkgs;
   nodejs
 
   # Terminal utilities
-  antidote
   gum
   uv
   wakatime-cli
 
   # Fonts
   meslo-lgs-nf
-
-  # Web and browsing
-  firefox-devedition
 ]

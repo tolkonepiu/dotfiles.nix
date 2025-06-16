@@ -2,8 +2,9 @@
 
 {
   imports = [
+    ./home-manager
     ./homebrew
-    ./home-manager.nix
+    ./security
     ./dock
   ];
 }
