@@ -1,12 +1,10 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ ... }:
 
 {
   imports = [
+    ./homebrew
     ./home-manager.nix
     ./dock
+    ../shared
   ];
 }

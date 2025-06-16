@@ -20,6 +20,7 @@ Much of the core configuration for both macOS and potential future platforms
 ```sh
 .
 ├── home-manager/           # User environment configurations
+├── stylix/                 # System theming configuration
 ├── default.nix             # Main shared module definition
 ├── files.nix               # Static configuration files
 ├── home-manager.nix        # Home Manager module integration

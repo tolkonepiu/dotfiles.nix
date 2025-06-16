@@ -8,7 +8,7 @@ macOS-specific functionality.
 
 The Darwin modules handle:
 
-- macOS-specific system settings
+- macOS-specific system settings and preferences
 - Homebrew package and cask management
 - MacOS Dock configuration
 - Platform-specific overrides for shared configurations
@@ -18,14 +18,8 @@ The Darwin modules handle:
 ```sh
 .
 ├── dock/               # MacOS dock configuration module
-│   └── default.nix     # Dock settings and application list
 ├── home-manager/       # Darwin-specific home-manager configs
-│   ├── default.nix     # Imports shared and Darwin-specific modules
-│   ├── git.nix         # Git extensions for macOS
-│   ├── ssh.nix         # SSH extensions for macOS
-│   └── README.md       # Documentation for Darwin home-manager modules
-├── casks.nix           # List of Homebrew casks to install
-├── default.nix         # Main Darwin module definition
+├── homebrew/           # Homebrew management
 ├── files.nix           # Static configuration files for macOS
 ├── home-manager.nix    # User and home-manager configuration
 └── packages.nix        # Darwin-specific packages

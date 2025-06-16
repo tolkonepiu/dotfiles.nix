@@ -30,13 +30,6 @@ in
     shell = pkgs.zsh;
   };
 
-  homebrew = {
-    enable = true;
-    casks = pkgs.callPackage ./casks.nix { };
-    masApps = import ./appstore.nix { };
-    # onActivation.cleanup = "uninstall";
-  };
-
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;

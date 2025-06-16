@@ -26,6 +26,8 @@ The repository is organized into these main directories:
   configurations
 - **Centralized User Configuration**: Personal details defined once in flake.nix
   and referenced throughout
+- **Advanced Shell Configuration**: Custom ZSH setup with
+  [zdotdir](https://github.com/tolkonepiu/zdotdir) integration and Antidote plugin manager
 - **Touch ID for sudo**: Use fingerprint authentication instead of typing
   passwords for sudo commands
 - **Declarative System Configuration**: Complete system setup declared in code
@@ -82,7 +84,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 Make [apps](./apps) executable:
 
 ```sh
-find apps/$(uname -m | sed 's/arm64/aarch64/')-darwin -type f \( -name apply -o -name build -o -name build-switch -o -name rollback \) -exec chmod +x
+find apps/$(uname -m | sed 's/arm64/aarch64/')-darwin -type f \( -name build -o -name build-switch -o -name rollback \) -exec chmod +x {} \;
 ```
 
 ### Managing Configuration
