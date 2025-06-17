@@ -7,6 +7,14 @@
 {
   imports = [ ./dock.nix ];
 
+  system.defaults.dock = {
+    autohide = true;
+    show-recents = false;
+    launchanim = true;
+    orientation = "bottom";
+    tilesize = 64;
+  };
+
   # Fully declarative dock using the latest from Nix Store
   local.dock = {
     enable = true;

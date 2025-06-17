@@ -63,14 +63,6 @@
         "com.apple.sound.beep.feedback" = 0;
       };
 
-      dock = {
-        autohide = true;
-        show-recents = false;
-        launchanim = true;
-        orientation = "bottom";
-        tilesize = 64;
-      };
-
       finder = {
         _FXShowPosixPathInTitle = false;
       };
