@@ -2,8 +2,8 @@
   programs.firefox.policies = {
     DisplayBookmarksToolbar = "never";
 
-    DisableFirefoxAccounts = true;
-    PasswordManagerEnabled = false;
+    DisableFirefoxAccounts = false;
+    PasswordManagerEnabled = true;
     DisablePocket = true;
     DisableTelemetry = true;
     HardwareAcceleration = true;
@@ -15,12 +15,12 @@
     DontCheckDefaultBrowser = true;
     FirefoxHome = {
       Search = true;
-      TopSites = false;
+      TopSites = true;
       SponsoredTopSites = false;
-      Highlights = false;
+      Highlights = true;
       Pocket = false;
       SponsoredPocket = false;
-      Snippets = false;
+      Snippets = true;
       Locked = true;
     };
     UserMessaging = {

@@ -4,6 +4,7 @@
 }:
 {
   imports = [
+    ./extensions.nix
     ./policies.nix
   ];
 
