@@ -37,14 +37,14 @@
       "installation_mode" = "force_installed";
       "install_url" =
         "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
-      "default_area" = "navbar";
+      "default_area" = "menupanel";
     };
 
     # Firefox Color
     "FirefoxColor@mozilla.com" = {
       "installation_mode" = "force_installed";
       "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/firefox-color/latest.xpi";
-      "default_area" = "navbar";
+      "default_area" = "menupanel";
     };
 
     # Refined GitHub

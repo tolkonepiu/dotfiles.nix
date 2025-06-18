@@ -6,6 +6,9 @@
   imports = [
     ./extensions.nix
     ./policies.nix
+    ./blocking.nix
+    ./user-js.nix
+    ./theme.nix
   ];
 
   programs.firefox = {
@@ -27,7 +30,6 @@
   };
 
   stylix.targets.firefox = {
-    colorTheme.enable = true;
     profileNames = [
       "${userConfig.username}.default"
     ];
