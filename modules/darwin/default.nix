@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./home-manager
+    ./home-manager.nix
     ./homebrew
     ./security
     ./dock
