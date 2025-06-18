@@ -1,5 +1,6 @@
 {
   imports = [
+    ./taps.nix
     ./casks.nix
     ./appstore.nix
   ];
