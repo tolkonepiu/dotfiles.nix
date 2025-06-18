@@ -27,10 +27,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    zdotdir = {
-      url = "github:tolkonepiu/zdotdir";
-      flake = false;
-    };
   };
 
   outputs =
@@ -44,7 +40,6 @@
       home-manager,
       nixpkgs,
       stylix,
-      zdotdir,
     }@inputs:
     let
       userConfig = {

@@ -1,11 +1,17 @@
 {
   lib,
   pkgs,
-  inputs,
-  zdotdir,
   ...
 }:
 
+let
+  zdotdir = pkgs.fetchFromGitHub {
+    owner = "tolkonepiu";
+    repo = "zdotdir";
+    rev = "167ca95e1d2821f27c6b428f88943bd4291bbf31";
+    sha256 = "sha256-5wJblYNUlIfZ1IcEuzkSl5O3dKVx+La17FOZwE5lKbI=";
+  };
+in
 {
   programs.zsh = {
     enable = true;

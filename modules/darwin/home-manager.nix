@@ -1,7 +1,6 @@
 {
   home-manager,
   userConfig,
-  zdotdir,
   pkgs,
   lib,
   ...
@@ -36,9 +35,8 @@ in
         ...
       }:
       {
-        # Pass the zdotdir and userConfig parameters explicitly to the home-manager modules
+        # Pass the userConfig parameters explicitly to the home-manager modules
         _module.args = {
-          zdotdir = zdotdir;
           userConfig = userConfig;
         };
 
