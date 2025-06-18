@@ -27,10 +27,11 @@ in
       "general.smoothScroll.msdPhysics.enabled" = lib.mkDefault false;
     };
 
-    extraConfig = lib.strings.concatLines [
+    preConfig = lib.strings.concatLines [
       # Betterfox
       (builtins.readFile "${betterfox}/Peskyfox.js")
       (builtins.readFile "${betterfox}/Fastfox.js")
+      (builtins.readFile "${betterfox}/Securefox.js")
     ];
   };
 }
