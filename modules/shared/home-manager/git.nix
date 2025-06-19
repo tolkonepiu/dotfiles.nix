@@ -6,18 +6,40 @@
 {
   programs.git = {
     enable = true;
+
+    userName = userConfig.name;
+    userEmail = userConfig.email;
+
     ignores = [
       "*.swp"
     ];
-    userName = userConfig.name;
-    userEmail = userConfig.email;
+
     lfs = {
       enable = true;
     };
+
     signing = {
       format = "openpgp";
       signByDefault = true;
     };
+
+    includes = [
+      { path = "catppuccin.gitconfig"; }
+    ];
+
+    delta = {
+      enable = true;
+      options = {
+        diff-so-fancy = true;
+        line-numbers = true;
+        side-by-side = false;
+        features = "catppuccin-mocha";
+        catppuccin-mocha = {
+          theme = "base16-stylix";
+        };
+      };
+    };
+
     extraConfig = {
       init.defaultBranch = "main";
       core = {
