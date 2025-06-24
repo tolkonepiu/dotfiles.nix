@@ -18,7 +18,11 @@
     # Media and entertainment
     "vlc"
 
+    # Virtualization
+    "utm"
+
     # System utilities
     "appcleaner"
+    "resilio-sync"
   ];
 }

@@ -15,7 +15,11 @@ in
 {
   # Add catpuccin theme for delta
   home.file.".config/git/catppuccin.gitconfig" = {
-    text = builtins.readFile "${ctp-delta}/catppuccin.gitconfig";
+    text = builtins.readFile (
+      pkgs.runCommand "filtered-gitconfig" { } ''
+        ${pkgs.gnused}/bin/sed 's/^\(\s*syntax-theme =.*\)$/# \1/' ${ctp-delta}/catppuccin.gitconfig > $out
+      ''
+    );
   };
 
   programs.git = {
@@ -49,7 +53,7 @@ in
         side-by-side = false;
         features = "catppuccin-mocha";
         catppuccin-mocha = {
-          theme = "base16-stylix";
+          syntax-theme = "base16-stylix";
         };
       };
     };
