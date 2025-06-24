@@ -1,8 +1,8 @@
 {
+  userConfig,
   config,
   pkgs,
   lib,
-  userConfig,
   ...
 }:
 

@@ -6,16 +6,6 @@
   ...
 }:
 
-let
-  sharedFiles = import ../shared/files.nix { inherit pkgs; };
-  additionalFiles = import ./files.nix {
-    inherit
-      userConfig
-      pkgs
-      lib
-      ;
-  };
-in
 {
   # It me
   users.users.${userConfig.username} = {
@@ -43,13 +33,8 @@ in
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };
-          file = lib.mkMerge [
-            sharedFiles
-            additionalFiles
-          ];
           stateVersion = "23.11";
         };
-        programs = { };
         imports = [
           ./home-manager
         ];

@@ -1,12 +1,19 @@
 {
-  config,
+  userConfig,
   pkgs,
   lib,
-  userConfig,
   ...
 }:
 
 {
+  # Create the Secretive SSH configuration (only for Apple Silicon)
+  home.file.".ssh/config_secretive" = lib.mkIf pkgs.stdenv.hostPlatform.isAarch64 {
+    text = ''
+      Host *
+        IdentityAgent /Users/${userConfig.username}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+    '';
+  };
+
   # Extend with Darwin-specific settings
   programs.ssh.includes = [
     (lib.mkIf pkgs.stdenv.hostPlatform.isAarch64 "/Users/${userConfig.username}/.ssh/config_secretive")

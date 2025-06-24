@@ -21,7 +21,6 @@ The Darwin modules handle:
 ├── home-manager/       # Darwin-specific home-manager configs
 ├── homebrew/           # Homebrew management
 ├── security/           # Security configuration
-├── files.nix           # Static configuration files for macOS
 ├── home-manager.nix    # User and home-manager configuration
 └── packages.nix        # Darwin-specific packages
 ```

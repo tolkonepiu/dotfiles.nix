@@ -18,11 +18,11 @@ Each application or tool has its own dedicated configuration file:
 
 ```sh
 .
-├── default.nix         # Imports all modules in this directory
 ├── bat.nix             # Bat (cat replacement) configuration
 ├── direnv.nix          # Direnv shell integration configuration
 ├── eza.nix             # Eza (ls replacement) configuration
 ├── fd.nix              # Fd (find replacement) configuration
+├── firefox/            # Firefox configuration
 ├── git.nix             # Git version control configuration
 ├── ssh.nix             # SSH client configuration
 ├── zoxide.nix          # Zoxide (cd replacement) configuration
