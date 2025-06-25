@@ -9,7 +9,7 @@
     "1password"
     "keybase"
     "secretive"
-    "tailscale"
+    "tailscale-app"
 
     # Productivity and note-taking
     "chatgpt"
