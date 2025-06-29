@@ -53,5 +53,12 @@
       "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/refined-github-/latest.xpi";
       "default_area" = "menupanel";
     };
+
+    # Augmented Steam
+    "{1be309c5-3e4f-4b99-927d-bb500eb4fa88}" = {
+      "installation_mode" = "force_installed";
+      "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/augmented-steam/latest.xpi";
+      "default_area" = "menupanel";
+    };
   };
 }
