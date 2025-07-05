@@ -1,6 +1,7 @@
 {
   home-manager,
   userConfig,
+  inputs,
   pkgs,
   lib,
   ...
@@ -18,6 +19,10 @@
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = {
+      inherit inputs userConfig;
+    };
     users.${userConfig.username} =
       {
         pkgs,
@@ -25,11 +30,6 @@
         ...
       }:
       {
-        # Pass the userConfig parameters explicitly to the home-manager modules
-        _module.args = {
-          userConfig = userConfig;
-        };
-
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };

@@ -27,19 +27,35 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    zdotdir = {
+      url = "github:tolkonepiu/zdotdir";
+      flake = false;
+    };
+
+    betterfox = {
+      url = "github:yokoffing/betterfox";
+      flake = false;
+    };
+
+    ctp-delta = {
+      url = "github:catppuccin/delta";
+      flake = false;
+    };
   };
 
   outputs =
     {
       self,
-      darwin,
-      nix-homebrew,
-      homebrew-bundle,
-      homebrew-core,
-      homebrew-cask,
-      home-manager,
       nixpkgs,
-      stylix,
+      ...
     }@inputs:
     let
       userConfig = {
@@ -97,28 +113,30 @@
 
       darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
         system:
-        darwin.lib.darwinSystem {
+        inputs.darwin.lib.darwinSystem {
           inherit system;
-          specialArgs = inputs // {
-            inherit userConfig;
+          specialArgs = {
+            inherit
+              inputs
+              userConfig
+              ;
           };
           modules = [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
+            inputs.home-manager.darwinModules.home-manager
+            inputs.nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
                 user = userConfig.username;
                 enable = true;
                 taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
+                  "homebrew/homebrew-core" = inputs.homebrew-core;
+                  "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                  "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
                 };
                 mutableTaps = false;
                 autoMigrate = true;
               };
             }
-            stylix.darwinModules.stylix
             ./hosts/darwin
           ];
         }

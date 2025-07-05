@@ -11,6 +11,12 @@
     ../../modules/shared
   ];
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
   nix = {
     package = pkgs.nix;
 

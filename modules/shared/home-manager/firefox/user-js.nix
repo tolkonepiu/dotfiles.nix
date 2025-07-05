@@ -1,17 +1,10 @@
 {
   lib,
   pkgs,
+  inputs,
   userConfig,
   ...
 }:
-let
-  betterfox = pkgs.fetchFromGitHub {
-    owner = "yokoffing";
-    repo = "Betterfox";
-    rev = "82553f016744f0eb0528f8d92c3eb30ef9a1f6c4";
-    hash = "sha256-jmZ1DTdND9wpPtPZ3TgJhgZc0ed+dre8mRUaA2llBL0=";
-  };
-in
 {
   programs.firefox.profiles."${userConfig.username}.default" = {
     settings = {
@@ -29,9 +22,9 @@ in
 
     preConfig = lib.strings.concatLines [
       # Betterfox
-      (builtins.readFile "${betterfox}/Peskyfox.js")
-      (builtins.readFile "${betterfox}/Fastfox.js")
-      (builtins.readFile "${betterfox}/Securefox.js")
+      (builtins.readFile "${inputs.betterfox}/Peskyfox.js")
+      (builtins.readFile "${inputs.betterfox}/Fastfox.js")
+      (builtins.readFile "${inputs.betterfox}/Securefox.js")
     ];
   };
 }

@@ -1,17 +1,9 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
-
-let
-  zdotdir = pkgs.fetchFromGitHub {
-    owner = "tolkonepiu";
-    repo = "zdotdir";
-    rev = "167ca95e1d2821f27c6b428f88943bd4291bbf31";
-    hash = "sha256-5wJblYNUlIfZ1IcEuzkSl5O3dKVx+La17FOZwE5lKbI=";
-  };
-in
 {
   programs.zsh = {
     enable = true;
@@ -19,11 +11,11 @@ in
     dotDir = ".config/zsh";
     initContent = lib.mkBefore ''
       # Source zdotdir configuration from https://github.com/tolkonepiu/zdotdir
-      source "${zdotdir}/.zshrc"
+      source "${inputs.zdotdir}/.zshrc"
     '';
     envExtra = ''
       # Source zdotdir env from https://github.com/tolkonepiu/zdotdir
-      source "${zdotdir}/.zshenv"
+      source "${inputs.zdotdir}/.zshenv"
     '';
 
     shellAliases = {
@@ -33,8 +25,8 @@ in
     sessionVariables = {
       EDITOR = "vim";
       ZDOTDIR_SKIP_UPDATE = "1";
-      ZSH_CONFIG_PATH = "${zdotdir}";
-      ANTIDOTE_STATIC_FILE = "/tmp/tmp-hm-antidote-static-${zdotdir.rev}";
+      ZSH_CONFIG_PATH = "${inputs.zdotdir}";
+      ANTIDOTE_STATIC_FILE = "/tmp/tmp-hm-antidote-static-${inputs.zdotdir.rev}";
       ANTIDOTE_PATH = "${pkgs.antidote}/share/antidote/";
     };
   };

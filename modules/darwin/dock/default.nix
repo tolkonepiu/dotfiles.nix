@@ -28,6 +28,9 @@
         app = "/Applications/Visual Studio Code - Insiders.app";
       }
       {
+        app = "/Users/${userConfig.username}/Applications/Home Manager Apps/Spotify.app";
+      }
+      {
         app = "/Applications/ChatGPT.app";
       }
       {

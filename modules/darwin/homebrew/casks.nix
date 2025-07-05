@@ -2,7 +2,6 @@
   homebrew.casks = [
     # Development tools
     "iterm2"
-    "visual-studio-code"
     "visual-studio-code@insiders"
 
     # Privacy and security
@@ -23,6 +22,5 @@
 
     # System utilities
     "appcleaner"
-    "resilio-sync"
   ];
 }
