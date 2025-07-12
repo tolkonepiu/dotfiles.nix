@@ -10,6 +10,7 @@ with pkgs;
   nixfmt-rfc-style
 
   # Development tools
+  devenv
   kubectl
 
   # Encryption and security tools
