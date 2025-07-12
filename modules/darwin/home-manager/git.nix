@@ -1,8 +1,4 @@
 {
-  userConfig,
-  config,
-  pkgs,
-  lib,
   ...
 }:
 
