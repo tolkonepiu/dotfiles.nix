@@ -1,9 +1,8 @@
 {
   userConfig,
+  config,
   ...
-}:
-
-{
+}: {
   system.defaults.dock = {
     autohide = true;
     show-recents = false;
@@ -19,7 +18,7 @@
         app = "/Applications/iTerm.app";
       }
       {
-        app = "/Users/${userConfig.username}/Applications/Home Manager Apps/Firefox.app";
+        app = "${config.home-manager.users.${userConfig.username}.programs.firefox.finalPackage}/Applications/Firefox.app";
       }
       {
         app = "/Applications/Obsidian.app";
@@ -28,7 +27,7 @@
         app = "/Applications/Visual Studio Code - Insiders.app";
       }
       {
-        app = "/Users/${userConfig.username}/Applications/Home Manager Apps/Spotify.app";
+        app = "${config.home-manager.users.${userConfig.username}.programs.spicetify.spicedSpotify}/Applications/Spotify.app";
       }
       {
         app = "/Applications/ChatGPT.app";
