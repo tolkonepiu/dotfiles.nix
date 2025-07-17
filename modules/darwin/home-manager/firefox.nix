@@ -1,8 +1,4 @@
-{
-  userConfig,
-  ...
-}:
-{
+{userConfig, ...}: {
   # Extend with Darwin-specific settings
   programs.firefox.profiles."${userConfig.username}.default" = {
     settings = {

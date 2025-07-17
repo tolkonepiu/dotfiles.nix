@@ -3,8 +3,7 @@
   pkgs,
   userConfig,
   ...
-}:
-{
+}: {
   programs.firefox.profiles."${userConfig.username}.default".extensions.settings = {
     "FirefoxColor@mozilla.com".settings = {
       firstRunDone = true;
@@ -191,12 +190,12 @@
         };
 
         images = {
-          additional_backgrounds = [ "./bg-000.svg" ];
-          custom_backgrounds = [ ];
+          additional_backgrounds = ["./bg-000.svg"];
+          custom_backgrounds = [];
         };
       };
 
-      images = { };
+      images = {};
     };
   };
 }

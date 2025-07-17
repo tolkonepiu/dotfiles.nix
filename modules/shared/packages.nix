@@ -1,12 +1,11 @@
-{ pkgs }:
-
-with pkgs;
-[
+{pkgs}:
+with pkgs; [
   # System monitoring and performance tools
   fastfetch
   htop
 
   # Nix ecosystem tools
+  alejandra
   nixfmt-rfc-style
 
   # Development tools

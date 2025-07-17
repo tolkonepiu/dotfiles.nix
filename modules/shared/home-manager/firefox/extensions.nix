@@ -27,16 +27,14 @@
     # Obsidian Web Clipper
     "clipper@obsidian.md" = {
       "installation_mode" = "force_installed";
-      "install_url" =
-        "https://addons.mozilla.org/firefox/downloads/latest/web-clipper-obsidian/latest.xpi";
+      "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/web-clipper-obsidian/latest.xpi";
       "default_area" = "navbar";
     };
 
     # Firefox Multi-Account Containers
     "@testpilot-containers" = {
       "installation_mode" = "force_installed";
-      "install_url" =
-        "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
+      "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
       "default_area" = "menupanel";
     };
 

@@ -4,8 +4,7 @@
   inputs,
   userConfig,
   ...
-}:
-{
+}: {
   programs.firefox.profiles."${userConfig.username}.default" = {
     settings = {
       # Vertical tabs

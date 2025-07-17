@@ -3,12 +3,11 @@
   inputs,
   userConfig,
   ...
-}:
-{
+}: {
   # Add catpuccin theme for delta
   home.file.".config/git/catppuccin.gitconfig" = {
     text = builtins.readFile (
-      pkgs.runCommand "filtered-gitconfig" { } ''
+      pkgs.runCommand "filtered-gitconfig" {} ''
         ${pkgs.gnused}/bin/sed 's/^\(\s*syntax-theme =.*\)$/# \1/' ${inputs.ctp-delta}/catppuccin.gitconfig > $out
       ''
     );
@@ -34,7 +33,7 @@
     };
 
     includes = [
-      { path = "catppuccin.gitconfig"; }
+      {path = "catppuccin.gitconfig";}
     ];
 
     delta = {

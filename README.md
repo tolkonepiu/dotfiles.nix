@@ -24,17 +24,12 @@ The repository is organized into these main directories:
 
 - **Modular Design**: Clear separation between shared and platform-specific
   configurations
-- **Centralized User Configuration**: Personal details defined once in flake.nix
-  and referenced throughout
 - **Advanced Shell Configuration**: Custom ZSH setup with
   [zdotdir](https://github.com/tolkonepiu/zdotdir) integration and Antidote plugin manager
 - **Touch ID for sudo**: Use fingerprint authentication instead of typing
   passwords for sudo commands
-- **Declarative System Configuration**: Complete system setup declared in code
 - **Homebrew and Mac App Store Integration**: Manages macOS applications via
   Homebrew casks and Mac App Store
-- **Dock Configuration**: Declarative macOS dock setup
-- **Reproducible Environment**: Consistent development environment
 - **Secretive Integration**: Secure SSH key management with
   [Apple's Secure Enclave](https://popov.wtf/secure-ssh-keys-with-secure-enclave-on-macos)
   (Apple Silicon only)

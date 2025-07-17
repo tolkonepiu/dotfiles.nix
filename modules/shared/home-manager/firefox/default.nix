@@ -1,8 +1,4 @@
-{
-  userConfig,
-  ...
-}:
-{
+{userConfig, ...}: {
   imports = [
     ./extensions.nix
     ./policies.nix

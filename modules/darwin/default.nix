@@ -3,9 +3,7 @@
   inputs,
   pkgs,
   ...
-}:
-
-{
+}: {
   imports = [
     ./homebrew
     ./security
@@ -30,7 +28,7 @@
     users.${userConfig.username} = {
       home = {
         enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix { };
+        packages = pkgs.callPackage ./packages.nix {};
         stateVersion = "23.11";
       };
       imports = [

@@ -3,9 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   # Create the Secretive SSH configuration (only for Apple Silicon)
   home.file.".ssh/config_secretive" = lib.mkIf pkgs.stdenv.hostPlatform.isAarch64 {
     text = ''

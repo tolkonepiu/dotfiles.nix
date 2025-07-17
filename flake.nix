@@ -51,68 +51,61 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      ...
-    }@inputs:
-    let
-      userConfig = {
-        name = "Pavel Popov";
-        email = "me@popov.wtf";
-        username = "chchmthrfckr";
-      };
-      darwinSystems = [
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-      linuxSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell =
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default =
-            with pkgs;
-            mkShell {
-              nativeBuildInputs = with pkgs; [
-                bashInteractive
-                git
-              ];
-              shellHook = with pkgs; ''
-                export EDITOR=vim
-              '';
-            };
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    userConfig = {
+      name = "Pavel Popov";
+      email = "me@popov.wtf";
+      username = "chchmthrfckr";
+    };
+    darwinSystems = [
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+    linuxSystems = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
+    forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+    devShell = system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = with pkgs;
+        mkShell {
+          nativeBuildInputs = with pkgs; [
+            bashInteractive
+            git
+          ];
+          shellHook = with pkgs; ''
+            export EDITOR=vim
+          '';
         };
-      mkApp = scriptName: system: {
-        type = "app";
-        program = "${
-          (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-            #!/usr/bin/env bash
-            PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-            echo "Running ${scriptName} for ${system}"
-            exec ${self}/apps/${system}/${scriptName}
-          '')
-        }/bin/${scriptName}";
-      };
-      mkDarwinApps = system: {
-        "build" = mkApp "build" system;
-        "build-switch" = mkApp "build-switch" system;
-        "rollback" = mkApp "rollback" system;
-      };
-    in
-    {
-      devShells = forAllSystems devShell;
-      apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+    };
+    mkApp = scriptName: system: {
+      type = "app";
+      program = "${
+        (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
+          #!/usr/bin/env bash
+          PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
+          echo "Running ${scriptName} for ${system}"
+          exec ${self}/apps/${system}/${scriptName}
+        '')
+      }/bin/${scriptName}";
+    };
+    mkDarwinApps = system: {
+      "build" = mkApp "build" system;
+      "build-switch" = mkApp "build-switch" system;
+      "rollback" = mkApp "rollback" system;
+    };
+  in {
+    devShells = forAllSystems devShell;
+    apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
-        system:
+    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
+      system:
         inputs.darwin.lib.darwinSystem {
           inherit system;
           specialArgs = {
@@ -140,6 +133,6 @@
             ./hosts/darwin
           ];
         }
-      );
-    };
+    );
+  };
 }
