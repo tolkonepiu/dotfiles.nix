@@ -1,0 +1,25 @@
+#!/bin/sh -e
+
+GREEN='\033[1;32m'
+NC='\033[0m'
+
+if [ -n "$1" ]; then
+    SYSTEM_TYPE="$1"
+    shift
+else
+    if [ "$(uname -m)" = "arm64" ]; then
+        SYSTEM_TYPE="aarch64-darwin"
+    else
+        SYSTEM_TYPE="x86_64-darwin"
+    fi
+fi
+
+GEN_NUM=$(sudo /run/current-system/sw/bin/darwin-rebuild --list-generations \
+    | sort -r \
+    | gum choose --header "Select a generation to rollback:" \
+    | awk '{print $1}'
+)
+
+sudo /run/current-system/sw/bin/darwin-rebuild switch --flake .#$SYSTEM_TYPE --switch-generation $GEN_NUM
+
+echo "${GREEN}Rollback to generation $GEN_NUM complete!${NC}"

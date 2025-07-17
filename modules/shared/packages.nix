@@ -27,7 +27,6 @@ with pkgs; [
   nodejs
 
   # Terminal utilities
-  gum
   uv
   wakatime-cli
 

@@ -65,11 +65,8 @@
       "aarch64-darwin"
       "x86_64-darwin"
     ];
-    linuxSystems = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
-    forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+
+    forAllSystems = f: nixpkgs.lib.genAttrs darwinSystems f;
     devShell = system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
@@ -84,21 +81,23 @@
           '';
         };
     };
-    mkApp = scriptName: system: {
+    mkDarwinApp = scriptName: system: {
       type = "app";
       program = "${
         (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
+          PATH=${nixpkgs.legacyPackages.${system}.nh}/bin:$PATH
+          PATH=${nixpkgs.legacyPackages.${system}.gum}/bin:$PATH
+          cd ${self}
+          exec ${self}/apps/darwin/${scriptName} ${system} "$@"
         '')
       }/bin/${scriptName}";
     };
     mkDarwinApps = system: {
-      "build" = mkApp "build" system;
-      "build-switch" = mkApp "build-switch" system;
-      "rollback" = mkApp "rollback" system;
+      "build" = mkDarwinApp "build" system;
+      "build-switch" = mkDarwinApp "build-switch" system;
+      "rollback" = mkDarwinApp "rollback" system;
     };
   in {
     devShells = forAllSystems devShell;
