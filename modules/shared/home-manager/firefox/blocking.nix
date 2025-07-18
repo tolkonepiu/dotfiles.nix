@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  userConfig,
-  ...
-}: {
+{userConfig, ...}: {
   programs.firefox.profiles."${userConfig.username}.default".extensions.settings = {
     "uBlock0@raymondhill.net".settings = {
       selectedFilterLists = [

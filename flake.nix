@@ -8,6 +8,10 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,19 +71,36 @@
     ];
 
     forAllSystems = f: nixpkgs.lib.genAttrs darwinSystems f;
+
     devShell = system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      default = with pkgs;
-        mkShell {
-          nativeBuildInputs = with pkgs; [
-            bashInteractive
-            git
-          ];
-          shellHook = with pkgs; ''
-            export EDITOR=vim
-          '';
-        };
+      default = inputs.devenv.lib.mkShell {
+        inherit inputs pkgs;
+        modules = [
+          {
+            enterTest = ''
+              nix flake check
+            '';
+            git-hooks.hooks = {
+              alejandra.enable = true;
+              check-yaml.enable = true;
+              deadnix.enable = true;
+              end-of-file-fixer.enable = true;
+              gptcommit.enable = true;
+              markdownlint.enable = true;
+              shellcheck = {
+                enable = true;
+                excludes = [
+                  "\\.envrc"
+                ];
+              };
+              shfmt.enable = true;
+              yamllint.enable = true;
+            };
+          }
+        ];
+      };
     };
     mkDarwinApp = scriptName: system: {
       type = "app";
@@ -89,7 +110,6 @@
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           PATH=${nixpkgs.legacyPackages.${system}.nh}/bin:$PATH
           PATH=${nixpkgs.legacyPackages.${system}.gum}/bin:$PATH
-          cd ${self}
           exec ${self}/apps/darwin/${scriptName} ${system} "$@"
         '')
       }/bin/${scriptName}";
@@ -101,6 +121,12 @@
     };
   in {
     devShells = forAllSystems devShell;
+
+    packages = forAllSystems (system: {
+      devenv-up = (devShell system).default.config.procfileScript;
+      devenv-test = (devShell system).default.config.test;
+    });
+
     apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
     darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (

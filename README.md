@@ -25,7 +25,8 @@ The repository is organized into these main directories:
 - **Modular Design**: Clear separation between shared and platform-specific
   configurations
 - **Advanced Shell Configuration**: Custom ZSH setup with
-  [zdotdir](https://github.com/tolkonepiu/zdotdir) integration and Antidote plugin manager
+  [zdotdir](https://github.com/tolkonepiu/zdotdir) integration and Antidote
+  plugin manager
 - **Touch ID for sudo**: Use fingerprint authentication instead of typing
   passwords for sudo commands
 - **Homebrew and Mac App Store Integration**: Manages macOS applications via
@@ -64,10 +65,14 @@ place and referenced throughout the configuration.
 
 If you're setting up a new macOS system:
 
+<!-- markdownlint-disable line-length -->
+
 ```bash
 # Install Nix (Determinate Nix)
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
+
+<!-- markdownlint-enable line-length -->
 
 > [!IMPORTANT]
 >
@@ -78,9 +83,13 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 Make [apps](./apps) executable:
 
+<!-- markdownlint-disable line-length -->
+
 ```sh
-find apps/$(uname -m | sed 's/arm64/aarch64/')-darwin -type f \( -name build -o -name build-switch -o -name rollback \) -exec chmod +x {} \;
+find apps/darwin -type f \( -name build -o -name build-switch -o -name rollback \) -exec chmod +x {} \;
 ```
+
+<!-- markdownlint-enable line-length -->
 
 ### Managing Configuration
 

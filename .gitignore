@@ -1,1 +1,8 @@
-result
+# devenv
+.devenv*
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

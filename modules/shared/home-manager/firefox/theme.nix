@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  userConfig,
-  ...
-}: {
+{userConfig, ...}: {
   programs.firefox.profiles."${userConfig.username}.default".extensions.settings = {
     "FirefoxColor@mozilla.com".settings = {
       firstRunDone = true;

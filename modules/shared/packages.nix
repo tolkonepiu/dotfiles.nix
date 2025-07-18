@@ -4,10 +4,6 @@ with pkgs; [
   fastfetch
   htop
 
-  # Nix ecosystem tools
-  alejandra
-  nixfmt-rfc-style
-
   # Development tools
   devenv
   kubectl

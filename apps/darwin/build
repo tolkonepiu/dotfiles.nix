@@ -5,19 +5,19 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 if [ -n "$1" ]; then
-    SYSTEM_TYPE="$1"
-    shift
+	SYSTEM_TYPE="$1"
+	shift
 else
-    if [ "$(uname -m)" = "arm64" ]; then
-        SYSTEM_TYPE="aarch64-darwin"
-    else
-        SYSTEM_TYPE="x86_64-darwin"
-    fi
+	if [ "$(uname -m)" = "arm64" ]; then
+		SYSTEM_TYPE="aarch64-darwin"
+	else
+		SYSTEM_TYPE="x86_64-darwin"
+	fi
 fi
 
 export NIXPKGS_ALLOW_UNFREE=1
 
 echo "${YELLOW}Starting build for ${SYSTEM_TYPE}...${NC}"
-nh darwin build --hostname ${SYSTEM_TYPE} "$@"
+nh darwin build --hostname "${SYSTEM_TYPE}" . "$@"
 
 echo "${GREEN}Build complete!${NC}"
