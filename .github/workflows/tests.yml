@@ -24,4 +24,4 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v13
 
       - name: 🚀 Run build and checks
-        run: nix develop --no-pure-eval --accept-flake-config --command devenv test
+        run: nix develop --no-pure-eval --command devenv test
