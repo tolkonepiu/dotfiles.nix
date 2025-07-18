@@ -1,0 +1,30 @@
+name: Tests
+
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        os: [macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🏗️ Install Determinate Nix
+        uses: DeterminateSystems/nix-installer-action@v19
+
+      - name: 🏗️ Setup Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
+
+      - name: 🏗️ Install devenv.sh
+        run: nix profile add nixpkgs#devenv
+
+      - name: 🚀 Run build and checks
+        run: nix develop --no-pure-eval --command bash -c "devenv test"

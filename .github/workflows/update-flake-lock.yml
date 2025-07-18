@@ -12,11 +12,11 @@ jobs:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🏗️ Setup Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v13
-
       - name: 🏗️ Install Determinate Nix
         uses: DeterminateSystems/nix-installer-action@v19
+
+      - name: 🏗️ Setup Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v13
 
       - name: 🔄 Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v27
