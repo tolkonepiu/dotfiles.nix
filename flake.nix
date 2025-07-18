@@ -79,9 +79,8 @@
         inherit inputs pkgs;
         modules = [
           {
-            enterTest = ''
-              nix flake check
-            '';
+            devenv.root = toString ./.;
+
             git-hooks.hooks = {
               alejandra.enable = true;
               check-yaml.enable = true;

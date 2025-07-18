@@ -1,9 +1,9 @@
 name: update-flake-lock
 
-on:
+"on":
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 1" # Runs at 00:00 on Monday UTC
+    - cron: 0 0 * * 1 # Runs at 00:00 on Monday UTC
 
 jobs:
   lockfile:
@@ -21,7 +21,7 @@ jobs:
       - name: 🔄 Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v27
         with:
-          pr-title: "Update flake.lock"
+          pr-title: Update flake.lock
           pr-labels: |
             dependencies
             automated
