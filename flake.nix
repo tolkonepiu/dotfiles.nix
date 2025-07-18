@@ -58,6 +58,7 @@
   outputs = {
     self,
     nixpkgs,
+    systems,
     ...
   } @ inputs: let
     userConfig = {
@@ -70,37 +71,7 @@
       "x86_64-darwin"
     ];
 
-    forAllSystems = f: nixpkgs.lib.genAttrs darwinSystems f;
-
-    devShell = system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      default = inputs.devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          {
-            devenv.root = toString ./.;
-
-            git-hooks.hooks = {
-              alejandra.enable = true;
-              check-yaml.enable = true;
-              deadnix.enable = true;
-              end-of-file-fixer.enable = true;
-              gptcommit.enable = true;
-              markdownlint.enable = true;
-              shellcheck = {
-                enable = true;
-                excludes = [
-                  "\\.envrc"
-                ];
-              };
-              shfmt.enable = true;
-              yamllint.enable = true;
-            };
-          }
-        ];
-      };
-    };
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
     mkDarwinApp = scriptName: system: {
       type = "app";
       program = "${
@@ -119,12 +90,44 @@
       "rollback" = mkDarwinApp "rollback" system;
     };
   in {
-    devShells = forAllSystems devShell;
-
-    packages = forAllSystems (system: {
-      devenv-up = (devShell system).default.config.procfileScript;
-      devenv-test = (devShell system).default.config.test;
+    packages = forEachSystem (system: {
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
+      devenv-test = self.devShells.${system}.default.config.test;
     });
+
+    devShells =
+      forEachSystem
+      (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = inputs.devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              enterTest = ''
+                nix run .#build
+              '';
+
+              git-hooks.hooks = {
+                alejandra.enable = true;
+                check-yaml.enable = true;
+                deadnix.enable = true;
+                end-of-file-fixer.enable = true;
+                gptcommit.enable = true;
+                markdownlint.enable = true;
+                shellcheck = {
+                  enable = true;
+                  excludes = [
+                    "\\.envrc"
+                  ];
+                };
+                shfmt.enable = true;
+                yamllint.enable = true;
+              };
+            }
+          ];
+        };
+      });
 
     apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
