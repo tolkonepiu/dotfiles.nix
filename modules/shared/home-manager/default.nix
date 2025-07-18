@@ -6,6 +6,7 @@
     ./firefox
     ./fd.nix
     ./git.nix
+    ./nh.nix
     ./spotify.nix
     ./ssh.nix
     ./stylix
