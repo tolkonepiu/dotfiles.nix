@@ -4,7 +4,6 @@
     ./policies.nix
     ./blocking.nix
     ./user-js.nix
-    ./theme.nix
   ];
 
   programs.firefox = {
@@ -25,9 +24,7 @@
     };
   };
 
-  stylix.targets.firefox = {
-    profileNames = [
-      "${userConfig.username}.default"
-    ];
+  catppuccin.firefox.profiles = {
+    "${userConfig.username}.default".enable = true;
   };
 }

@@ -3,11 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    stylix = {
-      url = "github:danth/stylix";
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
     devenv = {
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,11 +46,6 @@
 
     betterfox = {
       url = "github:yokoffing/betterfox";
-      flake = false;
-    };
-
-    ctp-delta = {
-      url = "github:catppuccin/delta";
       flake = false;
     };
   };

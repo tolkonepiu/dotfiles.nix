@@ -1,5 +1,6 @@
 {
   imports = [
+    ./catppuccin.nix
     ./bat.nix
     ./direnv.nix
     ./eza.nix
@@ -9,7 +10,6 @@
     ./nh.nix
     ./spotify.nix
     ./ssh.nix
-    ./stylix
     ./zoxide.nix
     ./zsh.nix
   ];
