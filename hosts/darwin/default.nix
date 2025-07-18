@@ -1,7 +1,6 @@
 {
   userConfig,
   config,
-  pkgs,
   ...
 }: {
   imports = [
@@ -16,30 +15,9 @@
   };
 
   nix = {
-    package = pkgs.nix;
-
-    settings = {
-      trusted-users = [
-        "@admin"
-        "${userConfig.username}"
-      ];
-      extra-substituters = [
-        "https://nix-community.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-    };
-
-    gc = {
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
+    # We use the determinate-nix installer which manages Nix for us,
+    # so we don't want nix-darwin to do it.
+    enable = false;
 
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -47,7 +25,7 @@
   };
 
   system = {
-    stateVersion = 4;
+    stateVersion = 6;
 
     primaryUser = "${userConfig.username}";
     checks = {

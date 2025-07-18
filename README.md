@@ -76,10 +76,9 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 > [!IMPORTANT]
 >
-> The installer will ask if you want to install Determinate Nix. Answer _No_ as
-> it
-> [currently conflicts](https://github.com/dustinlyons/nixos-config/issues/146)
-> with `nix-darwin`.
+> The installer will ask if you want to install Determinate Nix. Answer _Yes_ —
+> it works well with this setup and offers additional performance and
+> reproducibility benefits.
 
 Make [apps](./apps) executable:
 
