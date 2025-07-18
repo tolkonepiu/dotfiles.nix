@@ -18,7 +18,7 @@
         app = "/Applications/iTerm.app";
       }
       {
-        app = "${config.home-manager.users.${userConfig.username}.programs.firefox.finalPackage}/Applications/Firefox.app";
+        app = "${config.home-manager.users.${userConfig.username}.programs.firefox.finalPackage}/Applications/Firefox Developer Edition.app";
       }
       {
         app = "/Applications/Obsidian.app";

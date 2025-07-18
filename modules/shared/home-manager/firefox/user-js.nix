@@ -1,10 +1,9 @@
 {
   lib,
   inputs,
-  userConfig,
   ...
 }: {
-  programs.firefox.profiles."${userConfig.username}.default" = {
+  programs.firefox.profiles."dev-edition-default" = {
     settings = {
       # Vertical tabs
       "sidebar.verticalTabs" = true;

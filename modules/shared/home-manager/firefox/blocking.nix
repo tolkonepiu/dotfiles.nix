@@ -1,5 +1,5 @@
-{userConfig, ...}: {
-  programs.firefox.profiles."${userConfig.username}.default".extensions.settings = {
+{...}: {
+  programs.firefox.profiles."dev-edition-default".extensions.settings = {
     "uBlock0@raymondhill.net".settings = {
       selectedFilterLists = [
         "ublock-filters"

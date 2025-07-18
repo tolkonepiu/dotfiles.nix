@@ -1,4 +1,4 @@
-{userConfig, ...}: {
+{pkgs, ...}: {
   imports = [
     ./extensions.nix
     ./policies.nix
@@ -8,16 +8,17 @@
 
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox-devedition;
 
     languagePacks = [
       "en-US"
       "ru"
     ];
 
-    profiles."${userConfig.username}.default" = {
+    profiles."dev-edition-default" = {
       id = 0;
       isDefault = true;
-      name = "${userConfig.username}.default";
+      name = "dev-edition-default";
       extensions = {
         force = true;
       };
@@ -25,6 +26,6 @@
   };
 
   catppuccin.firefox.profiles = {
-    "${userConfig.username}.default".enable = true;
+    "dev-edition-default".enable = true;
   };
 }
