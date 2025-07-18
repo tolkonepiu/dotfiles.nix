@@ -100,7 +100,7 @@
           modules = [
             {
               enterTest = ''
-                nix run .#build
+                nix run .#build -- --no-nom
               '';
 
               git-hooks.hooks = {
