@@ -23,8 +23,5 @@ jobs:
       - name: 🏗️ Setup Cache
         uses: DeterminateSystems/magic-nix-cache-action@v13
 
-      - name: 🏗️ Install devenv.sh
-        run: nix profile add nixpkgs#devenv
-
       - name: 🚀 Run build and checks
-        run: nix develop --no-pure-eval --command bash -c "devenv test"
+        run: nix develop --no-pure-eval --command devenv test
