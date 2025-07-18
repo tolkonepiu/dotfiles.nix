@@ -105,7 +105,7 @@
           modules = [
             {
               enterTest = ''
-                nh darwin build --hostname "${system}" --no-nom . -- --accept-flake-config
+                nix run .#build -- --accept-flake-config
               '';
 
               git-hooks.hooks = {
