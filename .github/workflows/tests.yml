@@ -23,5 +23,8 @@ jobs:
       - name: 🏗️ Setup Cache
         uses: DeterminateSystems/magic-nix-cache-action@v13
 
-      - name: 🚀 Run build and checks
-        run: nix develop --no-pure-eval --command devenv test
+      - name: 🚀 Check flake
+        uses: DeterminateSystems/flake-checker-action@v12
+
+      - name: 🚀 Run build
+        run: nix run .#build -- --no-nom

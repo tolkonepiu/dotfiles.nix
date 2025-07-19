@@ -9,8 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin.url = "github:catppuccin/nix";
-    devenv = {
-      url = "github:cachix/devenv";
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
@@ -86,44 +86,34 @@
       "rollback" = mkDarwinApp "rollback" system;
     };
   in {
-    packages = forEachSystem (system: {
-      devenv-up = self.devShells.${system}.default.config.procfileScript;
-      devenv-test = self.devShells.${system}.default.config.test;
+    checks = forEachSystem (system: {
+      pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          alejandra.enable = true;
+          check-yaml.enable = true;
+          deadnix.enable = true;
+          end-of-file-fixer.enable = true;
+          gptcommit.enable = true;
+          markdownlint.enable = true;
+          shellcheck = {
+            enable = true;
+            excludes = [
+              "\\.envrc"
+            ];
+          };
+          shfmt.enable = true;
+          yamllint.enable = true;
+        };
+      };
     });
 
-    devShells =
-      forEachSystem
-      (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        default = inputs.devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            {
-              enterTest = ''
-                nix run .#build -- --no-nom
-              '';
-
-              git-hooks.hooks = {
-                alejandra.enable = true;
-                check-yaml.enable = true;
-                deadnix.enable = true;
-                end-of-file-fixer.enable = true;
-                gptcommit.enable = true;
-                markdownlint.enable = true;
-                shellcheck = {
-                  enable = true;
-                  excludes = [
-                    "\\.envrc"
-                  ];
-                };
-                shfmt.enable = true;
-                yamllint.enable = true;
-              };
-            }
-          ];
-        };
-      });
+    devShells = forEachSystem (system: {
+      default = nixpkgs.legacyPackages.${system}.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
+        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+      };
+    });
 
     apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
