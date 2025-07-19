@@ -17,7 +17,7 @@ in {
         app = "/System/Applications/Launchpad.app";
       }
       {
-        app = "${programs.ghostty.package}/Applications/Ghostty.app";
+        app = "/Applications/iTerm.app";
       }
       {
         app = "${programs.firefox.finalPackage}/Applications/Firefox.app";

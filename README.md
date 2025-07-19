@@ -67,18 +67,13 @@ If you're setting up a new macOS system:
 
 <!-- markdownlint-disable line-length -->
 
+Install Nix (Determinate Nix):
+
 ```bash
-# Install Nix (Determinate Nix)
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 ```
 
 <!-- markdownlint-enable line-length -->
-
-> [!IMPORTANT]
->
-> The installer will ask if you want to install Determinate Nix. Answer _Yes_ —
-> it works well with this setup and offers additional performance and
-> reproducibility benefits.
 
 Make [apps](./apps) executable:
 
