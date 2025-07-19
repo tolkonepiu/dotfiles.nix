@@ -26,5 +26,8 @@ jobs:
       - name: 🚀 Check flake
         uses: DeterminateSystems/flake-checker-action@v12
 
+      - name: 🚀 Run checks
+        run: nix flake check
+
       - name: 🚀 Run build
         run: nix run .#build -- --no-nom
