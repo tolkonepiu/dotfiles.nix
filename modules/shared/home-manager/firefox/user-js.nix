@@ -3,7 +3,7 @@
   inputs,
   ...
 }: {
-  programs.firefox.profiles."dev-edition-default" = {
+  programs.firefox.profiles.default = {
     settings = {
       # Vertical tabs
       "sidebar.verticalTabs" = true;

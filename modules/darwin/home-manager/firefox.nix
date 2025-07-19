@@ -1,6 +1,6 @@
 {...}: {
   # Extend with Darwin-specific settings
-  programs.firefox.profiles."dev-edition-default" = {
+  programs.firefox.profiles.default = {
     settings = {
       # https://github.com/yokoffing/Betterfox/blob/main/Smoothfox.js
       # Recommended for 120hz+ displays
