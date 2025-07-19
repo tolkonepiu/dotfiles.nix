@@ -2,7 +2,9 @@
   userConfig,
   config,
   ...
-}: {
+}: let
+  programs = config.home-manager.users.${userConfig.username}.programs;
+in {
   system.defaults.dock = {
     autohide = true;
     show-recents = false;
@@ -15,10 +17,10 @@
         app = "/System/Applications/Launchpad.app";
       }
       {
-        app = "/Applications/iTerm.app";
+        app = "${programs.ghostty.package}/Applications/Ghostty.app";
       }
       {
-        app = "${config.home-manager.users.${userConfig.username}.programs.firefox.finalPackage}/Applications/Firefox.app";
+        app = "${programs.firefox.finalPackage}/Applications/Firefox.app";
       }
       {
         app = "/Applications/Obsidian.app";
@@ -27,7 +29,7 @@
         app = "/Applications/Visual Studio Code - Insiders.app";
       }
       {
-        app = "${config.home-manager.users.${userConfig.username}.programs.spicetify.spicedSpotify}/Applications/Spotify.app";
+        app = "${programs.spicetify.spicedSpotify}/Applications/Spotify.app";
       }
       {
         app = "/Applications/ChatGPT.app";

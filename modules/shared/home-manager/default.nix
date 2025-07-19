@@ -6,6 +6,7 @@
     ./eza.nix
     ./firefox
     ./fd.nix
+    ./ghostty.nix
     ./git.nix
     ./nh.nix
     ./spotify.nix
