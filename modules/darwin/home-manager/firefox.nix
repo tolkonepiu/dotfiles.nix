@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # Extend with Darwin-specific settings
   programs.firefox.profiles.default = {
     settings = {

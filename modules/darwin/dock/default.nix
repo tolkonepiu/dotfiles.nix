@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  programs = config.home-manager.users.${userConfig.username}.programs;
+  inherit (config.home-manager.users.${userConfig.username}) programs;
 in {
   system.defaults.dock = {
     autohide = true;

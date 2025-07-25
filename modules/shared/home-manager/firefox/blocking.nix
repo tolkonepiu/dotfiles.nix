@@ -1,4 +1,4 @@
-{...}: {
+_: {
   programs.firefox.profiles.default.extensions.settings = {
     "uBlock0@raymondhill.net".settings = {
       selectedFilterLists = [

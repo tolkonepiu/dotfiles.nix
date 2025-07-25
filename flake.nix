@@ -96,12 +96,8 @@
           end-of-file-fixer.enable = true;
           gptcommit.enable = true;
           markdownlint.enable = true;
-          shellcheck = {
-            enable = true;
-            excludes = [
-              "\\.envrc"
-            ];
-          };
+          shellcheck.enable = true;
+          statix.enable = true;
           shfmt.enable = true;
           yamllint.enable = true;
         };
