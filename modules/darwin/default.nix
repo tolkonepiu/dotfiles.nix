@@ -1,39 +1,35 @@
+# This is your nix-darwin configuration.
+# For home configuration, see /modules/home/*
 {
-  userConfig,
-  inputs,
-  pkgs,
-  ...
-}: {
   imports = [
+    ./../common
     ./homebrew
     ./security
-    ./dock
+    ./finder.nix
+    ./dock.nix
   ];
 
-  # It me
-  users.users.${userConfig.username} = {
-    name = "${userConfig.username}";
-    home = "/Users/${userConfig.username}";
-    isHidden = false;
-    shell = pkgs.zsh;
-  };
+  # Configure macOS system
+  # See: https://github.com/ryan4yin/nix-darwin-kickstarter/blob/main/rich-demo/modules/system.nix
+  system.defaults = {
+    NSGlobalDomain = {
+      AppleShowAllExtensions = true;
+      ApplePressAndHoldEnabled = false;
 
-  # Enable home-manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = {
-      inherit inputs userConfig;
+      KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
+      InitialKeyRepeat = 15; # Values: 120, 94, 68, 35, 25, 15
+
+      "com.apple.mouse.tapBehavior" = 1;
+      "com.apple.sound.beep.volume" = 0.0;
+      "com.apple.sound.beep.feedback" = 0;
     };
-    users.${userConfig.username} = {
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix {};
-        stateVersion = "25.05";
-      };
-      imports = [
-        ./home-manager
-      ];
+    trackpad = {
+      # Enable tap to click
+      Clicking = true;
+      # Enable two finger right click
+      TrackpadRightClick = true;
+      # Enable three finger drag
+      TrackpadThreeFingerDrag = true;
     };
   };
 }

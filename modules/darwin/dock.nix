@@ -1,9 +1,5 @@
-{
-  userConfig,
-  config,
-  ...
-}: let
-  inherit (config.home-manager.users.${userConfig.username}) programs;
+{config, ...}: let
+  inherit (config.home-manager.users.${config.system.primaryUser}) programs;
 in {
   system.defaults.dock = {
     autohide = true;

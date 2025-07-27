@@ -1,12 +1,29 @@
-{userConfig, ...}: {
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+in {
   programs.git = {
     enable = true;
 
-    userName = userConfig.name;
-    userEmail = userConfig.email;
+    userName = config.me.fullname;
+    userEmail = config.me.email;
 
-    ignores = [
-      "*.swp"
+    ignores = lib.mkMerge [
+      [
+        ".direnv"
+        ".venv"
+        "*.log"
+        "*.tmp"
+        "*.swp"
+      ]
+      # Extend with Darwin-specific settings
+      (lib.mkIf isDarwin [
+        ".DS_Store"
+      ])
     ];
 
     lfs = {
