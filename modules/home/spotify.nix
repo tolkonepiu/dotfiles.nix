@@ -11,7 +11,7 @@
 in {
   imports = [inputs.spicetify-nix.homeManagerModules.default];
 
-  # create a home manager activation script to prevent spotify from asking to update
+  # Create a home manager activation script to prevent spotify from asking to update
   home.activation.removeSpotifyDarwinAutoUpdate = lib.mkIf isDarwin (
     lib.hm.dag.entryAfter ["writeBoundary"] ''
       autoUpdatePath="${config.home.homeDirectory}/Library/Application Support/Spotify/PersistentCache/Update"
