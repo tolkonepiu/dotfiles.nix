@@ -23,7 +23,12 @@
     devShells.default = pkgs.mkShell {
       name = "dotfiles-shell";
       meta.description = "Shell environment for modifying this Nix configuration";
-      packages = config.pre-commit.settings.enabledPackages;
+      packages = with pkgs;
+        [
+          just
+          nh
+        ]
+        ++ config.pre-commit.settings.enabledPackages;
 
       shellHook = ''
         ${config.pre-commit.installationScript}
