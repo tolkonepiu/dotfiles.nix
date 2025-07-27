@@ -1,9 +1,11 @@
 {
   lib,
   pkgs,
-  inputs,
+  flake,
   ...
-}: {
+}: let
+  inherit (flake) inputs;
+in {
   programs.zsh = {
     enable = true;
     enableCompletion = false;
@@ -16,10 +18,6 @@
       # Source zdotdir env from https://github.com/tolkonepiu/zdotdir
       source "${inputs.zdotdir}/.zshenv"
     '';
-
-    shellAliases = {
-      pass = "gopass";
-    };
 
     sessionVariables = {
       EDITOR = "vim";
