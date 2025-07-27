@@ -2,12 +2,13 @@
 <h1 align="center">:snowflake: dotfiles.nix :snowflake:</h1>
 
 <p align="center">
-My personal macOS configuration using
-[Nix](https://nix.dev/manual/nix/latest/language/),
-[nix-darwin](https://github.com/nix-darwin/nix-darwin), and
-[home-manager](https://github.com/nix-community/home-manager).
-<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
-
+  My personal macOS configuration using
+  <a href="https://nix.dev/manual/nix/latest/language/">Nix</a>,
+  <a href="https://github.com/nix-darwin/nix-darwin">nix-darwin</a>, and
+  <a href="https://github.com/nix-community/home-manager">home-manager</a>.
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
 </p>
 <!-- markdownlint-enable -->
 
