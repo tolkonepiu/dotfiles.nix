@@ -1,19 +1,19 @@
 <!-- markdownlint-disable -->
-<h2 align="center">:snowflake: dotfiles.nix :snowflake:</h2>
+<h1 align="center">:snowflake: dotfiles.nix :snowflake:</h1>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
-</p>
-<!-- markdownlint-enable -->
-
 My personal macOS configuration using
 [Nix](https://nix.dev/manual/nix/latest/language/),
 [nix-darwin](https://github.com/nix-darwin/nix-darwin), and
 [home-manager](https://github.com/nix-community/home-manager).
+<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
+
+</p>
+<!-- markdownlint-enable -->
 
 ## Features
 
-- **Advanced Shell Configuration**: Custom ZSH setup with
+- **Advanced Shell Configuration**: Custom ZSH setup with my
   [zdotdir](https://github.com/tolkonepiu/zdotdir) configuration
 - **Modern CLI Tools**: Leveraging tools like eza, fd, zoxide, bat, and others
   for an efficient command-line experience
