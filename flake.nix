@@ -14,6 +14,8 @@
     # Devshell
     git-hooks-nix.url = "github:cachix/git-hooks.nix";
     git-hooks-nix.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
@@ -49,8 +51,7 @@
   };
 
   outputs = inputs:
-    inputs.nixos-unified.lib.mkFlake
-    {
+    inputs.nixos-unified.lib.mkFlake {
       inherit inputs;
       root = ./.;
     };

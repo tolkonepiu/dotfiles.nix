@@ -167,11 +167,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1753623408,
-        "narHash": "sha256-eCJa00DPrCKmHZ6UqMEfcQgiX+Z1Ic/n0VvCsPFHOV4=",
+        "lastModified": 1753633700,
+        "narHash": "sha256-xsdH1j9PfXQNQB9q2Zhv0XnGfeQdIQFCEJaSe2pyytM=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "3f32af0bc524a9eeb3c77532400dfc1919c02345",
+        "rev": "76791626296f1c067bed93bc2aad9c71665748b3",
         "type": "github"
       },
       "original": {
@@ -183,11 +183,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1753626012,
-        "narHash": "sha256-FW+uURG80PZ6IkZnWrvhzwwzD+SWGN2ae9L5WfeqBxs=",
+        "lastModified": 1753638290,
+        "narHash": "sha256-uegH+fZnLD8kcWIivammmkVpNR6BXPGlfvzvO/jE1Kw=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "0acc20c77f030c05e53e1dc4bfbd7ffd50d44c62",
+        "rev": "3ba7d10ae74eef51384ce5d055f6e7aaae5bac68",
         "type": "github"
       },
       "original": {
@@ -311,6 +311,7 @@
         "nixos-unified": "nixos-unified",
         "nixpkgs": "nixpkgs_2",
         "spicetify-nix": "spicetify-nix",
+        "treefmt-nix": "treefmt-nix",
         "zdotdir": "zdotdir"
       }
     },
@@ -350,14 +351,34 @@
         "type": "github"
       }
     },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753439394,
+        "narHash": "sha256-Bv9h1AJegLI8uAhiJ1sZ4XAndYxhgf38tMgCQwiEpmc=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "2673921c03d6e75fdf4aa93e025772608d1482cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
     "zdotdir": {
       "flake": false,
       "locked": {
-        "lastModified": 1749744292,
+        "lastModified": 1753637554,
         "narHash": "sha256-5wJblYNUlIfZ1IcEuzkSl5O3dKVx+La17FOZwE5lKbI=",
         "owner": "tolkonepiu",
         "repo": "zdotdir",
-        "rev": "167ca95e1d2821f27c6b428f88943bd4291bbf31",
+        "rev": "324fbd4da04e4ab9fc9aec81b784d0db470779d8",
         "type": "github"
       },
       "original": {
