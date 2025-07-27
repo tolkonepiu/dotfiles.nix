@@ -2,8 +2,7 @@
 <h1 align="center">:snowflake: dotfiles.nix :snowflake:</h1>
 
 <p align="center">
-  My personal macOS configuration using
-  <a href="https://nix.dev/manual/nix/latest/language/">Nix</a>,
+  My personal macOS configuration using Nix,
   <a href="https://github.com/nix-darwin/nix-darwin">nix-darwin</a>, and
   <a href="https://github.com/nix-community/home-manager">home-manager</a>.
 </p>
