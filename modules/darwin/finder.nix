@@ -2,7 +2,7 @@
   system.defaults = {
     finder = {
       # Show full path in finder title
-      _FXShowPosixPathInTitle = true;
+      _FXShowPosixPathInTitle = false;
       # Show all file extensions
       AppleShowAllExtensions = true;
       # Disable warning when changing file extension
