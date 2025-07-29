@@ -2,6 +2,7 @@
   lib,
   pkgs,
   flake,
+  config,
   ...
 }: let
   inherit (flake) inputs;
@@ -9,7 +10,7 @@ in {
   programs.zsh = {
     enable = true;
     enableCompletion = false;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     initContent = lib.mkBefore ''
       # Source zdotdir configuration from https://github.com/tolkonepiu/zdotdir
       source "${inputs.zdotdir}/.zshrc"
