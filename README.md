@@ -36,3 +36,7 @@
   extension management
 - **Spicetify Spotify**: Custom Spotify theming with Catppuccin colors and
   useful extensions with the help of [Spicetify](https://spicetify.app/)
+
+## License
+
+See [LICENSE](./LICENSE)
