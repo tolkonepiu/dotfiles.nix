@@ -23,7 +23,6 @@ jobs:
         id: discover
         run: |
           darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
-          home_configs=$(nix eval .#homeConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
           echo "darwin-configs=$darwin_configs" >> $GITHUB_OUTPUT
 
   build-macos:
