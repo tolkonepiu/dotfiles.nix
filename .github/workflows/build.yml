@@ -1,0 +1,52 @@
+name: Build
+
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  discover-configs:
+    runs-on: ubuntu-latest
+    outputs:
+      darwin-configs: ${{ steps.discover.outputs.darwin-configs }}
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: 🏗️ Install Determinate Nix
+        uses: DeterminateSystems/nix-installer-action@90bb610b90bf290cad97484ba341453bd1cbefea # v19
+
+      - name: 🔍 Discover configurations
+        id: discover
+        run: |
+          darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
+          home_configs=$(nix eval .#homeConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
+          echo "darwin-configs=$darwin_configs" >> $GITHUB_OUTPUT
+
+  build-macos:
+    needs: discover-configs
+    if:
+      ${{ fromJSON(needs.discover-configs.outputs.darwin-configs)[0] != null }}
+    strategy:
+      matrix:
+        darwin-config:
+          ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
+    runs-on: macos-latest
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: 🏗️ Install Determinate Nix
+        uses: DeterminateSystems/nix-installer-action@90bb610b90bf290cad97484ba341453bd1cbefea # v19
+
+      - name: 🏗️ Setup Cache
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+
+      - name: 🚀 Build Darwin configuration (${{ matrix.darwin-config }})
+        run:
+          nix build .#darwinConfigurations.${{ matrix.darwin-config }}.system
+          --no-link
