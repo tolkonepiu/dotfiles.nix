@@ -1,10 +1,16 @@
 name: Build
 
-"on":
-  pull_request:
+on:
   push:
     branches:
       - main
+    paths: &paths
+      - modules/**
+      - configurations/**
+      - flake.lock
+      - flake.nix
+  pull_request:
+    paths: *paths
 
 jobs:
   discover-configs:

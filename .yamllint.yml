@@ -19,3 +19,5 @@ rules:
   quoted-strings:
     quote-type: any
     required: only-when-needed
+  truthy:
+    check-keys: false

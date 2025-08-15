@@ -14,6 +14,13 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
 </p>
+
+<div align="center">
+
+![Build](https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build)&nbsp;
+![Tests](https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests)
+
+</div>
 <!-- markdownlint-enable -->
 
 ## Features
