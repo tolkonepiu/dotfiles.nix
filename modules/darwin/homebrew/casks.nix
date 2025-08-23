@@ -18,6 +18,7 @@
     "vlc"
 
     # Virtualization
+    "container"
     "utm"
 
     # System utilities
