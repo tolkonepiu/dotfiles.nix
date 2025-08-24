@@ -13,7 +13,6 @@
 
     # System utilities
     "amphetamine" = 937984704;
-    "windows-app" = 1295203466;
 
     # Communication
     "mattermost" = 1614666244;
