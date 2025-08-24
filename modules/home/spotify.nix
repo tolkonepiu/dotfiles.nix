@@ -30,6 +30,7 @@ in {
     enabledExtensions = with spicePkgs.extensions; [
       adblock
       shuffle
+      copyLyrics
       hidePodcasts
       volumePercentage
     ];
