@@ -10,6 +10,9 @@
     # Development tools
     devenv
     kubectl
+    markdownlint-cli
+    shellcheck
+    yamllint
 
     # Encryption and security tools
     age
