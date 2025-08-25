@@ -12,6 +12,7 @@
     kubectl
     markdownlint-cli
     shellcheck
+    shfmt
     yamllint
 
     # Encryption and security tools
