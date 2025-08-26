@@ -22,6 +22,9 @@ in {
         app = "/Applications/Obsidian.app";
       }
       {
+        app = "/Applications/Cursor.app";
+      }
+      {
         app = "/Applications/Visual Studio Code - Insiders.app";
       }
       {

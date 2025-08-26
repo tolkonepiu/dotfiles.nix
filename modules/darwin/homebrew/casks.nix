@@ -1,6 +1,7 @@
 {
   homebrew.casks = [
     # Development tools
+    "cursor"
     "iterm2"
     "visual-studio-code@insiders"
 
