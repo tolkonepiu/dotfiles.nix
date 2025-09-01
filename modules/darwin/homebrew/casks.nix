@@ -21,7 +21,11 @@
 
     # Virtualization
     "container"
+    "orbstack"
     "utm"
+
+    # Remote control
+    "rustdesk"
 
     # System utilities
     "appcleaner"
