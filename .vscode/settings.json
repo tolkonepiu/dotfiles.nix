@@ -3,5 +3,8 @@
     "**/*.json5": "json5",
     ".prettierrc": "yaml"
   },
-  "yaml.schemaStore.enable": true
+  "yaml.schemaStore.enable": true,
+  "[nix]": {
+    "editor.defaultFormatter": "kamadorueda.alejandra"
+  }
 }
