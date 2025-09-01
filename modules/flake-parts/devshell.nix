@@ -13,7 +13,6 @@
       check-yaml.enable = true;
       deadnix.enable = true;
       end-of-file-fixer.enable = true;
-      gptcommit.enable = true;
       markdownlint.enable = true;
       shellcheck.enable = true;
       statix.enable = true;
