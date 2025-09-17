@@ -10,7 +10,7 @@ in {
 
     persistent-apps = [
       {
-        app = "/System/Applications/Launchpad.app";
+        app = "/System/Applications/Apps.app";
       }
       {
         app = "/Applications/iTerm.app";
