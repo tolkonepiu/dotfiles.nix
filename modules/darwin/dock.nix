@@ -13,7 +13,7 @@ in {
         app = "/System/Applications/Apps.app";
       }
       {
-        app = "/Applications/iTerm.app";
+        app = "${programs.ghostty.package}/Applications/Ghostty.app";
       }
       {
         app = "${programs.firefox.finalPackage}/Applications/Firefox.app";
