@@ -3,7 +3,6 @@
     # Development tools
     "cursor"
     "cursor-cli"
-    "iterm2"
     "visual-studio-code@insiders"
 
     # Privacy and security
@@ -19,15 +18,7 @@
     # Media and entertainment
     "vlc"
 
-    # Virtualization
-    "container"
-    "orbstack"
-    "utm"
-
     # Remote control
     "rustdesk"
-
-    # System utilities
-    "appcleaner"
   ];
 }
