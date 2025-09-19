@@ -15,14 +15,17 @@ in {
   home.activation.removeSpotifyDarwinAutoUpdate = lib.mkIf isDarwin (
     lib.hm.dag.entryAfter ["writeBoundary"] ''
       autoUpdatePath="${config.home.homeDirectory}/Library/Application Support/Spotify/PersistentCache/Update"
-      if [ -d "$autoUpdatePath" ] && [ "$(ls -A "$autoUpdatePath")" ]; then
+      if ! /usr/bin/stat -f "%Sf" "$autoUpdatePath" 2> /dev/null | grep -q uchg; then
         rm -rf "$autoUpdatePath"
+        mkdir -p "$autoUpdatePath"
+        /usr/bin/chflags uchg "$autoUpdatePath"
       fi
     ''
   );
 
   programs.spicetify = {
     enable = true;
+    spotifyPackage = pkgs.spotify;
 
     theme = spicePkgs.themes.catppuccin;
     colorScheme = "mocha";
