@@ -9,9 +9,6 @@ in {
   programs.git = {
     enable = true;
 
-    userName = config.me.fullname;
-    userEmail = config.me.email;
-
     ignores = lib.mkMerge [
       [
         ".direnv"
@@ -35,16 +32,11 @@ in {
       signByDefault = true;
     };
 
-    delta = {
-      enable = true;
-      options = {
-        diff-so-fancy = true;
-        line-numbers = true;
-        side-by-side = false;
+    settings = {
+      user = {
+        inherit (config.me) fullname;
+        inherit (config.me) email;
       };
-    };
-
-    extraConfig = {
       init.defaultBranch = "main";
       core = {
         editor = "vim";
