@@ -65,5 +65,12 @@
       "install_url" = "https://addons.mozilla.org/firefox/downloads/latest/augmented-steam/latest.xpi";
       "default_area" = "menupanel";
     };
+
+    # fx_cast
+    "fx_cast@matt.tf" = {
+      "installation_mode" = "force_installed";
+      "install_url" = "https://github.com/hensm/fx_cast/releases/download/v0.3.1/fx_cast-0.3.1.xpi";
+      "default_area" = "menupanel";
+    };
   };
 }

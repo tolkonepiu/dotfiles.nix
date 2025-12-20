@@ -16,6 +16,7 @@
     "obsidian"
 
     # Media and entertainment
+    "fx-cast-bridge"
     "vlc"
 
     # Remote control
