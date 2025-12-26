@@ -6,8 +6,23 @@
   ...
 }: let
   inherit (flake) inputs;
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin isAarch64;
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+
+  # FIXME: Temporary fix until nixpkgs provides a working Spotify package for Darwin ARM64
+  # archive.org doesn't provide a stable URL and it's currently broken
+  # https://github.com/NixOS/nixpkgs/issues/465676
+  spotifyPackage =
+    if (isDarwin && isAarch64)
+    then
+      pkgs.spotify.overrideAttrs {
+        version = "1.2.79.427";
+        src = pkgs.fetchurl {
+          url = "https://web.archive.org/web/20251225143128/https://download.scdn.co/SpotifyARM64.dmg";
+          hash = "sha256-jOn4hPbxIQncdjkuySTsBaFzM6VpojbMMgph/Vpah1k=";
+        };
+      }
+    else pkgs.spotify;
 in {
   imports = [inputs.spicetify-nix.homeManagerModules.default];
 
@@ -25,7 +40,7 @@ in {
 
   programs.spicetify = {
     enable = true;
-    spotifyPackage = pkgs.spotify;
+    inherit spotifyPackage;
 
     theme = spicePkgs.themes.catppuccin;
     colorScheme = "mocha";
