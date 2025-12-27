@@ -50,6 +50,12 @@
       url = "github:yokoffing/betterfox";
       flake = false;
     };
+
+    # Mole
+    mole = {
+      url = "github:tw93/homebrew-tap";
+      flake = false;
+    };
   };
 
   outputs = inputs:

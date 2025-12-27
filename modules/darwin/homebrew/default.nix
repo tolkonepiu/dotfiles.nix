@@ -8,6 +8,7 @@ in {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
     ./taps.nix
+    ./brews.nix
     ./casks.nix
     ./appstore.nix
   ];
@@ -26,6 +27,7 @@ in {
       "homebrew/homebrew-core" = inputs.homebrew-core;
       "homebrew/homebrew-cask" = inputs.homebrew-cask;
       "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+      "tw93/homebrew-tap" = inputs.mole;
     };
     mutableTaps = false;
     autoMigrate = true;

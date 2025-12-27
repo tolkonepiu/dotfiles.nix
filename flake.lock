@@ -235,6 +235,22 @@
         "type": "github"
       }
     },
+    "mole": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766812651,
+        "narHash": "sha256-sjoYOxgpRX1HgBGGZz3izsh0rL+AKn+Pqxr7atGBNIY=",
+        "owner": "tw93",
+        "repo": "homebrew-tap",
+        "rev": "aa25fb517585cbdf4206a0b734da9a9ea342221f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tw93",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -346,6 +362,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "krewfile": "krewfile",
+        "mole": "mole",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixos-unified": "nixos-unified",
