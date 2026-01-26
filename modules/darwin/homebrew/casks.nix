@@ -14,6 +14,9 @@
     "chatgpt"
     "obsidian"
 
+    # Communication
+    "discord"
+
     # Media and entertainment
     "fx-cast-bridge"
     "vlc"
