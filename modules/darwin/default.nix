@@ -3,6 +3,7 @@
 {
   imports = [
     ./../common
+    ./base
     ./homebrew
     ./security
     ./finder.nix
