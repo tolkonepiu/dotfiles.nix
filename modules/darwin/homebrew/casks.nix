@@ -2,7 +2,6 @@
   homebrew.casks = [
     # Development tools
     "cursor"
-    "cursor-cli"
     "visual-studio-code@insiders"
 
     # Privacy and security

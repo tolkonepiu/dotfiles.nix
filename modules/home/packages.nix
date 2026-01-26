@@ -13,8 +13,10 @@
       htop
 
       # Development tools
+      cursor-cli
       devenv
       docker
+      github-copilot-cli
       kubectl
       markdownlint-cli
       shellcheck
