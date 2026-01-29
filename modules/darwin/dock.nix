@@ -1,5 +1,5 @@
 {config, ...}: let
-  inherit (config.home-manager.users.${config.system.primaryUser}) programs;
+  inherit (config.home-manager.users.${config.system.primaryUser}.home) homeDirectory;
 in {
   system.defaults.dock = {
     autohide = true;
@@ -13,10 +13,10 @@ in {
         app = "/System/Applications/Apps.app";
       }
       {
-        app = "${programs.ghostty.package}/Applications/Ghostty.app";
+        app = "${homeDirectory}/Applications/Home Manager Apps/Ghostty.app";
       }
       {
-        app = "${programs.firefox.finalPackage}/Applications/Firefox.app";
+        app = "${homeDirectory}/Applications/Home Manager Apps/Firefox.app";
       }
       {
         app = "/Applications/Obsidian.app";
@@ -28,7 +28,7 @@ in {
         app = "/Applications/Visual Studio Code - Insiders.app";
       }
       {
-        app = "${programs.spicetify.spicedSpotify}/Applications/Spotify.app";
+        app = "${homeDirectory}/Applications/Home Manager Apps/Spotify.app";
       }
       {
         app = "/Applications/ChatGPT.app";
