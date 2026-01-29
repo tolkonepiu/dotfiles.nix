@@ -44,7 +44,7 @@ in {
       };
       pull.rebase = true;
       alias = {
-        lg = "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --decorate=full";
+        lg = "log --graph --pretty=tformat:'%C(magenta)%h%Creset %C(blue)%d%Creset %C(white)%s %C(green)(%cr)%Creset %C(cyan)<%an>%Creset' --abbrev-commit --decorate=full";
       };
     };
   };
