@@ -8,6 +8,8 @@
     ./security
     ./finder.nix
     ./dock.nix
+    ./software-update.nix
+    ./system.nix
   ];
 
   # Configure macOS system

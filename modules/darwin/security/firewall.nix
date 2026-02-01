@@ -1,11 +1,16 @@
 {
   networking.applicationFirewall = {
-    enable = true; # Turn on macOS application firewall
-    blockAllIncoming = false; # Allow inbound responses to outgoing traffic and services you explicitly permit
+    # Turn on macOS application firewall
+    enable = true;
+    # Allow inbound responses to outgoing traffic and services you explicitly permit
+    blockAllIncoming = false;
 
-    allowSignedApp = false; # Do not auto-allow built-in/OS-signed apps that are already installed
-    allowSigned = true; # Auto-allow apps signed by a valid certificate when they ask for incoming connections
+    # Do not auto-allow built-in/OS-signed apps that are already installed
+    allowSignedApp = false;
+    # Auto-allow apps signed by a valid certificate when they ask for incoming connections
+    allowSigned = true;
 
-    enableStealthMode = true; # Drop ICMP ping/port scan probes (no reply to unsolicited traffic)
+    # Drop ICMP ping/port scan probes (no reply to unsolicited traffic)
+    enableStealthMode = true;
   };
 }
