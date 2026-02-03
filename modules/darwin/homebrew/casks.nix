@@ -16,6 +16,7 @@
 
     # Communication
     "discord"
+    "element"
 
     # Media and entertainment
     "fx-cast-bridge"
