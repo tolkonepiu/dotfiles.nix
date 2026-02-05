@@ -8,15 +8,13 @@
   # Search for packages here: https://search.nixos.org/packages
   home.packages = with pkgs;
     [
-      # System monitoring and performance tools
+      # System tools
       fastfetch
-      htop
 
       # Development tools
       cursor-cli
       devenv
       docker
-      github-copilot-cli
       kubectl
       markdownlint-cli
       shellcheck
