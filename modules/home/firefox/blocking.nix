@@ -33,6 +33,7 @@ _: {
         "ublock-annoyances"
         "RUS-0"
         "RUS-1"
+        "https://raw.githubusercontent.com/gijsdev/ublock-hide-yt-shorts/master/list.txt"
       ];
     };
   };
