@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./extensions.nix
     ./policies.nix
@@ -8,6 +8,7 @@
 
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox-bin;
 
     languagePacks = [
       "en-US"
