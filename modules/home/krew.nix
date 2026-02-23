@@ -16,6 +16,7 @@ in {
     };
     plugins = [
       "krew"
+      "cnpg"
       "netshoot/netshoot"
     ];
   };
