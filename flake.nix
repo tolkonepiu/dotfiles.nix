@@ -55,6 +55,8 @@
     spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
     krewfile.url = "github:brumhard/krewfile";
     krewfile.inputs.nixpkgs.follows = "nixpkgs";
+    nvf.url = "github:NotAShelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
 
     # ZSH configuration
     zdotdir = {
