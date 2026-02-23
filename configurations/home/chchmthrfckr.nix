@@ -10,6 +10,7 @@ in {
     username = "chchmthrfckr";
     fullname = "Pavel Popov";
     email = "me@popov.wtf";
+    atuinServer = "https://atuin.popov.wtf";
   };
 
   home.stateVersion = "25.11";
