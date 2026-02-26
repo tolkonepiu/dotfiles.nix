@@ -2,6 +2,7 @@
   homebrew.casks = [
     # Development tools
     "cursor"
+    "gitify"
     "visual-studio-code@insiders"
 
     # Privacy and security
