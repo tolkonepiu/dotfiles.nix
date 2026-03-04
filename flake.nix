@@ -57,6 +57,8 @@
     krewfile.inputs.nixpkgs.follows = "nixpkgs";
     nvf.url = "github:NotAShelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
+    mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # ZSH configuration
     zdotdir = {
