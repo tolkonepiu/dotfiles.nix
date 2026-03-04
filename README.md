@@ -17,8 +17,8 @@
 
 <div align="center">
 <img src="https://img.shields.io/badge/25.11-informational.svg?style=for-the-badge&logo=nixos&logoColor=white&color=cba6f7&labelColor=45475a"/>&nbsp;
-<img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build&up_color=a6e3a1&down_color=f38ba8"/>&nbsp;
-<img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests&up_color=a6e3a1&down_color=f38ba8"/>
+<img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build"/>&nbsp;
+<img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests"/>
 
 </div>
 <!-- markdownlint-enable -->
