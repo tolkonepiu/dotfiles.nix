@@ -16,9 +16,9 @@
 </p>
 
 <div align="center">
-
-![Build](https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build)&nbsp;
-![Tests](https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests)
+<img src="https://img.shields.io/badge/25.11-informational.svg?style=for-the-badge&logo=nixos&logoColor=white&color=cba6f7&labelColor=45475a"/>&nbsp;
+<img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build&up_color=a6e3a1&down_color=f38ba8"/>&nbsp;
+<img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests&up_color=a6e3a1&down_color=f38ba8"/>
 
 </div>
 <!-- markdownlint-enable -->
@@ -27,8 +27,8 @@
 
 - **Advanced Shell Configuration**: Custom ZSH setup with my
   [zdotdir](https://github.com/tolkonepiu/zdotdir) configuration
-- **Modern CLI Tools**: Leveraging tools like `eza`, `fd`, `zoxide`, `bat`, and
-  others for an efficient command-line experience
+- **Modern CLI Tools**: Leveraging tools like `atuin`, `eza`, `fd`, `zoxide`,
+  `bat` and others for an efficient command-line experience
 - **Catppuccin Theme**: Consistent
   [Catppuccin](https://github.com/catppuccin/catppuccin) 🌿 Mocha flavor theming
   across all applications
@@ -43,6 +43,10 @@
   extension management
 - **Spicetify Spotify**: Custom Spotify theming with Catppuccin colors and
   useful extensions with the help of [Spicetify](https://spicetify.app/)
+- **Neovim**: Declarative editor config built on
+  [nvf](https://github.com/NotAShelf/nvf)
+- **OpenCode & MCP Servers**: [OpenCode](https://opencode.dev/) with MCP
+  integration
 
 ## License
 
