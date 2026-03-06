@@ -26,6 +26,7 @@
         [
           just
           nh
+          pre-commit
         ]
         ++ config.pre-commit.settings.enabledPackages;
 

@@ -27,5 +27,5 @@ jobs:
       - name: 🚀 Check flake.lock
         uses: DeterminateSystems/flake-checker-action@3164002371bc90729c68af0e24d5aacf20d7c9f6 # v12
 
-      - name: 🚀 Run flake checks
-        run: nix flake check
+      - name: 🚀 Run checks
+        run: nix develop -c pre-commit run --all-files
