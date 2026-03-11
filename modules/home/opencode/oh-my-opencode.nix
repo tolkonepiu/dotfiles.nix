@@ -12,20 +12,19 @@
           model = "github-copilot/grok-code-fast-1";
         };
         oracle = {
-          model = "openai/gpt-5.4";
-          variant = "high";
+          model = "openai/gpt-5.3-codex";
         };
         librarian = {
-          model = "github-copilot/gemini-3-flash";
+          model = "github-copilot/gemini-3-flash-preview";
         };
       };
 
       categories = {
-        quick = {model = "github-copilot/gpt-5-nano";};
-        unspecified-low = {model = "github-copilot/claude-sonnet-4-6";};
-        unspecified-high = {model = "openai/gpt-5.4";};
-        visual-engineering = {model = "github-copilot/gemini-3.1-pro";};
-        writing = {model = "github-copilot/gemini-3-flash";};
+        quick = {model = "opencode/gpt-5-nano";};
+        unspecified-low = {model = "github-copilot/claude-sonnet-4.6";};
+        unspecified-high = {model = "openai/gpt-5.3-codex";};
+        visual-engineering = {model = "github-copilot/gemini-3.1-pro-preview";};
+        writing = {model = "github-copilot/gemini-3-flash-preview";};
       };
 
       experimental = {
