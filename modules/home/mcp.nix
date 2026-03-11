@@ -10,5 +10,6 @@ in {
   mcp-servers.programs = {
     git.enable = true;
     context7.enable = true;
+    nixos.enable = true;
   };
 }

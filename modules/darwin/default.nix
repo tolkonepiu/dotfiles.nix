@@ -10,6 +10,7 @@
     ./dock.nix
     ./software-update.nix
     ./system.nix
+    ./trackpad.nix
   ];
 
   # Configure macOS system
@@ -25,21 +26,6 @@
       "com.apple.mouse.tapBehavior" = 1;
       "com.apple.sound.beep.volume" = 0.0;
       "com.apple.sound.beep.feedback" = 0;
-    };
-    trackpad = {
-      # Enable tap to click
-      Clicking = true;
-      # Enable two finger right click
-      TrackpadRightClick = true;
-      # Enable three finger drag
-      TrackpadThreeFingerDrag = true;
-    };
-    CustomUserPreferences = {
-      "com.apple.desktopservices" = {
-        # Avoid creating .DS_Store files on network or USB volumes
-        DSDontWriteNetworkStores = true;
-        DSDontWriteUSBStores = true;
-      };
     };
   };
 }
