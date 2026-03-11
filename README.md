@@ -45,7 +45,8 @@
   useful extensions with the help of [Spicetify](https://spicetify.app/)
 - **Neovim**: Declarative editor config built on
   [nvf](https://github.com/NotAShelf/nvf)
-- **OpenCode & MCP Servers**: [OpenCode](https://opencode.dev/) with MCP
+- **OpenCode**: [OpenCode](https://opencode.dev/) with
+  [Oh My OpenCode](https://github.com/code-yeongyu/oh-my-openagent) and MCP
   integration
 
 ## License
