@@ -7,7 +7,10 @@
     enable = true;
     enableMcpIntegration = true;
     settings = {
-      plugin = ["oh-my-opencode"];
+      plugin = [
+        # renovate: datasource=npm depName=oh-my-opencode
+        "oh-my-opencode@3.11.2"
+      ];
     };
   };
 }
