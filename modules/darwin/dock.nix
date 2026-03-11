@@ -19,19 +19,10 @@ in {
         app = "${homeDirectory}/Applications/Home Manager Apps/Firefox.app";
       }
       {
-        app = "/Applications/Obsidian.app";
-      }
-      {
-        app = "/Applications/Cursor.app";
-      }
-      {
         app = "/Applications/Visual Studio Code - Insiders.app";
       }
       {
         app = "${homeDirectory}/Applications/Home Manager Apps/Spotify.app";
-      }
-      {
-        app = "/Applications/ChatGPT.app";
       }
       {
         app = "/Applications/Telegram.app";

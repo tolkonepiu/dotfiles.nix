@@ -42,9 +42,6 @@
       "git-hashing"
     ];
 
-    # Note: external-builders is not allowed in determinateNix.customSettings
-    # as it's managed by the determinateNix module
-
     # don't warn that my git tree is dirty it is known through git
     warn-dirty = false;
 
@@ -59,7 +56,6 @@
     keep-outputs = true;
 
     # use binary cache, this is not gentoo
-    # external builders can also pick up those substituters
     builders-use-substitutes = true;
   };
 }
