@@ -6,7 +6,7 @@
 
       agents = {
         sisyphus = {
-          model = "github-copilot/claude-opus-41";
+          model = "github-copilot/claude-opus-4.6";
         };
         explore = {
           model = "github-copilot/grok-code-fast-1";
@@ -16,6 +16,9 @@
         };
         librarian = {
           model = "github-copilot/gemini-3-flash-preview";
+        };
+        hephaestus = {
+          model = "openai/gpt-5.4";
         };
       };
 
