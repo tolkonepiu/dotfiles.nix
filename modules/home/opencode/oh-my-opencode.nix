@@ -18,7 +18,10 @@
           model = "github-copilot/gemini-3-flash-preview";
         };
         hephaestus = {
-          model = "openai/gpt-5.4";
+          model = "openai/gpt-5.3-codex";
+        };
+        multimodal-looker = {
+          model = "github-copilot/gemini-3-flash-preview";
         };
       };
 
