@@ -60,6 +60,11 @@
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Agent Skills
+    agent-skills.url = "github:Kyure-A/agent-skills-nix";
+    awesome-copilot.url = "github:github/awesome-copilot";
+    awesome-copilot.flake = false;
+
     # ZSH configuration
     zdotdir = {
       url = "github:tolkonepiu/zdotdir";
