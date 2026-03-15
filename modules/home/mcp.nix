@@ -11,5 +11,12 @@ in {
     git.enable = true;
     context7.enable = true;
     nixos.enable = true;
+    github = {
+      enable = true;
+      # Requires `gh auth login` so `gh auth token` can return a token.
+      passwordCommand = {
+        GITHUB_PERSONAL_ACCESS_TOKEN = ["gh" "auth" "token"];
+      };
+    };
   };
 }
