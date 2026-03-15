@@ -31,9 +31,6 @@
 
     # enable extra experimental features
     extra-experimental-features = [
-      "nix-command"
-      "flakes"
-      "parallel-eval"
       "parse-toml-timestamps"
       "pipe-operators"
       "blake3-hashes"
