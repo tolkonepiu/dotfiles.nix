@@ -14,6 +14,10 @@ in {
       };
     };
     skills.enable = [
+      # Awesome GitHub Copilot
+      # See: https://github.com/github/awesome-copilot/blob/main/docs/README.skills.md
+      "agent-governance"
+      "agentic-eval"
       "context-map"
       "create-agentsmd"
       "create-implementation-plan"
