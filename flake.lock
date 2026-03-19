@@ -237,6 +237,22 @@
         "type": "github"
       }
     },
+    "ghostty-bin-nixpkgs": {
+      "locked": {
+        "lastModified": 1761258493,
+        "narHash": "sha256-6VeZzMkzA1/K8njw0GETeaFiaqOFGqiAlMLprhzR+CY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "899403631b0397dbf7f7791c7c57cb14d64114f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "899403631b0397dbf7f7791c7c57cb14d64114f0",
+        "type": "github"
+      }
+    },
     "git-hooks-nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -656,6 +672,7 @@
         "catppuccin": "catppuccin",
         "determinate": "determinate",
         "flake-parts": "flake-parts",
+        "ghostty-bin-nixpkgs": "ghostty-bin-nixpkgs",
         "git-hooks-nix": "git-hooks-nix",
         "home-manager": "home-manager_2",
         "homebrew-bundle": "homebrew-bundle",
