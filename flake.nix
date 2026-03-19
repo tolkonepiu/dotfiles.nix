@@ -10,8 +10,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-unified.url = "github:srid/nixos-unified";
-    # pinned for devenv 1.11.2 until 2.x is fixed on macOS (cachix/devenv#2576)
-    devenv-nixpkgs.url = "github:nixos/nixpkgs/80bdc1e5ce51f56b19791b52b2901187931f5353";
 
     # Devshell
     git-hooks-nix.url = "github:cachix/git-hooks.nix";
