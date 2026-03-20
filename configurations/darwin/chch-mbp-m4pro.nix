@@ -10,9 +10,6 @@ in {
 
   nixpkgs = {
     hostPlatform = "aarch64-darwin";
-    overlays = [
-      self.overlays.ghostty-bin
-    ];
   };
 
   networking.hostName = "chch-mbp-m4pro";

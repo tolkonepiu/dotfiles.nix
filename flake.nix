@@ -10,8 +10,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-unified.url = "github:srid/nixos-unified";
-    # pinned for ghostty-bin 1.2.3 until 1.3.x is fixed on macOS (NixOS/nixpkgs#501200)
-    ghostty-bin-nixpkgs.url = "github:nixos/nixpkgs/899403631b0397dbf7f7791c7c57cb14d64114f0";
 
     # Devshell
     git-hooks-nix.url = "github:cachix/git-hooks.nix";
