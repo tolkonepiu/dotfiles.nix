@@ -16,7 +16,7 @@
 </p>
 
 <div align="center">
-<img src="https://img.shields.io/badge/25.11-informational.svg?style=for-the-badge&logo=nixos&logoColor=white&color=cba6f7&labelColor=45475a"/>&nbsp;
+<img src="https://img.shields.io/badge/26.05-informational.svg?style=for-the-badge&logo=nixos&logoColor=white&color=cba6f7&labelColor=45475a"/>&nbsp;
 <img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build"/>&nbsp;
 <img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests"/>
 
