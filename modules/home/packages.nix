@@ -36,8 +36,6 @@
       nodejs
 
       # Rust packages
-      cargo
-      rustc
       rustup
 
       # Terminal utilities
