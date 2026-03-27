@@ -35,6 +35,10 @@
       # Node.js development tools
       nodejs
 
+      # Rust packages
+      cargo
+      rustc
+
       # Terminal utilities
       wakatime-cli
 
