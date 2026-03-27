@@ -38,6 +38,7 @@
       # Rust packages
       cargo
       rustc
+      rustup
 
       # Terminal utilities
       wakatime-cli
