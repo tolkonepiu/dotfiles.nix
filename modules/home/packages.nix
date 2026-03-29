@@ -12,11 +12,13 @@
       fastfetch
 
       # Development tools
+      biome
       cursor-cli
       devenv
       docker
       kubectl
       markdownlint-cli
+      rust-analyzer
       shellcheck
       shfmt
       yamllint
@@ -36,7 +38,10 @@
       nodejs
 
       # Rust packages
-      rustup
+      cargo
+      clippy
+      rustc
+      rustfmt
 
       # Terminal utilities
       wakatime-cli
