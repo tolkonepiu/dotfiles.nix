@@ -18,7 +18,7 @@
       docker
       kubectl
       markdownlint-cli
-      rust-analyzer
+      nixd
       shellcheck
       shfmt
       yamllint
@@ -31,6 +31,7 @@
 
       # Python packages
       pipx
+      pyright
       python3
       virtualenv
 
@@ -40,6 +41,7 @@
       # Rust packages
       cargo
       clippy
+      rust-analyzer
       rustc
       rustfmt
 
