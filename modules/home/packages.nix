@@ -21,6 +21,7 @@
       nixd
       shellcheck
       shfmt
+      yaml-language-server
       yamllint
 
       # Encryption and security tools
