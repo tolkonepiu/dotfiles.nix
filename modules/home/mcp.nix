@@ -15,6 +15,10 @@ in {
     git.enable = true;
     context7.enable = true;
     nixos.enable = true;
+    playwright = {
+      enable = true;
+      args = ["--headless"];
+    };
     filesystem = {
       enable = true;
       args = [

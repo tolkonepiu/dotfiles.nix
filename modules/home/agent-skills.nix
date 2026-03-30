@@ -26,6 +26,7 @@ in {
       "gh-cli"
       "git-commit"
       "github-issues"
+      "web-design-reviewer"
     ];
     targets.agents.enable = true;
   };
