@@ -12,6 +12,10 @@ in {
         path = inputs.awesome-copilot;
         subdir = "skills";
       };
+      vercel-skills = {
+        path = inputs.vercel-skills;
+        subdir = "skills";
+      };
     };
     skills.enable = [
       # Awesome GitHub Copilot
@@ -27,6 +31,11 @@ in {
       "git-commit"
       "github-issues"
       "web-design-reviewer"
+      # Vercel Agent Skills
+      # See: https://github.com/vercel-labs/agent-skills/
+      "web-design-guidelines"
+      "react-best-practices"
+      "composition-patterns"
     ];
     targets.agents.enable = true;
   };

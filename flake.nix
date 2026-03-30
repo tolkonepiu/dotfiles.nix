@@ -64,6 +64,8 @@
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
     awesome-copilot.url = "github:github/awesome-copilot";
     awesome-copilot.flake = false;
+    vercel-skills.url = "github:vercel-labs/agent-skills";
+    vercel-skills.flake = false;
 
     # ZSH configuration
     zdotdir = {

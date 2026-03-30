@@ -671,6 +671,7 @@
         "nvf": "nvf",
         "spicetify-nix": "spicetify-nix",
         "treefmt-nix": "treefmt-nix",
+        "vercel-skills": "vercel-skills",
         "zdotdir": "zdotdir"
       }
     },
@@ -757,6 +758,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "vercel-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774393204,
+        "narHash": "sha256-rMkx74IAnW55otJefKke8GRYL4Py0KxoeASJwMqOmFY=",
+        "owner": "vercel-labs",
+        "repo": "agent-skills",
+        "rev": "64484e9a6022c81e3af59f5dcee6fb6d631bf53e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel-labs",
+        "repo": "agent-skills",
         "type": "github"
       }
     },
