@@ -1,5 +1,6 @@
 {
   imports = [
+    ./lsp.nix
     ./oh-my-opencode.nix
   ];
 
