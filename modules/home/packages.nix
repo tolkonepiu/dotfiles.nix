@@ -12,6 +12,7 @@
       fastfetch
 
       # Development tools
+      ast-grep
       biome
       cursor-cli
       devenv
