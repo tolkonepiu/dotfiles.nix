@@ -43,11 +43,25 @@
   extension management
 - **Spicetify Spotify**: Custom Spotify theming with Catppuccin colors and
   useful extensions with the help of [Spicetify](https://spicetify.app/)
+- **Git & GitHub CLI**: Signed commits, [delta](https://github.com/dandavison/delta)
+  diff viewer, LFS support, and [gh](https://cli.github.com/) with extensions
+- **Kubernetes & Containers**: `kubectl` with
+  [krew](https://krew.sigs.k8s.io/) plugin management, Docker via
+  [Colima](https://github.com/abiosoft/colima)
+- **Dev Environment**: [direnv](https://direnv.net/) with nix-direnv,
+  [devenv](https://devenv.sh/), and multi-language toolchains (Rust, Python,
+  Node.js)
+- **Agent Skills**: Declarative AI agent skill management via
+  [agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix) with
+  [Copilot](https://github.com/github/awesome-copilot) and
+  [Vercel](https://github.com/vercel-labs/agent-skills) skill sets
 - **Neovim**: Declarative editor config built on
-  [nvf](https://github.com/NotAShelf/nvf)
-- **OpenCode**: [OpenCode](https://opencode.dev/) with
-  [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) and MCP
-  integration
+  [nvf](https://github.com/NotAShelf/nvf) with LSP, Treesitter, and
+  multi-language support (Nix, Rust, TypeScript, Python, and more)
+- **OpenCode**: AI-powered terminal IDE via
+  [OpenCode](https://opencode.dev/) with
+  [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent)
+  multi-agent orchestration, MCP servers, LSP integration, and plugins
 
 ## License
 
