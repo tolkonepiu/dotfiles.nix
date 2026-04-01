@@ -46,7 +46,7 @@
 - **Neovim**: Declarative editor config built on
   [nvf](https://github.com/NotAShelf/nvf)
 - **OpenCode**: [OpenCode](https://opencode.dev/) with
-  [Oh My OpenCode](https://github.com/code-yeongyu/oh-my-openagent) and MCP
+  [Oh My OpenAgent](https://github.com/code-yeongyu/oh-my-openagent) and MCP
   integration
 
 ## License

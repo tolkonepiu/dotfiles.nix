@@ -1,7 +1,7 @@
 {
   imports = [
     ./lsp.nix
-    ./oh-my-opencode.nix
+    ./oh-my-openagent.nix
   ];
 
   programs.opencode = {
@@ -10,7 +10,7 @@
     settings = {
       plugin = [
         # renovate: datasource=npm depName=oh-my-opencode
-        "oh-my-opencode@3.14.0"
+        "oh-my-openagent@3.14.0"
         # renovate: datasource=npm depName=opencode-wakatime
         "opencode-wakatime@1.3.0"
         # renovate: datasource=npm depName=opencode-atuin-history
