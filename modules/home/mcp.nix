@@ -1,8 +1,4 @@
-{
-  config,
-  flake,
-  ...
-}: let
+{flake, ...}: let
   inherit (flake) inputs;
 in {
   imports = [
@@ -18,14 +14,6 @@ in {
     playwright = {
       enable = true;
       args = ["--headless"];
-    };
-    filesystem = {
-      enable = true;
-      args = [
-        # XDG_PROJECTS_DIR
-        "${config.home.homeDirectory}/Projects"
-        config.xdg.configHome
-      ];
     };
     github = {
       enable = true;

@@ -57,6 +57,10 @@
         sisyphus-junior = {
           model = "github-copilot/claude-sonnet-4.6";
         };
+
+        librarian = {
+          model = "github-copilot/gemini-3-flash-preview";
+        };
       };
 
       categories = {
