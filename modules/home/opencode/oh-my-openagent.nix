@@ -12,12 +12,13 @@
 
       agents = {
         sisyphus = {
-          model = "github-copilot/claude-opus-4.6";
-          variant = "max";
+          model = "openai/gpt-5.4";
+          variant = "medium";
         };
 
-        explore = {
-          model = "github-copilot/grok-code-fast-1";
+        hephaestus = {
+          model = "openai/gpt-5.4";
+          variant = "medium";
         };
 
         oracle = {
@@ -25,8 +26,8 @@
           variant = "high";
         };
 
-        librarian = {
-          model = "github-copilot/gemini-3-flash-preview";
+        explore = {
+          model = "github-copilot/gpt-5-mini";
         };
 
         prometheus = {
@@ -48,25 +49,20 @@
           model = "github-copilot/claude-sonnet-4.6";
         };
 
-        hephaestus = {
-          model = "openai/gpt-5.4";
-          variant = "medium";
-        };
-
         multimodal-looker = {
           model = "openai/gpt-5.4";
           variant = "medium";
         };
+
+        sisyphus-junior = {
+          model = "github-copilot/claude-sonnet-4.6";
+        };
       };
 
       categories = {
-        quick = {
-          model = "github-copilot/gpt-5.4-mini";
-        };
-
-        deep = {
-          model = "openai/gpt-5.4";
-          variant = "medium";
+        visual-engineering = {
+          model = "github-copilot/gemini-3.1-pro-preview";
+          variant = "high";
         };
 
         ultrabrain = {
@@ -74,9 +70,18 @@
           variant = "xhigh";
         };
 
+        deep = {
+          model = "openai/gpt-5.3-codex";
+          variant = "medium";
+        };
+
         artistry = {
           model = "github-copilot/gemini-3.1-pro-preview";
           variant = "high";
+        };
+
+        quick = {
+          model = "github-copilot/gpt-5.4-mini";
         };
 
         unspecified-low = {
@@ -84,27 +89,12 @@
         };
 
         unspecified-high = {
-          model = "github-copilot/claude-opus-4.6";
-          variant = "max";
-        };
-
-        visual-engineering = {
-          model = "github-copilot/gemini-3.1-pro-preview";
-          variant = "high";
+          model = "github-copilot/claude-sonnet-4.6";
         };
 
         writing = {
           model = "github-copilot/gemini-3-flash-preview";
         };
-      };
-
-      runtime_fallback = {
-        enabled = true;
-        retry_on_errors = [400 429 503 529];
-        max_fallback_attempts = 3;
-        cooldown_seconds = 15;
-        timeout_seconds = 8;
-        notify_on_fallback = true;
       };
 
       experimental = {
