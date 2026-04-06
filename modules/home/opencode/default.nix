@@ -10,7 +10,7 @@
     settings = {
       plugin = [
         # renovate: datasource=npm depName=oh-my-opencode
-        "oh-my-openagent@3.15.2"
+        "oh-my-openagent@3.15.3"
         # renovate: datasource=npm depName=opencode-wakatime
         "opencode-wakatime@1.3.0"
         # renovate: datasource=npm depName=opencode-atuin-history
