@@ -11,8 +11,11 @@
     "secretive"
     "tailscale-app"
 
-    # Productivity and note-taking
+    # AI tools
     "chatgpt"
+    "openclaw"
+
+    # Productivity and note-taking
     "obsidian"
 
     # Communication
