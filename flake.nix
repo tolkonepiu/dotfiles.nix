@@ -3,19 +3,29 @@
 
   inputs = {
     # Principle inputs (updated by `nix run .#update`)
+    systems.url = "github:nix-systems/default";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
     nixos-unified.url = "github:srid/nixos-unified";
+    flake-compat.url = "github:NixOS/flake-compat";
+    flake-compat.flake = false;
 
     # Devshell
-    git-hooks-nix.url = "github:cachix/git-hooks.nix";
-    git-hooks-nix.inputs.nixpkgs.follows = "nixpkgs";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "flake-compat";
+      };
+    };
 
     # Determinate
     nix = {
@@ -51,17 +61,41 @@
 
     # Software inputs
     catppuccin.url = "github:catppuccin/nix";
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    spicetify-nix.inputs.nixpkgs.follows = "nixpkgs";
-    krewfile.url = "github:brumhard/krewfile";
-    krewfile.inputs.nixpkgs.follows = "nixpkgs";
-    nvf.url = "github:NotAShelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
+    krewfile = {
+      url = "github:brumhard/krewfile";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs = {
+        systems.follows = "systems";
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        flake-compat.follows = "flake-compat";
+      };
+    };
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs = {
+        systems.follows = "systems";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
     # Agent Skills
-    agent-skills.url = "github:Kyure-A/agent-skills-nix";
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
     awesome-copilot.url = "github:github/awesome-copilot";
     awesome-copilot.flake = false;
     vercel-skills.url = "github:vercel-labs/agent-skills";
