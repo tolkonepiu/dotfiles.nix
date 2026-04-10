@@ -1,7 +1,10 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["config:recommended", "helpers:pinGitHubActionDigests"],
-  dependencyDashboard: false,
+  dependencyDashboard: true,
+  nix: {
+    enabled: true,
+  },
   packageRules: [
     {
       matchUpdateTypes: ["minor", "patch", "pin", "digest"],
@@ -11,17 +14,23 @@
   customManagers: [
     {
       customType: "regex",
+      description: "Process npm package strings in Nix files",
+      managerFilePatterns: ["/\\.nix$/"],
+      matchStrings: [
+        '"(?<depName>@?[-\\w.]+(?:/[-\\w.]+)?)@(?<currentValue>\\d[^\"]*)"',
+      ],
+      datasourceTemplate: "npm",
+    },
+    {
+      customType: "regex",
       description: "Process annotated dependencies in Nix files",
       managerFilePatterns: ["/\\.nix$/"],
       matchStrings: [
-        // # renovate: datasource=npm depName=oh-my-opencode
-        // "oh-my-opencode@3.11.2"
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+@(?<currentValue>\\S+?)\"",
         // # renovate: datasource=github-releases depName=some/dep
         // version = "1.2.3";
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(=\\s+\"|:\\s|=)(&\\S+\\s)?(?<currentValue>[\\w]\\S+?)\"?;",
+        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(=\\s+"|:\\s|=)(&\\S+\\s)?(?<currentValue>[\\w]\\S+?)"?;',
       ],
       datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-    }
+    },
   ],
 }
