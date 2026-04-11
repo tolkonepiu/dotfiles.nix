@@ -1,13 +1,13 @@
 {
-  # oh-my-openagent config
-  # Models are aligned with upstream role defaults using the providers currently
-  # available in local `opencode models` (GitHub Copilot, OpenAI).
-  # OmO's built-in fallback chains still handle runtime resolution when the
-  # preferred configured model is unavailable.
+  # Disable oh-my-openagent telemetry
+  home.sessionVariables.OMO_SEND_ANONYMOUS_TELEMETRY = "0";
 
-  xdg.configFile."opencode/oh-my-openagent.jsonc".text =
-    builtins.toJSON
-    {
+  xdg.configFile."opencode/oh-my-openagent.jsonc" = {
+    force = true;
+    text = builtins.toJSON {
+      # oh-my-openagent config
+      # Models are aligned with upstream role defaults using the providers currently
+      # available in local `opencode models` (GitHub Copilot, OpenAI).
       "$schema" = "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json";
 
       agents = {
@@ -109,4 +109,5 @@
         enabled = false;
       };
     };
+  };
 }
