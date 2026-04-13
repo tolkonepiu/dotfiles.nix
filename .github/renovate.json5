@@ -4,7 +4,8 @@
   dependencyDashboard: false,
   lockFileMaintenance: {
     enabled: true,
-    schedule: ["before 4pm on monday"],
+    commitMessageAction: "flake.lock update",
+    schedule: ["before 4am on thursday"],
   },
   nix: {
     enabled: true,
