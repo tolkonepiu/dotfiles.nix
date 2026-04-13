@@ -16,6 +16,7 @@
 
     # Communication
     "mattermost" = 1614666244;
+    "slack" = 803453959;
     "telegram" = 747648890;
 
     # Security and VPN

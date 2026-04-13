@@ -13,7 +13,6 @@
 
     # AI tools
     "chatgpt"
-    "openclaw"
 
     # Productivity and note-taking
     "obsidian"
