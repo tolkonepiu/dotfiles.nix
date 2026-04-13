@@ -41,6 +41,7 @@ jobs:
         darwin-config:
           ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
     runs-on: macos-latest
+    timeout-minutes: 20
 
     steps:
       - name: ⤵️ Checkout repository
