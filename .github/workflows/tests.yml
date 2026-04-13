@@ -11,7 +11,8 @@ jobs:
   tests:
     strategy:
       matrix:
-        os: [macos-latest]
+        os:
+          - macos-26
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -20,9 +21,6 @@ jobs:
 
       - name: 🏗️ Install Determinate Nix
         uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
-
-      - name: 🏗️ Setup Cache
-        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
 
       - name: 🚀 Check flake.lock
         uses: DeterminateSystems/flake-checker-action@3164002371bc90729c68af0e24d5aacf20d7c9f6 # v12

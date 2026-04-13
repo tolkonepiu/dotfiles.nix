@@ -40,7 +40,7 @@ jobs:
       matrix:
         darwin-config:
           ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
-    runs-on: macos-latest
+    runs-on: macos-26
     timeout-minutes: 20
 
     steps:
