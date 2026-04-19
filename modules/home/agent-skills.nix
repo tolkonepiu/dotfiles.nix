@@ -30,6 +30,8 @@ in {
       "gh-cli"
       "git-commit"
       "github-issues"
+      "refactor-plan"
+      "refactor"
       "web-design-reviewer"
       # Vercel Agent Skills
       # See: https://github.com/vercel-labs/agent-skills/
