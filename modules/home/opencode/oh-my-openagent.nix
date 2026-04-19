@@ -27,7 +27,7 @@
         };
 
         explore = {
-          model = "github-copilot/gpt-5-mini";
+          model = "github-copilot/gemini-3-flash-preview";
         };
 
         prometheus = {
@@ -65,7 +65,7 @@
 
       categories = {
         visual-engineering = {
-          model = "github-copilot/gemini-3.1-pro-preview";
+          model = "openai/gpt-5.3-codex";
           variant = "high";
         };
 
@@ -80,12 +80,12 @@
         };
 
         artistry = {
-          model = "github-copilot/gemini-3.1-pro-preview";
+          model = "openai/gpt-5.3-codex";
           variant = "high";
         };
 
         quick = {
-          model = "github-copilot/gpt-5.4-mini";
+          model = "github-copilot/claude-haiku-4.5";
         };
 
         unspecified-low = {
@@ -93,7 +93,7 @@
         };
 
         unspecified-high = {
-          model = "github-copilot/claude-sonnet-4.6";
+          model = "github-copilot/claude-opus-4.6";
         };
 
         writing = {
