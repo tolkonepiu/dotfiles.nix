@@ -50,7 +50,7 @@ jobs:
           mode: diff-only
           attributes: |
             - displayName: ${{ matrix.darwin-config }}
-              attribute: darwinConfigurations.${{ matrix.darwin-config }}.config.system
+              attribute: darwinConfigurations.${{ matrix.darwin-config }}.config.system.build.toplevel
 
   comment:
     needs: diff-macos
