@@ -2,16 +2,12 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - main
-    paths: &paths
+  pull_request:
+    paths:
       - modules/**
       - configurations/**
       - flake.lock
       - flake.nix
-  pull_request:
-    paths: *paths
 
 jobs:
   discover-configs:
@@ -32,17 +28,14 @@ jobs:
           darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
           echo "darwin-configs=$darwin_configs" >> $GITHUB_OUTPUT
 
-  build-macos:
+  diff-macos:
     needs: discover-configs
-    if:
-      ${{ fromJSON(needs.discover-configs.outputs.darwin-configs)[0] != null }}
+    if: ${{ fromJSON(needs.discover-configs.outputs.darwin-configs)[0] != null }}
     strategy:
       matrix:
-        darwin-config:
-          ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
+        darwin-config: ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
     runs-on: macos-26
     timeout-minutes: 20
-
     steps:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -50,7 +43,20 @@ jobs:
       - name: 🏗️ Install Determinate Nix
         uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
 
-      - name: 🚀 Build Darwin configuration (${{ matrix.darwin-config }})
-        run:
-          nix build .#darwinConfigurations.${{ matrix.darwin-config }}.system
-          --no-link
+      - uses: natsukium/nix-diff-action@65526931655c9561dfdb1330b8770d1673857ae9 # v1.0.3
+        with:
+          mode: diff-only
+          attributes: |
+            - displayName: ${{ matrix.darwin-config }}
+              attribute: nixosConfigurations.${{ matrix.darwin-config }}.config.system.build.toplevel
+
+  comment:
+    needs: diff-macos
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - uses: natsukium/nix-diff-action@65526931655c9561dfdb1330b8770d1673857ae9 # v1.0.3
+        with:
+          mode: comment-only
