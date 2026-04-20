@@ -8,7 +8,7 @@ _: {
     markdown.enable = true;
     bash.enable = true;
     json.enable = true;
-    ts.enable = true;
+    typescript.enable = true;
     python.enable = true;
     rust = {
       enable = true;
