@@ -31,12 +31,12 @@
         };
 
         prometheus = {
-          model = "github-copilot/claude-opus-4.6";
+          model = "github-copilot/claude-opus-4.7";
           variant = "max";
         };
 
         metis = {
-          model = "github-copilot/claude-opus-4.6";
+          model = "github-copilot/claude-opus-4.7";
           variant = "max";
         };
 
@@ -93,7 +93,7 @@
         };
 
         unspecified-high = {
-          model = "github-copilot/claude-opus-4.6";
+          model = "github-copilot/claude-opus-4.7";
         };
 
         writing = {
