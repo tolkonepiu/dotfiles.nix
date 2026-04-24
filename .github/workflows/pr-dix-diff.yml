@@ -46,7 +46,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
 
       - name: 🚀 Generate nix diff (${{ matrix.darwin-config }})
-        uses: natsukium/nix-diff-action@65526931655c9561dfdb1330b8770d1673857ae9 # v1.0.3
+        uses: natsukium/nix-diff-action@b5c316c6cafc8470037d7f330b178aaeeba96ba4 # v1.1.0
         with:
           mode: diff-only
           attributes: |
@@ -61,6 +61,6 @@ jobs:
       pull-requests: write
     steps:
       - name: 💬 Comment nix diff results
-        uses: natsukium/nix-diff-action@65526931655c9561dfdb1330b8770d1673857ae9 # v1.0.3
+        uses: natsukium/nix-diff-action@b5c316c6cafc8470037d7f330b178aaeeba96ba4 # v1.1.0
         with:
           mode: comment-only
