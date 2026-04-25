@@ -37,7 +37,8 @@
       python3
       virtualenv
 
-      # Node.js development tools
+      # Web development tools
+      bun
       nodejs
 
       # Rust packages
