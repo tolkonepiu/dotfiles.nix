@@ -2,6 +2,7 @@
   imports = [
     ./lsp.nix
     ./oh-my-openagent.nix
+    ./tui.nix
   ];
 
   programs.opencode = {
@@ -13,6 +14,7 @@
         "opencode-wakatime@1.3.1"
         "opencode-atuin-history@0.1.0"
         "opencode-terminal-progress@0.5.0"
+        "@honcho-ai/opencode-honcho@0.1.1"
       ];
     };
   };
