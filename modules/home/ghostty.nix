@@ -11,8 +11,8 @@ in {
     package = lib.mkIf isDarwin pkgs.ghostty-bin;
     settings = {
       confirm-close-surface = false;
-      font-family = "MesloLGS NF";
-      font-size = 18;
+      font-family = "IosevkaTerm Nerd Font Mono";
+      font-size = 16.5;
       fullscreen = true;
       mouse-hide-while-typing = true;
       mouse-scroll-multiplier = 10;
