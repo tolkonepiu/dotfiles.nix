@@ -52,9 +52,7 @@
       wakatime-cli
 
       # Fonts
-      nerd-fonts.departure-mono
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.iosevka
+      meslo-lgs-nf
     ]
     ++ lib.optionals stdenv.isDarwin [
       # Virtualization
