@@ -9,6 +9,19 @@
     config = {
       allowUnfree = true;
     };
+    overlays = [
+      (final: prev: {
+        pythonPackagesExtensions =
+          prev.pythonPackagesExtensions
+          ++ [
+            (python-final: python-prev: {
+              aioboto3 = python-prev.aioboto3.overrideAttrs (_: {
+                doCheck = false;
+              });
+            })
+          ];
+      })
+    ];
   };
 
   home-manager = {
