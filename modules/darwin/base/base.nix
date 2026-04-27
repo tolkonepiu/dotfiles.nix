@@ -16,7 +16,7 @@
           ++ [
             (_: python-prev: {
               aioboto3 = python-prev.aioboto3.overrideAttrs (_: {
-                doCheck = false;
+                doInstallCheck = false;
               });
             })
           ];
