@@ -10,11 +10,11 @@
       allowUnfree = true;
     };
     overlays = [
-      (final: prev: {
+      (_: prev: {
         pythonPackagesExtensions =
           prev.pythonPackagesExtensions
           ++ [
-            (python-final: python-prev: {
+            (_: python-prev: {
               aioboto3 = python-prev.aioboto3.overrideAttrs (_: {
                 doCheck = false;
               });
