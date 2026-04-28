@@ -47,12 +47,12 @@ jobs:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      - name: 🧹 Reclaim disk space for Nix
+        uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+
       - uses: ./.github/actions/setup-nix
         with:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-
-      - name: 🧹 Reclaim disk space for Nix
-        uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
 
       - name: 🚀 Build Darwin configuration (${{ matrix.darwin-config }})
         run: nix build .#darwinConfigurations.${{ matrix.darwin-config }}.system
