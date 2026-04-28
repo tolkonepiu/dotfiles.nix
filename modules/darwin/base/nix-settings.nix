@@ -45,6 +45,16 @@
     # maximum number of parallel TCP connections used to fetch imports and binary caches, 0 means no limit
     http-connections = 35;
 
+    # use nix-community Cachix for community-maintained packages
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://tolkonepiu.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "tolkonepiu.cachix.org-1:G7pWK5VSW/AkjiZ737/lPVQjOvK4bMcMYZaSJiW5pHQ="
+    ];
+
     # Whether to accept nix configuration from a flake without displaying a Y/N prompt.
     accept-flake-config = false;
 

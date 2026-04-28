@@ -3,7 +3,7 @@ name: Build
 
 on:
   push:
-    branches:
+    branches: &branches
       - main
     paths: &paths
       - modules/**
@@ -12,6 +12,7 @@ on:
       - flake.nix
   pull_request:
     paths: *paths
+    branches: *branches
 
 jobs:
   discover-configs:
@@ -23,8 +24,9 @@ jobs:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: 🏗️ Install Determinate Nix
-        uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+      - uses: ./.github/actions/setup-nix
+        with:
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: 🔍 Discover configurations
         id: discover
@@ -34,23 +36,24 @@ jobs:
 
   build-macos:
     needs: discover-configs
-    if:
-      ${{ fromJSON(needs.discover-configs.outputs.darwin-configs)[0] != null }}
+    if: ${{ fromJSON(needs.discover-configs.outputs.darwin-configs)[0] != null }}
     strategy:
       matrix:
-        darwin-config:
-          ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
+        darwin-config: ${{ fromJSON(needs.discover-configs.outputs.darwin-configs) }}
     runs-on: macos-26
-    timeout-minutes: 20
+    timeout-minutes: 120
 
     steps:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: 🏗️ Install Determinate Nix
-        uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+      - uses: ./.github/actions/setup-nix
+        with:
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: 🧹 Reclaim disk space for Nix
+        uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
 
       - name: 🚀 Build Darwin configuration (${{ matrix.darwin-config }})
-        run:
-          nix build .#darwinConfigurations.${{ matrix.darwin-config }}.system
+        run: nix build .#darwinConfigurations.${{ matrix.darwin-config }}.system
           --no-link
