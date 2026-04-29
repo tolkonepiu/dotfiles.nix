@@ -576,6 +576,22 @@
         "type": "github"
       }
     },
+    "oh-my-opencode-slim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1777403705,
+        "narHash": "sha256-DWd+/+8FlUVYTFntQeX76COTZtJ7YsUece5cuAMyYb0=",
+        "owner": "alvinunreal",
+        "repo": "oh-my-opencode-slim",
+        "rev": "bd8b8aacab143252e293c4180cb0388b7735612f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alvinunreal",
+        "repo": "oh-my-opencode-slim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
@@ -599,6 +615,7 @@
         "nixos-unified": "nixos-unified",
         "nixpkgs": "nixpkgs",
         "nvf": "nvf",
+        "oh-my-opencode-slim": "oh-my-opencode-slim",
         "spicetify-nix": "spicetify-nix",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix",

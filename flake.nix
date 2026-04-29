@@ -100,6 +100,8 @@
     awesome-copilot.flake = false;
     vercel-skills.url = "github:vercel-labs/agent-skills";
     vercel-skills.flake = false;
+    oh-my-opencode-slim.url = "github:alvinunreal/oh-my-opencode-slim";
+    oh-my-opencode-slim.flake = false;
 
     # ZSH configuration
     zdotdir = {
