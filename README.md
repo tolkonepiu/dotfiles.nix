@@ -58,4 +58,3 @@
   with
   [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim/)
   multi-agent orchestration, MCP servers, plugins, and skills
-g
