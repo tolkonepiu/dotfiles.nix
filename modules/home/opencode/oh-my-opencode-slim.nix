@@ -57,6 +57,10 @@
           };
         };
       };
+
+      # Use the shared OpenCode MCP config for Context7.
+      # Disable only oh-my-opencode-slim's built-in registration.
+      disabled_mcps = ["context7"];
     };
   };
 
