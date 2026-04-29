@@ -5,7 +5,10 @@ _: {
     enableExtraDiagnostics = true;
 
     nix.enable = true;
-    markdown.enable = true;
+    markdown = {
+      enable = true;
+      format.type = ["prettierd"];
+    };
     bash.enable = true;
     json.enable = true;
     typescript.enable = true;
