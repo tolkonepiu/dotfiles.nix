@@ -59,4 +59,12 @@
       };
     };
   };
+
+  # Use oh-my-opencode-slim subagents instead of OpenCode built-ins.
+  programs.opencode.settings = {
+    agent = {
+      explore.disable = true;
+      general.disable = true;
+    };
+  };
 }
