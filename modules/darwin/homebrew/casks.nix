@@ -22,7 +22,6 @@
     "element"
 
     # Media and entertainment
-    "fx-cast-bridge"
     "vlc"
   ];
 }
