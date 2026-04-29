@@ -9,6 +9,18 @@
     config = {
       allowUnfree = true;
     };
+
+    overlays = [
+      (_final: prev: {
+        python3Packages =
+          prev.python3Packages
+          // {
+            fastmcp = prev.python3Packages.fastmcp.overrideAttrs (_old: {
+              doCheck = false;
+            });
+          };
+      })
+    ];
   };
 
   home-manager = {
