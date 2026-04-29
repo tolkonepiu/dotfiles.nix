@@ -4,10 +4,13 @@
     text = builtins.toJSON {
       "$schema" = "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json";
 
-      preset = "openai";
+      autoUpdate = false;
+      showStartupToast = false;
+
+      preset = "main";
 
       presets = {
-        openai = {
+        main = {
           orchestrator = {
             model = "openai/gpt-5.5";
             skills = ["*"];
@@ -20,7 +23,10 @@
           oracle = {
             model = "openai/gpt-5.5";
             variant = "high";
-            skills = ["simplify"];
+            skills = [
+              "refactor-plan"
+              "simplify"
+            ];
             mcps = [];
           };
 
@@ -38,21 +44,30 @@
           explorer = {
             model = "openai/gpt-5.4-mini";
             variant = "low";
-            skills = [];
+            skills = ["context-map"];
             mcps = [];
           };
 
           designer = {
             model = "openai/gpt-5.4-mini";
             variant = "medium";
-            skills = [];
-            mcps = [];
+            skills = [
+              "composition-patterns"
+              "react-best-practices"
+              "react-view-transitions"
+              "web-design-guidelines"
+              "web-design-reviewer"
+            ];
+            mcps = ["playwright"];
           };
 
           fixer = {
             model = "openai/gpt-5.4-mini";
             variant = "low";
-            skills = [];
+            skills = [
+              "refactor"
+              "git-commit"
+            ];
             mcps = [];
           };
         };
