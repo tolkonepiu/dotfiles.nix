@@ -6,6 +6,7 @@ on:
     paths:
       - modules/**
       - configurations/**
+      - overlays/**
       - flake.lock
       - flake.nix
     branches:

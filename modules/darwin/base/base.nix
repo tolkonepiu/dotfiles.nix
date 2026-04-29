@@ -1,4 +1,10 @@
 {
+  lib,
+  flake,
+  ...
+}: let
+  inherit (flake.inputs) self;
+in {
   nix = {
     # We use the determinate-nix installer for macOS which manages Nix for us,
     # so we don't want nix-darwin to do it.
@@ -9,6 +15,7 @@
     config = {
       allowUnfree = true;
     };
+    overlays = lib.attrValues self.overlays;
   };
 
   home-manager = {
