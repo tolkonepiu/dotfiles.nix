@@ -39,9 +39,10 @@ in {
       "web-design-reviewer"
       # Vercel Agent Skills
       # See: https://github.com/vercel-labs/agent-skills/
-      "web-design-guidelines"
-      "react-best-practices"
       "composition-patterns"
+      "react-best-practices"
+      "react-view-transitions"
+      "web-design-guidelines"
       # oh-my-opencode-slim
       # See: https://github.com/alvinunreal/oh-my-opencode-slim/blob/master/docs/skills.md
       "codemap"
