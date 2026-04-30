@@ -18,7 +18,6 @@
     "obsidian"
 
     # Communication
-    "discord"
     "element"
 
     # Media and entertainment
