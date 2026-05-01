@@ -26,11 +26,11 @@
     "awesome-copilot": {
       "flake": false,
       "locked": {
-        "lastModified": 1777442620,
-        "narHash": "sha256-tN7lMBJ7sLOAmuIFayVZGM/EBl2MpKHK8E3Tr54xZ7U=",
+        "lastModified": 1777595396,
+        "narHash": "sha256-5wDfebcLXaREQM7Wc52xl6NV4XsGiN5JOBzJttJ1r/M=",
         "owner": "github",
         "repo": "awesome-copilot",
-        "rev": "4e1bed268d704dda5d0f865e794ee2e94252ba2f",
+        "rev": "90921cc46f4e452ea379e70884d60ec25263f16a",
         "type": "github"
       },
       "original": {
@@ -79,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777398395,
-        "narHash": "sha256-SXlXUP3hdOLeACtGbx1Q5ShhJs3WgP2SPhCnv9Ew+Hw=",
+        "lastModified": 1777574785,
+        "narHash": "sha256-wgM3MbJ0eVaJFdigFno+DGNGoQRW5XNu7VQ+KCYNNlw=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "ea21443e55c1acca99a69076539e71eaffb87db5",
+        "rev": "b2d0b8ccbe1f3af05252716d5069364fb88e0386",
         "type": "github"
       },
       "original": {
@@ -260,11 +260,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777434174,
-        "narHash": "sha256-KwTyQ5g2qDhWIs/O6vH8HeF8n4JCzZIT/VYE7nYnukQ=",
+        "lastModified": 1777594677,
+        "narHash": "sha256-h90sHwoRJLRvaTpZroTvU2JRHDFj0czUafM8eqLe1RI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d3b4e4b1bd59aedd3d4eb0a8df7162edb6da4607",
+        "rev": "899c08a15beae5da51a5cecd6b2b994777a948da",
         "type": "github"
       },
       "original": {
@@ -292,11 +292,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1777458002,
-        "narHash": "sha256-MdUP1e/Wp7kxaHt4z7WR/isVOwnvuMjQm+bAklbzui0=",
+        "lastModified": 1777593366,
+        "narHash": "sha256-UJNdCyTBF6cz6Rm+iK5pNpUBht7oRQXp+uTVFEpRQUc=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "4102c2f27d583291e80b0f1cb028423bed5f195f",
+        "rev": "dac530c3fcbaff76149e117ae616c2d457fa6ede",
         "type": "github"
       },
       "original": {
@@ -308,11 +308,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1777457426,
-        "narHash": "sha256-QAmqguLDw0bN1sCKM+yHpbEq4Z6g+daJorUQXyWpCHE=",
+        "lastModified": 1777596476,
+        "narHash": "sha256-uUvRAdpJd+lGYOGbigwA80SUS+J8B8nWOAEqa0qKa+U=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "b625dc120cecbd24a41d921021eed8935cb0a557",
+        "rev": "3b9814e7a69ccc6c22343f1302ebcd3c63a0c497",
         "type": "github"
       },
       "original": {
@@ -351,11 +351,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777317008,
-        "narHash": "sha256-7gKEaJ8OzFblQJcO+BtRhMMJUHOi84o4w+EM/XJIPik=",
+        "lastModified": 1777555748,
+        "narHash": "sha256-RvKwvF868YY6HCfVC3K1kVrlUOnn4ynWxAi5PujhFXo=",
         "owner": "natsukium",
         "repo": "mcp-servers-nix",
-        "rev": "72d86d1dd3b9021129e8b7efe7866efe5e54cc29",
+        "rev": "39253ce656ff86527a060148c40901bbbde6a4c2",
         "type": "github"
       },
       "original": {
@@ -563,11 +563,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777150561,
-        "narHash": "sha256-YLVqyn6LpFa+h697TmZIk0qVIbe7MxMpL8UTF4K+efA=",
+        "lastModified": 1777478067,
+        "narHash": "sha256-2vZnUuv8fg2sIE6pXgGxZQQ3ZhQW1XE7Sxieg8gK2p4=",
         "owner": "NotAShelf",
         "repo": "nvf",
-        "rev": "5b4f9c63205e5b0ef180a2b0e4cc844111f96fa6",
+        "rev": "13c4ad4b4bb926c22945e2fb8862769fe51f27f1",
         "type": "github"
       },
       "original": {
@@ -579,11 +579,11 @@
     "oh-my-opencode-slim": {
       "flake": false,
       "locked": {
-        "lastModified": 1777403705,
-        "narHash": "sha256-DWd+/+8FlUVYTFntQeX76COTZtJ7YsUece5cuAMyYb0=",
+        "lastModified": 1777571811,
+        "narHash": "sha256-HMtLseaR2H6vpfTtEY5Xdypnv710LpHKfnJqRfkryds=",
         "owner": "alvinunreal",
         "repo": "oh-my-opencode-slim",
-        "rev": "bd8b8aacab143252e293c4180cb0388b7735612f",
+        "rev": "02732194523c988a266186d54bbdfc3a1b9438fc",
         "type": "github"
       },
       "original": {
