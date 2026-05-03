@@ -14,11 +14,6 @@
     # System utilities
     "amphetamine" = 937984704;
 
-    # Communication
-    "mattermost" = 1614666244;
-    "slack" = 803453959;
-    "telegram" = 747648890;
-
     # Security and VPN
     "wireguard" = 1451685025;
   };

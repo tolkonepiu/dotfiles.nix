@@ -19,6 +19,9 @@
 
     # Communication
     "element"
+    "mattermost"
+    "slack"
+    "telegram"
 
     # Media and entertainment
     "vlc"
