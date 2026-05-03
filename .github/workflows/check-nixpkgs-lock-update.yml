@@ -1,0 +1,52 @@
+name: Check nixpkgs lock update
+
+on:
+  pull_request:
+    paths:
+      - flake.lock
+
+permissions:
+  contents: read
+
+jobs:
+  check-nixpkgs-lock-update:
+    runs-on: ubuntu-latest
+
+    env:
+      NIXPKGS_INPUT: nixpkgs
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🧬 Compare nixpkgs rev in flake.lock
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          base_file="$(mktemp)"
+
+          git show "origin/${{ github.base_ref }}:flake.lock" > "$base_file"
+
+          old_rev="$(
+            jq -er --arg input "$NIXPKGS_INPUT" \
+              '.nodes[$input].locked.rev' "$base_file"
+          )"
+
+          new_rev="$(
+            jq -er --arg input "$NIXPKGS_INPUT" \
+              '.nodes[$input].locked.rev' flake.lock
+          )"
+
+          echo "Base nixpkgs rev: $old_rev"
+          echo "PR nixpkgs rev:   $new_rev"
+
+          if [[ "$old_rev" == "$new_rev" ]]; then
+            echo "::error::flake.lock changed, but nixpkgs rev did not change."
+            echo "::error::This Renovate PR appears to update only non-nixpkgs inputs."
+            exit 1
+          fi
+
+          echo "nixpkgs rev changed: $old_rev -> $new_rev"
