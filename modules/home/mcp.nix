@@ -8,7 +8,6 @@ in {
   programs.mcp.enable = true;
 
   mcp-servers.programs = {
-    git.enable = true;
     context7.enable = true;
     playwright = {
       enable = true;

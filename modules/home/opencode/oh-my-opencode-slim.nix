@@ -38,6 +38,7 @@
               "websearch"
               "context7"
               "grep_app"
+              "github"
             ];
           };
 
@@ -49,7 +50,7 @@
           };
 
           designer = {
-            model = "openai/gpt-5.4-mini";
+            model = "github-copilot/gemini-3.1-pro-preview";
             variant = "medium";
             skills = [
               "composition-patterns"
