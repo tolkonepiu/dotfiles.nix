@@ -14,7 +14,6 @@ _: {
         # Privacy
         "easyprivacy"
         "adguard-spyware-url"
-        "block-lan"
         # Malware protection, security
         "urlhaus-1"
         "curben-phishing"
