@@ -5,10 +5,10 @@
 }: let
   inherit (flake.inputs) self;
 in {
-  nix = {
-    # We use the determinate-nix installer for macOS which manages Nix for us,
-    # so we don't want nix-darwin to do it.
-    enable = false;
+  determinateNix = {
+    # Let Determinate Nix manage Nix configuration.
+    # This also disables nix-darwin's built-in Nix management.
+    enable = true;
   };
 
   nixpkgs = {
