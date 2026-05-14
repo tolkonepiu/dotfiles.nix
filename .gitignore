@@ -3,3 +3,7 @@
 
 # pre-commit
 .pre-commit-config.yaml
+
+# mcp-servers-nix
+.mcp.json
+opencode.json
