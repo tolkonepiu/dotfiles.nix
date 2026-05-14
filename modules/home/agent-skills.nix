@@ -31,7 +31,6 @@ in {
       "create-implementation-plan"
       "create-readme"
       "create-specification"
-      "gh-cli"
       "git-commit"
       "github-issues"
       "refactor-plan"
