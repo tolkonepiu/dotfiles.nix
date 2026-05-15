@@ -44,6 +44,7 @@ in {
       "web-design-guidelines"
       # oh-my-opencode-slim
       # See: https://github.com/alvinunreal/oh-my-opencode-slim/blob/master/docs/skills.md
+      "clonedeps"
       "codemap"
       "simplify"
     ];
