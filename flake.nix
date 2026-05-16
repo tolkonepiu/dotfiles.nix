@@ -45,14 +45,7 @@
     };
 
     # Homebrew
-    nix-homebrew = {
-      url = "github:zhaofengli/nix-homebrew";
-      inputs.brew-src.follows = "homebrew-brew";
-    };
-    homebrew-brew = {
-      url = "github:Homebrew/brew";
-      flake = false;
-    };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;

@@ -55,6 +55,23 @@
         "type": "github"
       }
     },
+    "brew-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778146321,
+        "narHash": "sha256-HeBwuJmuBioZHyZqDOcf7W/xsMFupSD583v6I5Cl7a8=",
+        "owner": "Homebrew",
+        "repo": "brew",
+        "rev": "af835384ac574f76025adb38b292b04cecee1f1f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Homebrew",
+        "ref": "5.1.10",
+        "repo": "brew",
+        "type": "github"
+      }
+    },
     "catppuccin": {
       "inputs": {
         "nixpkgs": [
@@ -256,22 +273,6 @@
         "type": "github"
       }
     },
-    "homebrew-brew": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1778799216,
-        "narHash": "sha256-zdF9BcmnSIWxGzWIaoHF8NnyYqZ8F8WZPe9KK/2SvC8=",
-        "owner": "Homebrew",
-        "repo": "brew",
-        "rev": "377eef6431ccc94648db99e46e0660ca479c26d9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Homebrew",
-        "repo": "brew",
-        "type": "github"
-      }
-    },
     "homebrew-bundle": {
       "flake": false,
       "locked": {
@@ -450,9 +451,7 @@
     },
     "nix-homebrew": {
       "inputs": {
-        "brew-src": [
-          "homebrew-brew"
-        ]
+        "brew-src": "brew-src"
       },
       "locked": {
         "lastModified": 1778332591,
@@ -605,7 +604,6 @@
         "flake-utils": "flake-utils",
         "git-hooks-nix": "git-hooks-nix",
         "home-manager": "home-manager",
-        "homebrew-brew": "homebrew-brew",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
