@@ -7,7 +7,7 @@
     commitMessageAction: "flake.lock update",
     schedule: ["* 0-2 * * 1,3,5"],
     recreateWhen: "always",
-    rebaseStalePrs: true,
+    rebaseWhen: "behind-base-branch",
   },
   nix: {
     enabled: true,
@@ -29,7 +29,7 @@
       description: "Process npm package strings in Nix files",
       managerFilePatterns: ["/\\.nix$/"],
       matchStrings: [
-        '"(?<depName>@?[-\\w.]+(?:/[-\\w.]+)?)@(?<currentValue>\\d[^\"]*)"',
+        '"(?<depName>@?[-\\w.]+(?:/[-\\w.]+)?)@(?<currentValue>\\d[^"]*)"',
       ],
       datasourceTemplate: "npm",
     },
@@ -38,8 +38,6 @@
       description: "Process annotated dependencies in Nix files",
       managerFilePatterns: ["/\\.nix$/"],
       matchStrings: [
-        // # renovate: datasource=github-releases depName=some/dep
-        // version = "1.2.3";
         'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(=\\s+"|:\\s|=)(&\\S+\\s)?(?<currentValue>[\\w]\\S+?)"?;',
       ],
       datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
