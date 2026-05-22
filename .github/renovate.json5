@@ -6,19 +6,20 @@
     enabled: true,
     commitMessageAction: "flake.lock update",
     schedule: ["* 0-2 * * 1,3,5"],
+    recreateWhen: "always",
+    rebaseStalePrs: true,
   },
   nix: {
     enabled: true,
   },
   packageRules: [
     {
-      matchUpdateTypes: [
-        "minor",
-        "patch",
-        "pin",
-        "digest",
-        "lockFileMaintenance",
-      ],
+      matchUpdateTypes: ["lockFileMaintenance"],
+      rebaseWhen: "behind-base-branch",
+      automerge: true,
+    },
+    {
+      matchUpdateTypes: ["minor", "patch", "pin", "digest"],
       automerge: true,
     },
   ],
