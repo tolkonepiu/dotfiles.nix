@@ -14,25 +14,25 @@ in {
       "${config.home.homeDirectory}/.ssh/config_external"
     ];
 
-    matchBlocks = lib.mkMerge [
+    settings = lib.mkMerge [
       {
         "*" = {
-          forwardAgent = false;
-          addKeysToAgent = "yes";
-          compression = true;
-          serverAliveInterval = 60;
-          serverAliveCountMax = 3;
-          hashKnownHosts = true;
-          userKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts";
-          controlMaster = "auto";
-          controlPath = "${config.home.homeDirectory}/.ssh/master-%r@%n:%p";
-          controlPersist = "10m";
+          ForwardAgent = false;
+          AddKeysToAgent = "yes";
+          Compression = true;
+          ServerAliveInterval = 60;
+          ServerAliveCountMax = 3;
+          HashKnownHosts = true;
+          UserKnownHostsFile = "${config.home.homeDirectory}/.ssh/known_hosts";
+          ControlMaster = "auto";
+          ControlPath = "${config.home.homeDirectory}/.ssh/master-%r@%n:%p";
+          ControlPersist = "10m";
         };
       }
 
       (lib.mkIf isDarwin {
         "*" = {
-          identityAgent = "${config.home.homeDirectory}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+          IdentityAgent = "${config.home.homeDirectory}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
         };
       })
     ];
