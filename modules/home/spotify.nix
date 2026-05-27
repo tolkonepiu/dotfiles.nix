@@ -7,7 +7,7 @@
 }: let
   inherit (flake) inputs;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [inputs.spicetify-nix.homeManagerModules.default];
 
