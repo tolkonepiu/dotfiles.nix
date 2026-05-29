@@ -8,6 +8,7 @@
     ./security
     ./finder.nix
     ./dock.nix
+    ./paneru.nix
     ./software-update.nix
     ./system.nix
     ./trackpad.nix

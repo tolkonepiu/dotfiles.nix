@@ -13,7 +13,7 @@ in {
       confirm-close-surface = false;
       font-family = "MesloLGS NF";
       font-size = 18;
-      fullscreen = true;
+      fullscreen = false;
       mouse-hide-while-typing = true;
       mouse-scroll-multiplier = 10;
       shell-integration-features = "no-cursor,no-ssh-terminfo,ssh-env,sudo,title";

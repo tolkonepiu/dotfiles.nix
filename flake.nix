@@ -87,6 +87,10 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    paneru = {
+      url = "github:karinushka/paneru";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Agent Skills
     agent-skills = {
