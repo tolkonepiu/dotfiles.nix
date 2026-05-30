@@ -96,8 +96,8 @@ in {
         quit = "ctrl + alt + shift - q";
       };
       swipe = {
-        deceleration = 0.4;
-        sensitivity = 0.4;
+        deceleration = 4.0;
+        sensitivity = 0.35;
         continuous = false;
         gesture = {
           fingers_count = 3;
