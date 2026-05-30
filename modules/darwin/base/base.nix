@@ -9,6 +9,9 @@ in {
     # Let Determinate Nix manage Nix configuration.
     # This also disables nix-darwin's built-in Nix management.
     enable = true;
+
+    # Disable Determinate Nix crash reporting
+    determinateNixd.telemetry.sentry.endpoint = null;
   };
 
   nixpkgs = {
