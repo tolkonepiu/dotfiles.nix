@@ -29,25 +29,25 @@ in {
         window_focus_north = "ctrl + alt - k";
         window_focus_east = "ctrl + alt - l";
 
-        # Move/swap focused window: same directions + shift
-        window_swap_west = "ctrl + alt + shift - h";
-        window_swap_south = "ctrl + alt + shift - j";
-        window_swap_north = "ctrl + alt + shift - k";
-        window_swap_east = "ctrl + alt + shift - l";
+        # Move/swap focused window: same directions + cmd
+        window_swap_west = "cmd + ctrl + alt - h";
+        window_swap_south = "cmd + ctrl + alt - j";
+        window_swap_north = "cmd + ctrl + alt - k";
+        window_swap_east = "cmd + ctrl + alt - l";
 
         # Strip edges
         # a / ; are home-row-ish: left edge / right edge
         window_focus_first = "ctrl + alt - a";
         window_focus_last = "ctrl + alt - ;";
-        window_swap_first = "ctrl + alt + shift - a";
-        window_swap_last = "ctrl + alt + shift - ;";
+        window_swap_first = "cmd + ctrl + alt - a";
+        window_swap_last = "cmd + ctrl + alt - ;";
 
         # Virtual workspaces / rows
         # Matches niri's default idea: U = down, I = up
         window_virtual_south = "ctrl + alt - u";
         window_virtual_north = "ctrl + alt - i";
-        window_virtualmove_south = "ctrl + alt + shift - u";
-        window_virtualmove_north = "ctrl + alt + shift - i";
+        window_virtualmove_south = "cmd + ctrl + alt - u";
+        window_virtualmove_north = "cmd + ctrl + alt - i";
 
         # Direct virtual workspace access
         window_virtualnum_1 = "ctrl + alt - 1";
@@ -61,19 +61,19 @@ in {
         window_virtualnum_9 = "ctrl + alt - 9";
 
         # Move window to numbered virtual workspace and follow it
-        window_virtualmovenum_1 = "ctrl + alt + shift - 1";
-        window_virtualmovenum_2 = "ctrl + alt + shift - 2";
-        window_virtualmovenum_3 = "ctrl + alt + shift - 3";
-        window_virtualmovenum_4 = "ctrl + alt + shift - 4";
-        window_virtualmovenum_5 = "ctrl + alt + shift - 5";
-        window_virtualmovenum_6 = "ctrl + alt + shift - 6";
-        window_virtualmovenum_7 = "ctrl + alt + shift - 7";
-        window_virtualmovenum_8 = "ctrl + alt + shift - 8";
-        window_virtualmovenum_9 = "ctrl + alt + shift - 9";
+        window_virtualmovenum_1 = "cmd + ctrl + alt - 1";
+        window_virtualmovenum_2 = "cmd + ctrl + alt - 2";
+        window_virtualmovenum_3 = "cmd + ctrl + alt - 3";
+        window_virtualmovenum_4 = "cmd + ctrl + alt - 4";
+        window_virtualmovenum_5 = "cmd + ctrl + alt - 5";
+        window_virtualmovenum_6 = "cmd + ctrl + alt - 6";
+        window_virtualmovenum_7 = "cmd + ctrl + alt - 7";
+        window_virtualmovenum_8 = "cmd + ctrl + alt - 8";
+        window_virtualmovenum_9 = "cmd + ctrl + alt - 9";
 
         # Layout actions
         window_resize = "ctrl + alt - r";
-        window_shrink = "ctrl + alt + shift - r";
+        window_shrink = "cmd + ctrl + alt - r";
 
         window_fullwidth = "ctrl + alt - f";
         window_center = "ctrl + alt - c";
@@ -86,8 +86,8 @@ in {
 
         # Multi-display
         window_nextdisplay = "ctrl + alt - n";
-        window_nextdisplaysend = "ctrl + alt + shift - n";
-        mouse_nextdisplay = "ctrl + alt + shift - m";
+        window_nextdisplaysend = "cmd + ctrl + alt - n";
+        mouse_nextdisplay = "cmd + ctrl + alt - m";
 
         # Snap current window back into viewport
         window_snap = "ctrl + alt - s";
