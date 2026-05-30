@@ -7,6 +7,7 @@ in {
     launchanim = true;
     orientation = "bottom";
     tilesize = 64;
+    showMissionControlGestureEnabled = false;
 
     persistent-apps = [
       {

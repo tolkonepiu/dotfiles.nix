@@ -5,6 +5,6 @@
     # Enable two finger right click
     TrackpadRightClick = true;
     # Swipe between full-screen applications / Spaces
-    TrackpadThreeFingerHorizSwipeGesture = 2;
+    TrackpadFourFingerHorizSwipeGesture = 2;
   };
 }
