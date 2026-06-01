@@ -13,5 +13,5 @@ in {
     atuinServer = "https://atuin.popov.wtf";
   };
 
-  home.stateVersion = "26.05";
+  home.stateVersion = "26.11";
 }
