@@ -18,7 +18,6 @@
     "obsidian"
 
     # Communication
-    "element"
     "mattermost"
     "slack"
     "telegram"

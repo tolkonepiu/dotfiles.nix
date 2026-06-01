@@ -9,7 +9,9 @@
   home.packages = with pkgs;
     [
       # System tools
+      curl
       fastfetch
+      wget
 
       # Development tools
       ast-grep
@@ -27,7 +29,6 @@
 
       # Encryption and security tools
       age
-      gnupg
       gopass
       sops
 
