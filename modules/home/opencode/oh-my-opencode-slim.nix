@@ -50,7 +50,7 @@
           };
 
           designer = {
-            model = "github-copilot/gemini-3.1-pro-preview";
+            model = "openai/gpt-5.3-codex";
             variant = "medium";
             skills = [
               "composition-patterns"
