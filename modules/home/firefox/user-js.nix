@@ -45,9 +45,7 @@ in {
 
     preConfig = lib.strings.concatLines [
       # Betterfox
-      (builtins.readFile "${inputs.betterfox}/Peskyfox.js")
-      (builtins.readFile "${inputs.betterfox}/Fastfox.js")
-      (builtins.readFile "${inputs.betterfox}/Securefox.js")
+      (builtins.readFile "${inputs.betterfox}/user.js")
     ];
   };
 }

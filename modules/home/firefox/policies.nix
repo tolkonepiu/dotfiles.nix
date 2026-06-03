@@ -75,5 +75,14 @@
       };
     };
     ExtensionUpdate = true;
+    SearchEngines = {
+      Default = "DuckDuckGo";
+      Remove = [
+        "Amazon.com"
+        "Bing"
+        "eBay"
+        "Perplexity"
+      ];
+    };
   };
 }
