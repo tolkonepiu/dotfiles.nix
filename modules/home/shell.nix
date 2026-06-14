@@ -21,8 +21,6 @@ in {
     '';
 
     sessionVariables = {
-      EDITOR = "vim";
-      ZDOTDIR_SKIP_UPDATE = "1";
       ZSH_CONFIG_PATH = "${inputs.zdotdir}";
       ANTIDOTE_BUNDLE_FILE = "${inputs.zdotdir}/.zsh_plugins.txt";
       ANTIDOTE_STATIC_FILE = "/tmp/tmp-hm-antidote-static-${inputs.zdotdir.rev}";

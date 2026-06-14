@@ -743,11 +743,11 @@
     "zdotdir": {
       "flake": false,
       "locked": {
-        "lastModified": 1781103744,
-        "narHash": "sha256-HMuLOh1cer3Tw4pj2jxDX2KWEIMC8Zif3xRIy5D1sGM=",
+        "lastModified": 1781447720,
+        "narHash": "sha256-sEomb+oNpq4t6POJ7f6CxgdaIhUuajVtoqn1udFcn0A=",
         "owner": "tolkonepiu",
         "repo": "zdotdir",
-        "rev": "7dc65687b95346c9e69fccea553ec0c15156c061",
+        "rev": "173f9bd145a2d146d1b3d8024f29264dd9525ed5",
         "type": "github"
       },
       "original": {
