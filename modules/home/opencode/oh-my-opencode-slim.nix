@@ -1,4 +1,6 @@
 {
+  home.sessionVariables.OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS = true;
+
   xdg.configFile."opencode/oh-my-opencode-slim.json" = {
     force = true;
     text = builtins.toJSON {
@@ -13,6 +15,7 @@
         main = {
           orchestrator = {
             model = "openai/gpt-5.5";
+            variant = "medium";
             skills = ["*"];
             mcps = [
               "*"
@@ -50,7 +53,7 @@
           };
 
           designer = {
-            model = "openai/gpt-5.3-codex";
+            model = "openai/gpt-5.5";
             variant = "medium";
             skills = [
               "composition-patterns"
@@ -63,7 +66,7 @@
           };
 
           fixer = {
-            model = "openai/gpt-5.4-mini";
+            model = "openai/gpt-5.5";
             variant = "low";
             skills = [
               "refactor"
@@ -80,11 +83,23 @@
     };
   };
 
-  # Use oh-my-opencode-slim subagents instead of OpenCode built-ins.
-  programs.opencode.settings = {
-    agent = {
-      explore.disable = true;
-      general.disable = true;
+  programs.opencode = {
+    settings = {
+      plugin = [
+        "oh-my-opencode-slim@2.0.2"
+      ];
+      agent = {
+        # Use oh-my-opencode-slim agents instead of OpenCode built-ins.
+        build.disable = true;
+        explore.disable = true;
+        general.disable = true;
+        plan.disable = true;
+      };
+    };
+    tui = {
+      plugin = [
+        "oh-my-opencode-slim@2.0.2"
+      ];
     };
   };
 }

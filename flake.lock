@@ -594,11 +594,11 @@
     "oh-my-opencode-slim": {
       "flake": false,
       "locked": {
-        "lastModified": 1781003428,
-        "narHash": "sha256-cxVxOZeBTdh0bmYWtXZOO43x55+0JwWCTasJvQoq9Ew=",
+        "lastModified": 1781435300,
+        "narHash": "sha256-zfaGyYl0SwK9mGO6+w22LIAl422IAFuyphxYGO49r6s=",
         "owner": "alvinunreal",
         "repo": "oh-my-opencode-slim",
-        "rev": "b7829a272284bfb6823fd87f0cb3063e1f33c628",
+        "rev": "f9445c677499782ae59bd47e23b13a51c2a46749",
         "type": "github"
       },
       "original": {
