@@ -40,7 +40,7 @@
             mcps = [
               "websearch"
               "context7"
-              "grep_app"
+              "gh_grep"
               "github"
             ];
           };
