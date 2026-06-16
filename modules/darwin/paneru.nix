@@ -13,6 +13,7 @@ in {
         focus_follows_mouse = true;
         mouse_follows_focus = true;
         auto_center = true;
+        virtual_workspace_animations = true;
 
         animation_speed = 15;
         preset_column_widths = [0.50 0.60 0.70 0.80 0.90 1.00];
@@ -91,14 +92,11 @@ in {
 
         # Snap current window back into viewport
         window_snap = "ctrl + alt - s";
-
-        # Quit Paneru
-        quit = "ctrl + alt + shift - q";
       };
       swipe = {
-        deceleration = 4.0;
-        sensitivity = 0.35;
-        continuous = false;
+        deceleration = 8.0;
+        sensitivity = 1.0;
+        continuous = true;
         gesture = {
           fingers_count = 3;
           direction = "Natural";
