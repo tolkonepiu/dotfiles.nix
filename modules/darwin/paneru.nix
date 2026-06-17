@@ -103,22 +103,6 @@ in {
           vertical = true;
         };
       };
-      decorations = {
-        active = {
-          border = {
-            enabled = true;
-            color = "#cba6f7";
-            width = 2.0;
-            radius = 12.0;
-          };
-        };
-        inactive = {
-          dim = {
-            opacity = 0.3;
-            color = "#181825";
-          };
-        };
-      };
       windows = {
         all = {
           title = ".*";
