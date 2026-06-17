@@ -16,7 +16,6 @@
       # Development tools
       ast-grep
       biome
-      cursor-cli
       devenv
       docker
       kubectl
