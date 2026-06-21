@@ -86,7 +86,7 @@
   programs.opencode = {
     settings = {
       plugin = [
-        "oh-my-opencode-slim@2.0.3"
+        "oh-my-opencode-slim@2.0.4"
       ];
       agent = {
         # Use oh-my-opencode-slim agents instead of OpenCode built-ins.
@@ -98,7 +98,7 @@
     };
     tui = {
       plugin = [
-        "oh-my-opencode-slim@2.0.3"
+        "oh-my-opencode-slim@2.0.4"
       ];
     };
   };
