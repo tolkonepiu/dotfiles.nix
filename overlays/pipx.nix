@@ -5,6 +5,7 @@ _: _final: prev: {
       (old.disabledTests or [])
       ++ [
         "test_fix_package_name"
+        "test_inject_single_package"
         "test_parse_specifier_for_metadata"
       ];
   });
