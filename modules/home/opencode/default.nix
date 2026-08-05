@@ -14,5 +14,10 @@
         "opencode-terminal-progress@0.5.0"
       ];
     };
+    tui = {
+      attention = {
+        enabled = true;
+      };
+    };
   };
 }
