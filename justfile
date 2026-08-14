@@ -34,4 +34,4 @@ build:
 # Activate the configuration
 [group('Main')]
 switch:
-  nh darwin switch .
+  nh darwin switch . --show-activation-logs
