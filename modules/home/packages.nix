@@ -54,7 +54,7 @@
       # Fonts
       meslo-lgs-nf
     ]
-    ++ lib.optionals stdenv.isDarwin [
+    ++ lib.optionals stdenv.hostPlatform.isDarwin [
       # Virtualization
       colima
       lima
