@@ -8,7 +8,6 @@ in {
   imports = [
     inputs.nix-homebrew.darwinModules.nix-homebrew
     ./taps.nix
-    ./brews.nix
     ./casks.nix
     ./appstore.nix
   ];

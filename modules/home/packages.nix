@@ -57,7 +57,9 @@
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       # Virtualization
       colima
-      lima
+
+      # Tools
+      mole-cleaner
     ];
 
   # Programs natively supported by home-manager.

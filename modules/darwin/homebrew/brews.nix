@@ -1,6 +1,0 @@
-{
-  homebrew.brews = [
-    # Tools
-    "mole"
-  ];
-}
