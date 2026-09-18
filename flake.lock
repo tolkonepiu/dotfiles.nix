@@ -552,22 +552,6 @@
         "type": "github"
       }
     },
-    "oh-my-opencode-slim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789696173,
-        "narHash": "sha256-QkKxrXRPcgcxj6Y+OgO7FKafOwX6GHa9pPcbScHMwc8=",
-        "owner": "alvinunreal",
-        "repo": "oh-my-opencode-slim",
-        "rev": "7583c14a4c1224bb108e3a2a02f16b01c3d4f527",
-        "type": "github"
-      },
-      "original": {
-        "owner": "alvinunreal",
-        "repo": "oh-my-opencode-slim",
-        "type": "github"
-      }
-    },
     "paneru": {
       "inputs": {
         "crane": "crane",
@@ -619,7 +603,6 @@
         "nixos-unified": "nixos-unified",
         "nixpkgs": "nixpkgs",
         "nvf": "nvf",
-        "oh-my-opencode-slim": "oh-my-opencode-slim",
         "paneru": "paneru",
         "spicetify-nix": "spicetify-nix",
         "systems": "systems",

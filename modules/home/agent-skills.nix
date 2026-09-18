@@ -16,10 +16,6 @@ in {
         path = inputs.vercel-skills;
         subdir = "skills";
       };
-      oh-my-opencode-slim = {
-        path = inputs.oh-my-opencode-slim;
-        subdir = "src/skills";
-      };
     };
     skills.enable = [
       # Awesome GitHub Copilot
@@ -42,14 +38,6 @@ in {
       "react-best-practices"
       "react-view-transitions"
       "web-design-guidelines"
-      # oh-my-opencode-slim
-      # See: https://github.com/alvinunreal/oh-my-opencode-slim/blob/master/docs/skills.md
-      "clonedeps"
-      "codemap"
-      "deepwork"
-      "reflect"
-      "simplify"
-      "worktrees"
     ];
     targets.agents.enable = true;
   };
