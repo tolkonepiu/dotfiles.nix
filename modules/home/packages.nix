@@ -18,6 +18,7 @@
       biome
       devenv
       docker
+      docker-compose
       kubectl
       markdownlint-cli
       nixd
