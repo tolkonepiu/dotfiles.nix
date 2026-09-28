@@ -10,7 +10,7 @@
     settings = {
       plugin = [
         "opencode-wakatime@1.3.9"
-        "opencode-atuin-history@0.2.1"
+        "opencode-atuin-history@1.0.1"
         "opencode-terminal-progress@1.0.2"
       ];
     };
