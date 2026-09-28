@@ -11,7 +11,7 @@
       plugin = [
         "opencode-wakatime@1.3.9"
         "opencode-atuin-history@0.2.1"
-        "opencode-terminal-progress@0.5.1"
+        "opencode-terminal-progress@1.0.2"
       ];
     };
     tui = {
