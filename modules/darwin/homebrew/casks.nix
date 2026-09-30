@@ -6,6 +6,7 @@
 
     # Privacy and security
     "1password"
+    "happ"
     "keybase"
     "secretive"
     "tailscale-app"

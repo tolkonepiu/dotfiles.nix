@@ -13,8 +13,5 @@
 
     # System utilities
     "amphetamine" = 937984704;
-
-    # Security and VPN
-    "wireguard" = 1451685025;
   };
 }
