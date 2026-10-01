@@ -9,7 +9,7 @@
     enableMcpIntegration = true;
     settings = {
       plugin = [
-        "opencode-wakatime@1.3.9"
+        "opencode-wakatime@1.4.0"
         "opencode-atuin-history@1.0.1"
         "opencode-terminal-progress@1.0.2"
       ];
