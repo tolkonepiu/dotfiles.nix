@@ -93,6 +93,7 @@
         # Use oh-my-opencode-slim agents instead of OpenCode built-ins.
         build.disable = true;
         explore.disable = true;
+        explorer.disable = false;
         general.disable = true;
         plan.disable = true;
       };
