@@ -16,7 +16,7 @@
       presets = {
         main = {
           orchestrator = {
-            model = "openai/gpt-5.6-terra";
+            model = "openai/gpt-6-astra";
             variant = "xhigh";
             skills = ["*"];
             mcps = [
@@ -26,7 +26,7 @@
           };
 
           oracle = {
-            model = "openai/gpt-5.6-sol";
+            model = "openai/gpt-6.1-sol";
             variant = "xhigh";
             skills = [
               "refactor-plan"
@@ -36,7 +36,7 @@
           };
 
           librarian = {
-            model = "openai/gpt-5.6-luna";
+            model = "openai/gpt-6-luna";
             variant = "low";
             skills = [];
             mcps = [
@@ -47,14 +47,14 @@
           };
 
           explorer = {
-            model = "openai/gpt-5.6-luna";
+            model = "openai/gpt-6-luna";
             variant = "low";
             skills = ["context-map"];
             mcps = [];
           };
 
           designer = {
-            model = "openai/gpt-5.6-terra";
+            model = "openai/gpt-6-astra";
             variant = "medium";
             skills = [
               "composition-patterns"
@@ -67,7 +67,7 @@
           };
 
           fixer = {
-            model = "openai/gpt-5.6-terra";
+            model = "openai/gpt-6-astra";
             variant = "low";
             skills = [
               "refactor"
