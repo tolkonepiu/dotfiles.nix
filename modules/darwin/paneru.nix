@@ -94,8 +94,8 @@ in {
         window_snap = "ctrl + alt - s";
       };
       swipe = {
-        deceleration = 8.0;
-        sensitivity = 1.0;
+        deceleration = 4.0;
+        sensitivity = 0.35;
         continuous = true;
         gesture = {
           fingers_count = 3;
