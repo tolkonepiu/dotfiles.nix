@@ -108,7 +108,13 @@ in {
           title = ".*";
           horizontal_padding = 6;
           vertical_padding = 0;
-          width = 0.5;
+          width = 0.8;
+        };
+        firefox_pip = {
+          bundle_id = "org.nixos.firefox";
+          title = "^Picture\\-in\\-Picture$";
+          floating = true;
+          grid = "12:12:9:9:3:3";
         };
       };
     };
