@@ -27,23 +27,6 @@
       };
     };
 
-    # Determinate
-    nix = {
-      url = "github:DeterminateSystems/nix-src";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        git-hooks-nix.follows = "git-hooks-nix";
-      };
-    };
-    determinate = {
-      url = "github:DeterminateSystems/determinate";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nix.follows = "nix";
-      };
-    };
-
     # Homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     homebrew-bundle = {

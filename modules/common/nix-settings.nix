@@ -1,17 +1,17 @@
 {
-  determinateNix.customSettings = {
+  lib,
+  pkgs,
+  ...
+}: {
+  nix.settings = {
     # let the system decide the number of max jobs
     max-jobs = "auto";
-    eval-cores = 0;
     cores = 0;
 
     allowed-users = ["*"];
 
-    # only allow sudo users to manage the nix store
-    trusted-users = [
-      "root"
-      "@admin"
-    ];
+    # Root and configured users are trusted by myusers.nix.
+    trusted-users = lib.optionals pkgs.stdenv.hostPlatform.isDarwin ["@admin"];
 
     # build inside sandboxed environments
     sandbox = true;
@@ -29,8 +29,10 @@
     # show more log lines for failed builds
     log-lines = 30;
 
-    # enable extra experimental features
+    # Enable the CLI and flakes alongside supported experimental features.
     extra-experimental-features = [
+      "nix-command"
+      "flakes"
       "parse-toml-timestamps"
       "pipe-operators"
       "blake3-hashes"
