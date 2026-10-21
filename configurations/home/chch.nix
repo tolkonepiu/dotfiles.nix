@@ -7,7 +7,7 @@ in {
   ];
 
   me = {
-    username = "chchmthrfckr";
+    username = "chch";
     fullname = "Pavel Popov";
     email = "me@popov.wtf";
     atuinServer = "https://atuin.chchlabs.dev";

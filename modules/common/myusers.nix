@@ -21,7 +21,7 @@ in {
       defaultText = "All users under ./configuration/users are included by default";
       default = let
         dirContents = builtins.readDir (self + /configurations/home);
-        fileNames = builtins.attrNames dirContents; # Extracts keys: [ "chchmthrfckr.nix" ]
+        fileNames = builtins.attrNames dirContents;
         regularFiles = builtins.filter (name: dirContents.${name} == "regular") fileNames; # Filters for regular files
         baseNames = map (name: builtins.replaceStrings [".nix"] [""] name) regularFiles; # Removes .nix extension
       in

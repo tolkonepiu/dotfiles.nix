@@ -14,5 +14,5 @@ in {
 
   networking.hostName = "chch-mbp-m4pro";
 
-  system.primaryUser = "chchmthrfckr";
+  system.primaryUser = "chch";
 }
