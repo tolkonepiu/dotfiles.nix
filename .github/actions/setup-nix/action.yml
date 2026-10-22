@@ -14,8 +14,8 @@ runs:
       uses: cachix/install-nix-action@448cde739abec1eaf0646249e3d25bb8d9bc7702 # v31.11.2
       with:
         extra_nix_config: |
-          extra-substituters = https://nyx-cache.chaotic.cx/
-          extra-trusted-public-keys = nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=
+          substituters = https://cache.nixos.org/ https://nyx-cache.chaotic.cx/
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=
     - name: 🏗️ Setup cachix
       uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
       with:
@@ -23,3 +23,14 @@ runs:
         signingKey: ${{ inputs.signingKey }}
         authToken: ${{ inputs.authToken }}
         extraPullNames: nix-community
+    - name: 🔍 Verify Nyx cache
+      shell: bash
+      run: |
+        substituters=$(nix config show substituters)
+        trusted_public_keys=$(nix config show trusted-public-keys)
+        printf 'substituters = %s\ntrusted-public-keys = %s\n' "$substituters" "$trusted_public_keys"
+        if [[ " $substituters " != *" https://nyx-cache.chaotic.cx/ "* ]] ||
+           [[ " $trusted_public_keys " != *" nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk= "* ]]; then
+          echo '::error::Nyx cache URL or signing key is missing after Cachix setup.'
+          exit 1
+        fi
