@@ -7,6 +7,7 @@
 }: {
   imports = [
     ../common
+    ./auto-upgrade.nix
     flake.inputs.chaotic.nixosModules.default
     flake.inputs.disko.nixosModules.disko
   ];
