@@ -60,6 +60,7 @@
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       # Virtualization
       colima
+      lima-full
 
       # Tools
       mole-cleaner
