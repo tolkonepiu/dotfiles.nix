@@ -1,7 +1,6 @@
 {
   config,
   flake,
-  lib,
   pkgs,
   ...
 }: {
@@ -34,7 +33,6 @@
   programs.niri.enable = true;
 
   environment.systemPackages = with pkgs; [
-    squeekboard
     fuzzel
     waybar
     swaylock
@@ -48,7 +46,6 @@
     cp ${config.programs.niri.package.src}/resources/default-config.kdl "$out"
     chmod u+w "$out"
     substituteInPlace "$out" --replace-fail alacritty ghostty
-    printf '\nspawn-at-startup "${lib.getExe pkgs.squeekboard}"\n' >> "$out"
   '';
 
   systemd.tmpfiles.rules = [
