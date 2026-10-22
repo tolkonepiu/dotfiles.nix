@@ -1,5 +1,5 @@
 {
-  description = "tolkonepiu's dotfiles.nix for macOS";
+  description = "tolkonepiu's dotfiles.nix for macOS and NixOS";
 
   inputs = {
     # Principle inputs (updated by `nix run .#update`)
@@ -15,6 +15,9 @@
     nixos-unified.url = "github:srid/nixos-unified";
     flake-compat.url = "github:NixOS/flake-compat";
     flake-compat.flake = false;
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # Devshell
     treefmt-nix.url = "github:numtide/treefmt-nix";

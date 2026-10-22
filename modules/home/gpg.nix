@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
   programs.gpg = {

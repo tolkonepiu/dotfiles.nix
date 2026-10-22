@@ -6,12 +6,16 @@ inputs:
     required: false
   authToken:
     description: Cachix auth token
-    required: true
+    required: false
 runs:
   using: composite
   steps:
     - name: 🏗️ Install Nix
       uses: cachix/install-nix-action@448cde739abec1eaf0646249e3d25bb8d9bc7702 # v31.11.2
+      with:
+        extra_nix_config: |
+          extra-substituters = https://nyx-cache.chaotic.cx/
+          extra-trusted-public-keys = nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk=
     - name: 🏗️ Setup cachix
       uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
       with:
