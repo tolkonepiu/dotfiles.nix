@@ -1,10 +1,4 @@
-{
-  config,
-  flake,
-  lib,
-  pkgs,
-  ...
-}: {
+{flake, ...}: {
   imports = [
     flake.inputs.self.nixosModules.default
     flake.inputs.chaotic.vendored.jovian.nixosModules.default
@@ -27,29 +21,11 @@
       enable = true;
       autoStart = true;
       user = "chch";
-      desktopSession = "niri";
+      desktopSession = "plasma";
     };
   };
-  # Jovian autoStart manages session selection between Gaming Mode and niri.
-  programs.niri.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    squeekboard
-    fuzzel
-    waybar
-    swaylock
-    brightnessctl
-    playerctl
-    xwayland-satellite
-  ];
-  security.pam.services.swaylock = {};
-
-  home-manager.users.chch.xdg.configFile."niri/config.kdl".source = pkgs.runCommand "niri-config.kdl" {} ''
-    cp ${config.programs.niri.package.src}/resources/default-config.kdl "$out"
-    chmod u+w "$out"
-    substituteInPlace "$out" --replace-fail alacritty ghostty
-    printf '\nspawn-at-startup "${lib.getExe pkgs.squeekboard}"\n' >> "$out"
-  '';
+  services.desktopManager.plasma6.enable = true;
+  # Jovian configures SDDM itself for Gaming Mode and Plasma Wayland switching.
 
   systemd.tmpfiles.rules = [
     "d /games 0755 chch users -"
