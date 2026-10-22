@@ -12,11 +12,15 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   discover-configs:
     runs-on: ubuntu-latest
     outputs:
       darwin-configs: ${{ steps.discover.outputs.darwin-configs }}
+      nixos-configs: ${{ steps.discover.outputs.nixos-configs }}
 
     steps:
       - name: ⤵️ Checkout repository
@@ -29,9 +33,7 @@ jobs:
 
       - name: 🔍 Discover configurations
         id: discover
-        run: |
-          darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
-          echo "darwin-configs=$darwin_configs" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/discover-configs
 
   diff-macos:
     needs: discover-configs
@@ -57,12 +59,37 @@ jobs:
         with:
           mode: diff-only
           attributes: |
-            - displayName: ${{ matrix.darwin-config }}
+            - displayName: Darwin / ${{ matrix.darwin-config }}
               attribute: darwinConfigurations.${{ matrix.darwin-config }}.config.system.build.toplevel
 
+  diff-nixos:
+    needs: discover-configs
+    if: ${{ fromJSON(needs.discover-configs.outputs.nixos-configs)[0] != null }}
+    strategy:
+      matrix:
+        nixos-config: ${{ fromJSON(needs.discover-configs.outputs.nixos-configs) }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 🏗️ Install Nix
+        uses: ./.github/actions/setup-nix
+        with:
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: 🚀 Generate nix diff (${{ matrix.nixos-config }})
+        uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7 # v1.1.1
+        with:
+          mode: diff-only
+          attributes: |
+            - displayName: NixOS / ${{ matrix.nixos-config }}
+              attribute: nixosConfigurations.${{ matrix.nixos-config }}.config.system.build.toplevel
+
   comment:
-    needs: diff-macos
-    runs-on: ubuntu-latest
+    needs: [diff-macos, diff-nixos]
+    runs-on: ubuntu-26.04
     permissions:
       actions: read
       pull-requests: write

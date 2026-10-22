@@ -15,11 +15,15 @@ on:
     paths: *paths
     branches: *branches
 
+permissions:
+  contents: read
+
 jobs:
   discover-configs:
     runs-on: ubuntu-latest
     outputs:
       darwin-configs: ${{ steps.discover.outputs.darwin-configs }}
+      nixos-configs: ${{ steps.discover.outputs.nixos-configs }}
 
     steps:
       - name: ⤵️ Checkout repository
@@ -32,9 +36,7 @@ jobs:
 
       - name: 🔍 Discover configurations
         id: discover
-        run: |
-          darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json 2>/dev/null || echo '[]')
-          echo "darwin-configs=$darwin_configs" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/discover-configs
 
   build-macos:
     needs: discover-configs
@@ -60,4 +62,33 @@ jobs:
       - name: 🚀 Build Darwin configuration (${{ matrix.darwin-config }})
         run: >
           nix build .#darwinConfigurations.${{ matrix.darwin-config }}.system
+          --no-link --print-build-logs
+
+  build-nixos:
+    needs: discover-configs
+    if: ${{ fromJSON(needs.discover-configs.outputs.nixos-configs)[0] != null }}
+    strategy:
+      fail-fast: false
+      matrix:
+        nixos-config: ${{ fromJSON(needs.discover-configs.outputs.nixos-configs) }}
+    runs-on: ubuntu-26.04
+    timeout-minutes: 120
+
+    steps:
+      - name: ⤵️ Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 🧹 Reclaim disk space for Nix
+        uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+
+      - name: 🏗️ Install Nix
+        uses: ./.github/actions/setup-nix
+        with:
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: 🚀 Build NixOS configuration (${{ matrix.nixos-config }})
+        env:
+          NIXOS_CONFIG: ${{ matrix.nixos-config }}
+        run: >
+          nix build ".#nixosConfigurations.${NIXOS_CONFIG}.config.system.build.toplevel"
           --no-link --print-build-logs

@@ -2,6 +2,14 @@
 # https://just.systems/
 # run `just` from this directory to see available commands
 
+nh_system := if os() == "macos" {
+  "darwin"
+} else if os() == "linux" {
+  "os"
+} else {
+  error("Unsupported operating system: " + os())
+}
+
 # Default command when 'just' is run without arguments
 default:
   @just --list
@@ -29,9 +37,9 @@ dev:
 # Build the configuration
 [group('Main')]
 build:
-  nh darwin build .
+  nh {{nh_system}} build .
 
 # Activate the configuration
 [group('Main')]
 switch:
-  nh darwin switch . --show-activation-logs
+  nh {{nh_system}} switch . --show-activation-logs

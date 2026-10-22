@@ -7,7 +7,7 @@
 </h1>
 
 <p align="center">
-  My personal macOS configuration using Nix,
+  My personal macOS and NixOS configurations using Nix,
   <a href="https://github.com/nix-darwin/nix-darwin">nix-darwin</a>, and
   <a href="https://github.com/nix-community/home-manager">home-manager</a>.
 </p>
