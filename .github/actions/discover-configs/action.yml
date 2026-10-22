@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-action.json
+name: Discover configurations
+description: Discover Darwin and NixOS configurations in the current checkout (requires Nix).
+
+outputs:
+  darwin-configs:
+    description: JSON array of Darwin configuration names
+    value: ${{ steps.discover.outputs.darwin-configs }}
+  nixos-configs:
+    description: JSON array of NixOS configuration names
+    value: ${{ steps.discover.outputs.nixos-configs }}
+
+runs:
+  using: composite
+  steps:
+    - name: Discover configurations
+      id: discover
+      shell: bash
+      run: |
+        set -euo pipefail
+        darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json)
+        nixos_configs=$(nix eval .#nixosConfigurations --apply builtins.attrNames --json)
+        echo "darwin-configs=$darwin_configs" >> "$GITHUB_OUTPUT"
+        echo "nixos-configs=$nixos_configs" >> "$GITHUB_OUTPUT"

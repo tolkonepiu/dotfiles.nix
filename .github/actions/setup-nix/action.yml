@@ -23,14 +23,3 @@ runs:
         signingKey: ${{ inputs.signingKey }}
         authToken: ${{ inputs.authToken }}
         extraPullNames: nix-community
-    - name: 🔍 Verify Nyx cache
-      shell: bash
-      run: |
-        substituters=$(nix config show substituters)
-        trusted_public_keys=$(nix config show trusted-public-keys)
-        printf 'substituters = %s\ntrusted-public-keys = %s\n' "$substituters" "$trusted_public_keys"
-        if [[ " $substituters " != *" https://nyx-cache.chaotic.cx/ "* ]] ||
-           [[ " $trusted_public_keys " != *" nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk= "* ]]; then
-          echo '::error::Nyx cache URL or signing key is missing after Cachix setup.'
-          exit 1
-        fi

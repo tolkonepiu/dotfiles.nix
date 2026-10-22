@@ -36,13 +36,7 @@ jobs:
 
       - name: 🔍 Discover configurations
         id: discover
-        shell: bash
-        run: |
-          set -euo pipefail
-          darwin_configs=$(nix eval .#darwinConfigurations --apply builtins.attrNames --json)
-          nixos_configs=$(nix eval .#nixosConfigurations --apply builtins.attrNames --json)
-          echo "darwin-configs=$darwin_configs" >> "$GITHUB_OUTPUT"
-          echo "nixos-configs=$nixos_configs" >> "$GITHUB_OUTPUT"
+        uses: ./.github/actions/discover-configs
 
   build-macos:
     needs: discover-configs
