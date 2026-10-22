@@ -11,6 +11,7 @@
       # System tools
       curl
       fastfetch
+      watch
       wget
 
       # Development tools
@@ -22,6 +23,7 @@
       kubectl
       markdownlint-cli
       nixd
+      ripgrep
       shellcheck
       shfmt
       yaml-language-server
