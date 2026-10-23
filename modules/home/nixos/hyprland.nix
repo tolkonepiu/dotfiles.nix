@@ -1,6 +1,6 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    settings.ecosystem.no_update_news = true;
+    settings.config.ecosystem.no_update_news = true;
   };
 }
