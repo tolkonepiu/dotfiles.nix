@@ -5,6 +5,7 @@
   pkgs,
   ...
 }: let
+  inherit (flake) inputs;
   actions = config.lib.niri.actions;
   noctalia = lib.getExe config.programs.noctalia.package;
 in {
