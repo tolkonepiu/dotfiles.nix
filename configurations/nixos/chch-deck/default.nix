@@ -17,17 +17,37 @@
   };
 
   jovian = {
-    devices.steamdeck.enable = true;
+    devices.steamdeck = {
+      enable = true;
+      # Allow Steam to control TDP and GPU clocks.
+      enablePerfControlUdevRules = true;
+      # Use Valve's software-controlled fan curve.
+      enableOsFanControl = true;
+    };
     steam = {
       enable = true;
       autoStart = true;
       user = "chch";
       desktopSession = "niri";
     };
+    # Enable Decky Loader in Steam Gaming Mode.
+    decky-loader.enable = true;
   };
   # Jovian switches between Gaming Mode and the native niri session.
 
   home-manager.sharedModules = [./niri.nix ./noctalia.nix ./keyboard.nix];
+
+  # Compressed RAM swap for memory-heavy games and emulators.
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
+
+  # Periodically trim unused blocks on the SSD.
+  services.fstrim.enable = true;
+  # Allow games to request temporary performance optimizations.
+  programs.gamemode.enable = true;
 
   systemd.tmpfiles.rules = [
     "d /games 0755 chch users -"
