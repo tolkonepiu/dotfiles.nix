@@ -26,6 +26,8 @@
   };
   # Jovian configures SDDM itself for Gaming Mode and Hyprland switching.
 
+  home-manager.sharedModules = [./hyprland.nix];
+
   systemd.tmpfiles.rules = [
     "d /games 0755 chch users -"
     "d /games/SteamLibrary 0755 chch users -"
