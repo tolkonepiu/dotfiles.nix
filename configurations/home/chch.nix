@@ -8,7 +8,7 @@ in {
 
   me = {
     username = "chch";
-    fullname = "Pavel Popov";
+    name = "Pavel Popov";
     email = "me@popov.wtf";
     atuinServer = "https://atuin.chchlabs.dev";
   };

@@ -34,8 +34,7 @@ in {
 
     settings = {
       user = {
-        inherit (config.me) fullname;
-        inherit (config.me) email;
+        inherit (config.me) name email;
       };
       init.defaultBranch = "main";
       core = {
