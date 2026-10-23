@@ -16,6 +16,7 @@
     flake-compat.url = "github:NixOS/flake-compat";
     flake-compat.flake = false;
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    chaotic.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -54,6 +55,14 @@
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        flake-parts.follows = "flake-parts";
+      };
+    };
     krewfile = {
       url = "github:brumhard/krewfile";
       inputs = {

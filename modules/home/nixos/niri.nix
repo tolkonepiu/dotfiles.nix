@@ -53,4 +53,11 @@ in {
       "XF86MonBrightnessDown".action = spawn noctalia "msg" "brightness-down";
     };
   };
+
+  stylix = {
+    targets = {
+      niri.enable = true;
+      gtk.enable = true;
+    };
+  };
 }
