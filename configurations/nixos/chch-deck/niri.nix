@@ -15,7 +15,8 @@ in {
   programs.niri.settings = {
     outputs."eDP-1" = {
       scale = 1;
-      transform.rotation = 270;
+      # Matches `niri msg output eDP-1 transform normal`.
+      transform.rotation = 0;
     };
     input = {
       keyboard.xkb = {
