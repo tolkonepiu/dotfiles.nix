@@ -8,6 +8,10 @@
   actions = config.lib.niri.actions;
   noctalia = lib.getExe config.programs.noctalia.package;
 in {
+  imports = [
+    inputs.niri.homeModules.stylix
+  ];
+
   programs.niri.settings = {
     input = {
       keyboard.xkb = {
@@ -54,10 +58,8 @@ in {
     };
   };
 
-  stylix = {
-    targets = {
-      niri.enable = true;
-      gtk.enable = true;
-    };
+  stylix.targets = {
+    niri.enable = true;
+    gtk.enable = true;
   };
 }
