@@ -8,6 +8,7 @@
   imports = [
     ../common
     ./auto-upgrade.nix
+    ./boot.nix
     ./niri.nix
     flake.inputs.chaotic.nixosModules.default
     flake.inputs.disko.nixosModules.disko

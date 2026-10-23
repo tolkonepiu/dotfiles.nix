@@ -2,6 +2,7 @@
   imports = [
     flake.inputs.self.nixosModules.default
     flake.inputs.chaotic.vendored.jovian.nixosModules.default
+    ./boot.nix
     ./disko.nix
     ./updater.nix
   ];
