@@ -16,10 +16,9 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
-  # Battery status for Ambxst.
+  # Battery status for desktop sessions.
   services.upower.enable = true;
   programs = {
-    hyprland.enable = true;
     zsh.enable = true;
   };
   users.users = lib.genAttrs config.myusers (_: {
