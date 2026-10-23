@@ -48,6 +48,8 @@
   services.fstrim.enable = true;
   # Allow games to request temporary performance optimizations.
   programs.gamemode.enable = true;
+  # Enable Steam Input keyboard/mouse emulation on Wayland (Niri) via uinput
+  programs.steam.extest.enable = true;
 
   systemd.tmpfiles.rules = [
     "d /games 0755 chch users -"
