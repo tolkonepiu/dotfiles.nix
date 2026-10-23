@@ -1,6 +1,18 @@
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.noctalia = {
     settings = {
+      # Disable lockscreen
+      lockscreen.enabled = false;
+      # Use a local encryption key instead of GNOME Keyring
+      storage = {
+        key_source = "file";
+        key_file = "${config.home.homeDirectory}/.local/share/noctalia/storage.key";
+      };
       # Compositor stays at scale 1. Enlarge shell controls independently.
       accessibility.ui_scale = 1.2;
       shell = {
@@ -57,4 +69,19 @@
       };
     };
   };
+
+  # Generate a persistent encryption key on first activation.
+  home.activation.noctaliaStorageKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    key="${config.home.homeDirectory}/.local/share/noctalia/storage.key"
+
+    if [ ! -f "$key" ]; then
+      # Restrict access to the key directory.
+      ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "$key")"
+      ${pkgs.coreutils}/bin/chmod 700 "$(${pkgs.coreutils}/bin/dirname "$key")"
+
+      # Generate the key with owner-only permissions.
+      umask 077
+      ${pkgs.openssl}/bin/openssl rand -hex 32 > "$key"
+    fi
+  '';
 }
