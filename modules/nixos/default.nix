@@ -16,7 +16,12 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
-  programs.zsh.enable = true;
+  # Battery status for Ambxst.
+  services.upower.enable = true;
+  programs = {
+    hyprland.enable = true;
+    zsh.enable = true;
+  };
   users.users = lib.genAttrs config.myusers (_: {
     extraGroups = ["wheel" "networkmanager"];
     shell = pkgs.zsh;

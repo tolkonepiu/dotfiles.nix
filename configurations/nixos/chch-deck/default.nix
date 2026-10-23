@@ -21,11 +21,10 @@
       enable = true;
       autoStart = true;
       user = "chch";
-      desktopSession = "plasma";
+      desktopSession = "hyprland";
     };
   };
-  services.desktopManager.plasma6.enable = true;
-  # Jovian configures SDDM itself for Gaming Mode and Plasma Wayland switching.
+  # Jovian configures SDDM itself for Gaming Mode and Hyprland switching.
 
   systemd.tmpfiles.rules = [
     "d /games 0755 chch users -"

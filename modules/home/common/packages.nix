@@ -1,0 +1,63 @@
+{pkgs, ...}: {
+  # Nix packages to install to $HOME
+  #
+  # Search for packages here: https://search.nixos.org/packages
+  home.packages = with pkgs; [
+    # System tools
+    curl
+    fastfetch
+    watch
+    wget
+
+    # Development tools
+    ast-grep
+    biome
+    devenv
+    docker
+    docker-compose
+    kubectl
+    markdownlint-cli
+    nixd
+    ripgrep
+    shellcheck
+    shfmt
+    yaml-language-server
+    yamllint
+
+    # Encryption and security tools
+    age
+    gopass
+    sops
+
+    # Python packages
+    pipx
+    pyright
+    python3
+    virtualenv
+
+    # Web development tools
+    bun
+    nodejs
+
+    # Rust packages
+    cargo
+    clippy
+    rust-analyzer
+    rustc
+    rustfmt
+
+    # Terminal utilities
+    wakatime-cli
+
+    # Fonts
+    meslo-lgs-nf
+  ];
+
+  # Programs natively supported by home-manager.
+  # They can be configured in `programs.*` instead of using home.packages.
+  programs = {
+    # Better `cat`
+    bat.enable = true;
+    jq.enable = true;
+  };
+}

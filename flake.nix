@@ -46,6 +46,8 @@
     };
 
     # Software inputs
+    ambxst.url = "github:Axenide/Ambxst";
+    ambxst.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";

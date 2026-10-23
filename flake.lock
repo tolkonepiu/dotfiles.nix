@@ -20,6 +20,27 @@
         "type": "github"
       }
     },
+    "ambxst": {
+      "inputs": {
+        "axctl": "axctl",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792333033,
+        "narHash": "sha256-mZcyEVESlm5qOW0TyRoCA+HofkSbbQMObyq3IFzbZ+Q=",
+        "owner": "Axenide",
+        "repo": "Ambxst",
+        "rev": "37ee0fcd13c8bf6fd2498e5322a175ac4edbc48f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Axenide",
+        "repo": "Ambxst",
+        "type": "github"
+      }
+    },
     "awesome-copilot": {
       "flake": false,
       "locked": {
@@ -33,6 +54,27 @@
       "original": {
         "owner": "github",
         "repo": "awesome-copilot",
+        "type": "github"
+      }
+    },
+    "axctl": {
+      "inputs": {
+        "nixpkgs": [
+          "ambxst",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792130649,
+        "narHash": "sha256-u4mu95xe7oBFv/bXWAJwATadwNcdNZ+meBlFCo2qdNk=",
+        "owner": "Axenide",
+        "repo": "axctl",
+        "rev": "24599b6d961048635f44d7128604316144cb9ee1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Axenide",
+        "repo": "axctl",
         "type": "github"
       }
     },
@@ -550,6 +592,7 @@
     "root": {
       "inputs": {
         "agent-skills": "agent-skills",
+        "ambxst": "ambxst",
         "awesome-copilot": "awesome-copilot",
         "betterfox": "betterfox",
         "catppuccin": "catppuccin",

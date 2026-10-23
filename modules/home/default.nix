@@ -1,7 +1,10 @@
-# A module that automatically imports everything else in the parent folder.
 {
-  imports = with builtins;
-    map
-    (fn: ./${fn})
-    (filter (fn: fn != "default.nix") (attrNames (readDir ./.)));
+  lib,
+  osClass,
+  ...
+}: {
+  imports =
+    [./common]
+    ++ lib.optionals (osClass == "darwin") [./darwin]
+    ++ lib.optionals (osClass == "nixos") [./nixos];
 }
