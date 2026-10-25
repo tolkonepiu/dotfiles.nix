@@ -14,10 +14,6 @@
     NoDefaultBookmarks = true;
     SearchSuggestEnabled = false;
     DisableFormHistory = true;
-    Preferences."places.history.enabled" = {
-      Value = false;
-      Status = "locked";
-    };
     DontCheckDefaultBrowser = true;
     FirefoxHome = {
       Search = true;

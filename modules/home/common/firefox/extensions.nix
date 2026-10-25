@@ -12,6 +12,8 @@ let
     "addon@karakeep.app" = "karakeep";
     # Firefox Color
     "FirefoxColor@mozilla.com" = "firefox-color";
+    # Firefox Multi-Account Containers
+    "@testpilot-containers" = "multi-account-containers";
     # Refined GitHub
     "{a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad}" = "refined-github-";
     # Augmented Steam

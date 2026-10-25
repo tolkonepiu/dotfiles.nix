@@ -13,6 +13,31 @@ in {
         settings = lib.mkMerge [
           # Common settings
           {
+            # Restore this pinned toolbar layout on each startup, clearing tab-orientation snapshots.
+            "browser.uiCustomization.state" = {
+              placements = {
+                widget-overflow-fixed-list = [];
+                nav-bar = [
+                  "alltabs-button"
+                  "sidebar-button"
+                  "back-button"
+                  "forward-button"
+                  "stop-reload-button"
+                  "vertical-spacer"
+                  "urlbar-container"
+                  "downloads-button"
+                  "reset-pbm-toolbar-button"
+                  "unified-extensions-button"
+                ];
+                TabsToolbar = [];
+                vertical-tabs = ["tabbrowser-tabs"];
+                PersonalToolbar = ["personal-bookmarks"];
+              };
+              currentVersion = 100;
+            };
+            "browser.uiCustomization.horizontalTabstrip" = "";
+            "browser.uiCustomization.navBarWhenVerticalTabs" = "";
+
             # Vertical tabs
             "sidebar.verticalTabs" = true;
             "sidebar.visibility" = "expand-on-hover";

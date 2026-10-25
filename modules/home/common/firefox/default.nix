@@ -24,14 +24,6 @@
           force = true;
         };
       };
-      work = {
-        id = 1;
-        isDefault = false;
-        name = "work";
-        extensions = {
-          force = true;
-        };
-      };
     };
   };
 
