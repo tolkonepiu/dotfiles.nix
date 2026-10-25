@@ -2,8 +2,10 @@
   programs.firefox.policies = {
     DisplayBookmarksToolbar = "never";
 
-    DisableFirefoxAccounts = false;
-    PasswordManagerEnabled = true;
+    DisableFirefoxAccounts = true;
+    PasswordManagerEnabled = false;
+    AutofillAddressEnabled = false;
+    AutofillCreditCardEnabled = false;
     DisablePocket = true;
     DisableTelemetry = true;
     HardwareAcceleration = true;
@@ -12,6 +14,10 @@
     NoDefaultBookmarks = true;
     SearchSuggestEnabled = false;
     DisableFormHistory = true;
+    Preferences."places.history.enabled" = {
+      Value = false;
+      Status = "locked";
+    };
     DontCheckDefaultBrowser = true;
     FirefoxHome = {
       Search = true;
@@ -34,14 +40,6 @@
       WebSuggestions = false;
       SponsoredSuggestions = false;
       ImproveSuggest = false;
-      Locked = true;
-    };
-    GenerativeAI = {
-      Enabled = false;
-      Chatbot = false;
-      SmartWindow = false;
-      LinkPreviews = false;
-      TabGroups = false;
       Locked = true;
     };
     AIControls = {

@@ -15,12 +15,22 @@
       "ru"
     ];
 
-    profiles.default = {
-      id = 0;
-      isDefault = true;
-      name = "default";
-      extensions = {
-        force = true;
+    profiles = {
+      default = {
+        id = 0;
+        isDefault = true;
+        name = "default";
+        extensions = {
+          force = true;
+        };
+      };
+      work = {
+        id = 1;
+        isDefault = false;
+        name = "work";
+        extensions = {
+          force = true;
+        };
       };
     };
   };
