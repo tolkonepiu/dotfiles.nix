@@ -98,7 +98,7 @@
         plan.disable = true;
       };
     };
-    tui = {
+    cli = {
       plugin = [
         "oh-my-opencode-slim@3.0.5"
       ];

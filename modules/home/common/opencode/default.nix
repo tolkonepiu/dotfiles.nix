@@ -1,8 +1,4 @@
 {
-  config,
-  lib,
-  ...
-}: {
   imports = [
     ./lsp.nix
     ./oh-my-opencode-slim.nix
@@ -17,7 +13,7 @@
         "opencode-atuin-history@1.0.1"
       ];
     };
-    tui = {
+    cli = {
       plugin = [
         "opencode-terminal-progress@1.1.0"
       ];
@@ -26,9 +22,4 @@
       };
     };
   };
-
-  # TODO: Remove once Home Manager supports OpenCode CLI plugin configuration
-  home.activation.removeOpenCodeCliConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run rm -f -- "${config.xdg.configHome}/opencode/cli.json"
-  '';
 }
