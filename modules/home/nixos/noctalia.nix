@@ -64,6 +64,7 @@
           "group:system"
           "group:connectivity"
           "group:clock"
+          "group:session"
         ];
 
         # Individual Catppuccin Mocha Crust capsules.
@@ -87,7 +88,6 @@
           {
             id = "system";
             members = [
-              "session"
               "tray"
               "volume"
               "brightness"
@@ -114,6 +114,14 @@
           {
             id = "clock";
             members = ["clock"];
+            fill = "#11111b";
+            padding = 10.0;
+            radius = 20.0;
+            opacity = 0.96;
+          }
+          {
+            id = "session";
+            members = ["session"];
             fill = "#11111b";
             padding = 10.0;
             radius = 20.0;
@@ -149,7 +157,8 @@
           drawer_item_size = 32;
         };
 
-        clock.format = "{:%a %d, %H:%M}";
+        network.show_label = false;
+        clock.format = "{:%H:%M}";
       };
 
       control_center = {

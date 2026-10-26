@@ -46,26 +46,13 @@
         };
       };
 
-      # The shared top bar leaves the bottom edge free for the OSK.
       # Bar scaling is independent of accessibility.ui_scale. 60 * 0.8 gives
       # 48px-high targets; (16px glyph + 2 * 12px padding) * 1.2 = 48px wide.
       bar.default = {
         thickness = 60;
         scale = 1.2;
-        layer = "overlay"; # Keep the keyboard button reachable in fullscreen.
         capsule_thickness = 0.8;
         capsule_padding = 12.0;
-        start = ["apps" "deck-keyboard"];
-      };
-
-      widget = {
-        deck-keyboard = {
-          type = "custom_button";
-          glyph = "keyboard";
-          label = "Keyboard";
-          tooltip = "Show or hide the on-screen keyboard";
-          actions.left = "exec deck-keyboard-toggle";
-        };
       };
     };
   };
