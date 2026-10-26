@@ -22,7 +22,6 @@ local function render(value)
         ui.label({ text = "System updates", fontSize = 13, color = "primary" }),
         ui.label({ text = titles[value.status] or titles.error, fontSize = 20, fontWeight = "bold", maxWidth = 340 }),
         ui.label({ text = value.message, maxWidth = 340, maxLines = 6 }),
-        ui.label({ text = "Updates never restart your computer automatically.", maxWidth = 340, fontSize = 12 }),
         ui.row({ gap = 8 }, {
             ui.button({ text = "Check again", onClick = "checkAgain", enabled = not value.busy }),
             ui.button({ text = "Install update", variant = "primary", onClick = "applyUpdate",
