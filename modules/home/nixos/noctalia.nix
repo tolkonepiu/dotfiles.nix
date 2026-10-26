@@ -31,7 +31,6 @@
         };
       };
 
-      # Floating top bar with separate capsule groups.
       bar.default = {
         position = lib.mkDefault "top";
         thickness = lib.mkDefault 34;
@@ -46,9 +45,10 @@
         smart_auto_hide = lib.mkDefault false;
         reserve_space = lib.mkDefault true;
         layer = lib.mkDefault "top";
+        capsule = false;
 
         start = lib.mkDefault [
-          "group:launcher"
+          "apps"
         ];
 
         center = lib.mkDefault [
@@ -56,45 +56,20 @@
         ];
 
         end = lib.mkDefault [
-          "group:system"
-          "group:connectivity"
-          "group:clock"
-          "group:session"
+          "tray"
+          "volume"
+          "brightness"
+          "bluetooth"
+          "network"
+          "battery"
+          "clock"
+          "session"
         ];
 
-        # Individual capsules.
         capsule_group = [
-          {
-            id = "launcher";
-            members = ["apps"];
-          }
           {
             id = "workspaces";
             members = ["workspaces"];
-          }
-          {
-            id = "system";
-            members = [
-              "tray"
-              "volume"
-              "brightness"
-            ];
-          }
-          {
-            id = "connectivity";
-            members = [
-              "bluetooth"
-              "network"
-              "battery"
-            ];
-          }
-          {
-            id = "clock";
-            members = ["clock"];
-          }
-          {
-            id = "session";
-            members = ["session"];
           }
         ];
       };
