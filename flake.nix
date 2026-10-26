@@ -15,10 +15,15 @@
     nixos-unified.url = "github:srid/nixos-unified";
     flake-compat.url = "github:NixOS/flake-compat";
     flake-compat.flake = false;
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    chaotic.inputs.nixpkgs.follows = "nixpkgs";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
 
     # Devshell
     treefmt-nix.url = "github:numtide/treefmt-nix";
