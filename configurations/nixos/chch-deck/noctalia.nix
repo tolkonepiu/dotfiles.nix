@@ -4,45 +4,46 @@
   pkgs,
   ...
 }: {
-  programs.noctalia = {
-    settings = {
-      shell = {
-        session = {
-          grid = true;
-          grid_columns = 2;
-          show_shortcuts = false;
-          actions = [
-            {
-              action = "logout";
-              label = "Return to Gaming Mode";
-              glyph = "device-gamepad";
-              # End the native desktop session; Jovian resumes Gaming Mode.
-              command = "niri msg action quit --skip-confirmation";
-            }
-            {
-              action = "suspend";
-              label = "Sleep";
-            }
-            {
-              action = "reboot";
-              label = "Restart";
-              countdown_seconds = 5.0;
-            }
-            {
-              action = "shutdown";
-              label = "Shut Down";
-              countdown_seconds = 5.0;
-            }
-          ];
-        };
+  programs.noctalia.settings = {
+    shell = {
+      session = {
+        grid = true;
+        grid_columns = 2;
+        show_shortcuts = false;
+        actions = [
+          {
+            action = "logout";
+            label = "Return to Gaming Mode";
+            glyph = "device-gamepad";
+            # End the native desktop session; Jovian resumes Gaming Mode.
+            command = "niri msg action quit --skip-confirmation";
+          }
+          {
+            action = "suspend";
+            label = "Sleep";
+          }
+          {
+            action = "reboot";
+            label = "Restart";
+            countdown_seconds = 5.0;
+          }
+          {
+            action = "shutdown";
+            label = "Shut Down";
+            countdown_seconds = 5.0;
+          }
+        ];
       };
-      # Disable lockscreen
-      lockscreen.enabled = false;
-      # Use a local encryption key instead of GNOME Keyring
-      storage = {
-        key_source = "file";
-        key_file = "${config.home.homeDirectory}/.local/share/noctalia/storage.key";
-      };
+    };
+    # No automatic screen locking
+    lockscreen = {
+      enabled = false;
+      lock_before_suspend = false;
+    };
+    # Use a local encryption key instead of GNOME Keyring
+    storage = {
+      key_source = "file";
+      key_file = "${config.home.homeDirectory}/.local/share/noctalia/storage.key";
     };
   };
 

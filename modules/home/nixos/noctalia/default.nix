@@ -128,6 +128,28 @@
           "session"
         ];
       };
+
+      idle = {
+        # Disable the pre-action fade animation.
+        pre_action_fade_seconds = 0.0;
+
+        behavior = {
+          # Turn off the display after 5 minutes.
+          screen-off = {
+            enabled = true;
+            timeout = 300;
+            action = "screen_off";
+          };
+
+          # Suspend after 15 minutes.
+          suspend = {
+            enabled = true;
+            timeout = 900;
+            action = "suspend";
+            lock_before_suspend = false;
+          };
+        };
+      };
     };
   };
 }
