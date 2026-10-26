@@ -5,6 +5,11 @@
 }: {
   imports = [flake.inputs.noctalia.homeModules.default];
 
+  xdg.dataFile."noctalia/plugins/nixos-update" = {
+    source = ./nixos-update;
+    recursive = true;
+  };
+
   programs.noctalia = {
     enable = true;
 
@@ -13,6 +18,7 @@
     checkConfig = true;
 
     settings = {
+      plugins.enabled = ["dotfiles/nixos-update"];
       # Catppuccin Mocha.
       theme = {
         source = "builtin";
@@ -56,6 +62,7 @@
         ];
 
         end = lib.mkDefault [
+          "nixos-update"
           "tray"
           "volume"
           "brightness"
@@ -75,6 +82,9 @@
       };
 
       widget = {
+        nixos-update = {
+          type = "dotfiles/nixos-update:status";
+        };
         # Application launcher.
         apps = {
           type = "custom_button";

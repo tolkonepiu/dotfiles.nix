@@ -4,7 +4,6 @@
     flake.inputs.chaotic.vendored.jovian.nixosModules.default
     ./boot.nix
     ./disko.nix
-    ./updater.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";

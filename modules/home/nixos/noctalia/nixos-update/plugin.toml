@@ -1,0 +1,19 @@
+id = "dotfiles/nixos-update"
+name = "NixOS updates"
+description = "Check and apply system updates without leaving the desktop."
+version = "1.0.0"
+plugin_api = 24
+author = "dotfiles"
+icon = "download"
+
+[[service]]
+id = "updater"
+entry = "service.luau"
+
+[[widget]]
+id = "status"
+entry = "widget.luau"
+
+[[panel]]
+id = "updates"
+entry = "panel.luau"
