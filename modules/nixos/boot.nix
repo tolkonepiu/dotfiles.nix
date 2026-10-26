@@ -6,9 +6,6 @@
     # Suppress non-critical kernel messages.
     consoleLogLevel = 3;
 
-    # Disable verbose initrd output.
-    initrd.verbose = false;
-
     kernelParams = [
       # Reduce kernel boot messages.
       "quiet"
