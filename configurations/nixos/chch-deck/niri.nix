@@ -6,6 +6,11 @@ in {
   wayland.systemd.target = "niri.service";
 
   programs.niri.settings = {
+    # Start the desktop client only in Niri, using NixOS's extest-enabled Steam.
+    spawn-at-startup = [
+      {command = ["/run/current-system/sw/bin/steam" "-silent"];}
+    ];
+
     outputs."eDP-1" = {
       scale = 1;
       # Matches `niri msg output eDP-1 transform normal`.

@@ -18,6 +18,8 @@
   jovian = {
     devices.steamdeck = {
       enable = true;
+      # Update BIOS and controller firmware at boot, subject to Valve's checks.
+      autoUpdate = true;
       # Allow Steam to control TDP and GPU clocks.
       enablePerfControlUdevRules = true;
       # Use Valve's software-controlled fan curve.
@@ -33,6 +35,18 @@
     decky-loader.enable = true;
   };
   # Jovian switches between Gaming Mode and the native niri session.
+
+  # Only run the vendor's firmware updaters while connected to external power.
+  systemd.services = {
+    jupiter-biosupdate = {
+      overrideStrategy = "asDropin";
+      unitConfig.ConditionACPower = true;
+    };
+    jupiter-controller-update = {
+      overrideStrategy = "asDropin";
+      unitConfig.ConditionACPower = true;
+    };
+  };
 
   home-manager.sharedModules = [./niri.nix ./noctalia.nix];
 
