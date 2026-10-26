@@ -1,6 +1,6 @@
 id = "dotfiles/nixos-update"
-name = "NixOS updates"
-description = "Check and apply system updates without leaving the desktop."
+name = "System updates"
+description = "Check for and install system updates."
 version = "1.0.0"
 plugin_api = 24
 author = "dotfiles"

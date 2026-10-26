@@ -1,10 +1,10 @@
 local labels = {
     checking = { "refresh", "", "Checking for updates" },
-    up_to_date = { "circle-check", "", "System is up to date" },
-    update_available = { "download", "Update", "System update available" },
-    updating = { "refresh", "Updating", "Applying system updates" },
+    up_to_date = { "circle-check", "", "Your system is up to date" },
+    update_available = { "download", "Update", "An update is available" },
+    updating = { "refresh", "Updating", "Installing updates" },
     reboot_required = { "power", "Restart", "Restart required" },
-    error = { "alert-triangle", "Check", "Could not update the system" },
+    error = { "alert-triangle", "Check", "Updates need your attention" },
 }
 
 local function render(value)

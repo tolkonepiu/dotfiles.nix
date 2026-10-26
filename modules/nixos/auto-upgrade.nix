@@ -22,7 +22,7 @@ in {
   system.autoUpgrade = {
     enable = lib.mkDefault true;
     flake = lib.mkDefault "github:tolkonepiu/dotfiles.nix/main#${config.networking.hostName}";
-    operation = lib.mkDefault "boot";
+    operation = lib.mkDefault "switch";
     upgrade = lib.mkDefault false;
     allowReboot = lib.mkDefault false;
     dates = lib.mkDefault "04:40";
