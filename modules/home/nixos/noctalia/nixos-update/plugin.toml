@@ -2,7 +2,7 @@ id = "dotfiles/nixos-update"
 name = "System updates"
 description = "Check for and install system updates."
 version = "1.0.0"
-plugin_api = 24
+plugin_api = 42
 author = "dotfiles"
 icon = "download"
 
@@ -17,3 +17,6 @@ entry = "widget.luau"
 [[panel]]
 id = "updates"
 entry = "panel.luau"
+width = 368
+height = "content"
+max_height = 400

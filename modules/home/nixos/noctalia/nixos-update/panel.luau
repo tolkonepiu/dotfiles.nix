@@ -38,7 +38,8 @@ local function render(value)
             ui.button({ text = "Cancel", onClick = "cancelReboot" }),
         }))
     end
-    panel.render(ui.column({ padding = 20, gap = 14, width = 380 }, children))
+    -- The host supplies 14px panel insets; let it measure the content height.
+    panel.render(ui.column({ gap = 14 }, children))
 end
 
 function checkAgain()
