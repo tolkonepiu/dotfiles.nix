@@ -6,15 +6,6 @@
 }: {
   programs.noctalia = {
     settings = {
-      # Disable lockscreen
-      lockscreen.enabled = false;
-      # Use a local encryption key instead of GNOME Keyring
-      storage = {
-        key_source = "file";
-        key_file = "${config.home.homeDirectory}/.local/share/noctalia/storage.key";
-      };
-      # Compositor stays at scale 1. Enlarge shell controls independently.
-      accessibility.ui_scale = 1.2;
       shell = {
         session = {
           grid = true;
@@ -45,14 +36,12 @@
           ];
         };
       };
-
-      # Bar scaling is independent of accessibility.ui_scale. 60 * 0.8 gives
-      # 48px-high targets; (16px glyph + 2 * 12px padding) * 1.2 = 48px wide.
-      bar.default = {
-        thickness = 60;
-        scale = 1.2;
-        capsule_thickness = 0.8;
-        capsule_padding = 12.0;
+      # Disable lockscreen
+      lockscreen.enabled = false;
+      # Use a local encryption key instead of GNOME Keyring
+      storage = {
+        key_source = "file";
+        key_file = "${config.home.homeDirectory}/.local/share/noctalia/storage.key";
       };
     };
   };

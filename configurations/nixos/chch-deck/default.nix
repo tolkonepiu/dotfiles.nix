@@ -35,7 +35,7 @@
   };
   # Jovian switches between Gaming Mode and the native niri session.
 
-  home-manager.sharedModules = [./niri.nix ./noctalia.nix ./keyboard.nix];
+  home-manager.sharedModules = [./niri.nix ./noctalia.nix];
 
   # Compressed RAM swap for memory-heavy games and emulators.
   zramSwap = {
