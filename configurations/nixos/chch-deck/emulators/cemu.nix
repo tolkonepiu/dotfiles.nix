@@ -105,7 +105,6 @@ in {
       "${configDir}/controllerProfiles"
     ]
     ++ [
-      "d ${configHome} - ${user} ${group} -"
       # Non-forcing link preserves existing MLC saves; no automatic migration.
       "L ${mlcDir}/usr/save - - - - ${savesDir}"
       # Mutable seed-once copies: existing installations require manual adoption.
