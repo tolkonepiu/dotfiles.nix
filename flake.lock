@@ -217,6 +217,32 @@
         "type": "github"
       }
     },
+    "eden": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "import-tree": [
+          "import-tree"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787680156,
+        "narHash": "sha256-fxS1QiBZ+e1sZB1xIeFD1I4WjN/Vkvz9eetVL+pYKR4=",
+        "owner": "Nyramu",
+        "repo": "eden-nix",
+        "rev": "797c79167ca382dabe1fd2365c924262b78811ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Nyramu",
+        "repo": "eden-nix",
+        "type": "github"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -429,11 +455,11 @@
     },
     "import-tree": {
       "locked": {
-        "lastModified": 1784254960,
-        "narHash": "sha256-iI88R3wHz8wTKQb5orvpc51L/Xr64AJyxid/0MKa/b8=",
+        "lastModified": 1788467110,
+        "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
         "owner": "vic",
         "repo": "import-tree",
-        "rev": "4ebb10ae17d5f1ad366e7aef5b92cb8eecf24f69",
+        "rev": "eb1b52eaecc57f7c136d07ae8a93e724dfecac46",
         "type": "github"
       },
       "original": {
@@ -733,7 +759,9 @@
         "flake-parts": [
           "flake-parts"
         ],
-        "import-tree": "import-tree",
+        "import-tree": [
+          "import-tree"
+        ],
         "nix-darwin": [
           "nix-darwin"
         ],
@@ -763,6 +791,7 @@
         "catppuccin": "catppuccin",
         "chaotic": "chaotic",
         "disko": "disko",
+        "eden": "eden",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
@@ -771,6 +800,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "import-tree": "import-tree",
         "krewfile": "krewfile",
         "mcp-servers-nix": "mcp-servers-nix",
         "niri": "niri",

@@ -17,6 +17,7 @@
     flake-compat.flake = false;
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    import-tree.url = "github:vic/import-tree";
     chaotic = {
       url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
       inputs = {
@@ -95,6 +96,15 @@
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
         nix-darwin.follows = "nix-darwin";
+        import-tree.follows = "import-tree";
+      };
+    };
+    eden = {
+      url = "github:Nyramu/eden-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
       };
     };
 
