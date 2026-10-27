@@ -13,6 +13,7 @@ in {
   systemd.tmpfiles.rules = map (path: "d ${path} 0755 ${user} ${group} -") [
     paths.root
     paths.bios
+    paths.roms
     paths.saves
     paths.states
   ];
