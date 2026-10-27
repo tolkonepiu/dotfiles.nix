@@ -1,10 +1,17 @@
-{flake, ...}: {
+{
+  config,
+  flake,
+  ...
+}: let
+  user = config.jovian.steam.user;
+  group = config.users.users.${user}.group;
+in {
   imports = [
     flake.inputs.self.nixosModules.default
     flake.inputs.chaotic.vendored.jovian.nixosModules.default
     ./boot.nix
     ./disko.nix
-    ./emulators.nix
+    ./emulators
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -33,7 +40,11 @@
       desktopSession = "niri";
     };
     # Enable Decky Loader in Steam Gaming Mode.
-    decky-loader.enable = true;
+    decky-loader = {
+      enable = true;
+      # Match Steam's user for access to its graphical session.
+      user = "chch";
+    };
   };
   # Jovian switches between Gaming Mode and the native niri session.
 
@@ -68,8 +79,8 @@
   programs.steam.extest.enable = true;
 
   systemd.tmpfiles.rules = [
-    "d /games 0755 chch users -"
-    "d /games/SteamLibrary 0755 chch users -"
+    "d /games 0755 ${user} ${group} -"
+    "d /games/SteamLibrary 0755 ${user} ${group} -"
   ];
 
   system.stateVersion = "26.11";
