@@ -21,6 +21,12 @@
       <mlc_path>${lib.strings.escapeXML mlcDir}</mlc_path>
       <GamePaths><Entry>${lib.strings.escapeXML romsDir}</Entry></GamePaths>
       <Input><DSUC host="127.0.0.1" port="26760"/></Input>
+      <Audio>
+        <api>3</api>
+        <TVChannels>1</TVChannels>
+        <TVVolume>50</TVVolume>
+        <TVDevice>default</TVDevice>
+      </Audio>
     </content>
   '';
 
