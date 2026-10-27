@@ -58,6 +58,8 @@
     memoryPercent = 50;
   };
 
+  services.openssh.enable = true;
+
   # Periodically trim unused blocks on the SSD.
   services.fstrim.enable = true;
   # Allow games to request temporary performance optimizations.
