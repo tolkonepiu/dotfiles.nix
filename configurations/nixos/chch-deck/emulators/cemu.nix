@@ -9,16 +9,12 @@
   group = config.users.users.${user}.group;
   configHome = config.home-manager.users.${user}.xdg.configHome;
   configDir = "${configHome}/Cemu";
-  dataDir = "${paths.root}/cemu";
-  mlcDir = "${dataDir}/mlc01";
-  savesDir = "${paths.saves}/cemu";
   romsDir = "${paths.roms}/wiiu";
 
-  # Cemu v2.6 CemuConfig.cpp schema; CemuApp.cpp skips setup when this exists.
+  # Use Cemu's default MLC and save locations.
   settingsSeed = pkgs.writeText "cemu-settings.xml" ''
     <?xml version="1.0" encoding="UTF-8"?>
     <content>
-      <mlc_path>${lib.strings.escapeXML mlcDir}</mlc_path>
       <GamePaths><Entry>${lib.strings.escapeXML romsDir}</Entry></GamePaths>
       <Input><DSUC host="127.0.0.1" port="26760"/></Input>
       <Audio>
@@ -96,17 +92,11 @@ in {
 
   systemd.tmpfiles.rules =
     map (path: "d ${path} 0755 ${user} ${group} -") [
-      dataDir
-      mlcDir
-      "${mlcDir}/usr"
-      savesDir
       romsDir
       configDir
       "${configDir}/controllerProfiles"
     ]
     ++ [
-      # Non-forcing link preserves existing MLC saves; no automatic migration.
-      "L ${mlcDir}/usr/save - - - - ${savesDir}"
       # Mutable seed-once copies: existing installations require manual adoption.
       "C ${configDir}/settings.xml 0644 ${user} ${group} - ${settingsSeed}"
       "C ${configDir}/controllerProfiles/controller0.xml 0644 ${user} ${group} - ${controllerSeed}"
