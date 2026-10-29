@@ -26,6 +26,7 @@ in {
                   "vertical-spacer"
                   "urlbar-container"
                   "downloads-button"
+                  "developer-button"
                   "reset-pbm-toolbar-button"
                   "unified-extensions-button"
                 ];
