@@ -55,7 +55,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: 🚀 Generate nix diff (${{ matrix.darwin-config }})
-        uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7 # v1.1.1
+        uses: natsukium/nix-diff-action@4ab5eda848658193fbbd804efb5d4d7c2f166f37 # v1.1.2
         with:
           mode: diff-only
           attributes: |
@@ -80,7 +80,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: 🚀 Generate nix diff (${{ matrix.nixos-config }})
-        uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7 # v1.1.1
+        uses: natsukium/nix-diff-action@4ab5eda848658193fbbd804efb5d4d7c2f166f37 # v1.1.2
         with:
           mode: diff-only
           attributes: |
@@ -95,6 +95,6 @@ jobs:
       pull-requests: write
     steps:
       - name: 💬 Comment nix diff results
-        uses: natsukium/nix-diff-action@4091452e4c7b3c7ea4ecbaec84be7f0066d810d7 # v1.1.1
+        uses: natsukium/nix-diff-action@4ab5eda848658193fbbd804efb5d4d7c2f166f37 # v1.1.2
         with:
           mode: comment-only
