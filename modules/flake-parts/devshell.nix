@@ -27,8 +27,8 @@
       };
 
       flavors = {
-        claude-code.enable = false;
-        opencode.enable = false;
+        claude-code.enable = true;
+        opencode.enable = true;
       };
     };
 
