@@ -1,6 +1,5 @@
 {
   home.sessionVariables = {
-    OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS = "1";
     OPENCODE_ENABLE_EXA = "1";
   };
 
@@ -16,8 +15,8 @@
       presets = {
         main = {
           orchestrator = {
-            model = "openai/gpt-6-astra";
-            variant = "xhigh";
+            model = "openai/gpt-6.1-sol";
+            variant = "high";
             skills = ["*"];
             mcps = [
               "*"
@@ -26,7 +25,7 @@
           };
 
           oracle = {
-            model = "openai/gpt-6.1-sol";
+            model = "openai/gpt-6-astra";
             variant = "xhigh";
             skills = [
               "refactor-plan"
@@ -35,10 +34,10 @@
             mcps = [];
           };
 
-          librarian = {
-            model = "openai/gpt-6-luna";
+          explorer = {
+            model = "openai/gpt-6-luna-fast";
             variant = "low";
-            skills = [];
+            skills = ["context-map"];
             mcps = [
               "context7"
               "gh_grep"
@@ -46,15 +45,8 @@
             ];
           };
 
-          explorer = {
-            model = "openai/gpt-6-luna";
-            variant = "low";
-            skills = ["context-map"];
-            mcps = [];
-          };
-
           designer = {
-            model = "openai/gpt-6-astra";
+            model = "openai/gpt-6.1-terra";
             variant = "medium";
             skills = [
               "composition-patterns"
@@ -67,8 +59,8 @@
           };
 
           fixer = {
-            model = "openai/gpt-6-astra";
-            variant = "low";
+            model = "openai/gpt-6.1-sol";
+            variant = "medium";
             skills = [
               "refactor"
               "git-commit"
