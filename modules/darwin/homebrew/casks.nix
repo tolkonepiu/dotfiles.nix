@@ -10,6 +10,7 @@
     "keybase"
     "secretive"
     "tailscale-app"
+    "yubico-authenticator"
 
     # AI tools
     "chatgpt"
