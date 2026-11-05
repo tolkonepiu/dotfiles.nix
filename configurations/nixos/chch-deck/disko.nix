@@ -11,7 +11,7 @@ in {
       type = "gpt";
       partitions = {
         ESP = {
-          size = "1G";
+          size = "2G";
           type = "EF00";
           content = {
             type = "filesystem";
@@ -21,7 +21,7 @@ in {
           };
         };
         root = {
-          size = "128G";
+          size = "100%";
           content = {
             type = "btrfs";
             subvolumes = {
@@ -41,16 +41,11 @@ in {
                 mountpoint = "/var/log";
                 mountOptions = btrfsOptions;
               };
+              "/@games" = {
+                mountpoint = "/games";
+                mountOptions = btrfsOptions;
+              };
             };
-          };
-        };
-
-        games = {
-          size = "100%";
-          content = {
-            type = "btrfs";
-            mountpoint = "/games";
-            mountOptions = btrfsOptions;
           };
         };
       };
