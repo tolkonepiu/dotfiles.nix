@@ -12,7 +12,7 @@ in {
     enable = true;
     enableCompletion = false;
     dotDir = "${config.xdg.configHome}/zsh";
-    initContent = lib.mkBefore ''
+    initContent = lib.mkAfter ''
       mkdir -p -- "${antidoteHome}"
       # Source zdotdir configuration from https://github.com/tolkonepiu/zdotdir
       source "${inputs.zdotdir}/.zshrc"
