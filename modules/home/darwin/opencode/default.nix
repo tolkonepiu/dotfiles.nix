@@ -9,7 +9,6 @@
     enableMcpIntegration = true;
     settings = {
       plugin = [
-        "opencode-wakatime@1.4.0"
         "opencode-atuin-history@1.0.1"
         "@dietrichgebert/ponytail@5.3.3"
       ];

@@ -31,9 +31,6 @@
     rustc
     rustfmt
 
-    # Terminal utilities
-    wakatime-cli
-
     # Virtualization
     colima
     lima-full

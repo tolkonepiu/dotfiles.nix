@@ -1013,11 +1013,11 @@
     "zdotdir": {
       "flake": false,
       "locked": {
-        "lastModified": 1793145054,
-        "narHash": "sha256-ltugr6oEh/NQjumBSHYVdc/Y8JSnf7e4FTTwnZt4l9M=",
+        "lastModified": 1793977650,
+        "narHash": "sha256-VIxFDhU7+jJKKmg+0imS9IbNO0N0KHdIE+mznwynz3c=",
         "owner": "tolkonepiu",
         "repo": "zdotdir",
-        "rev": "9af694adf6751d7cc641d72939d9fbefe091b6c2",
+        "rev": "afa330a1c16e9d90ff76a0f5bc5408efce0b41cf",
         "type": "github"
       },
       "original": {
