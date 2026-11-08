@@ -9,7 +9,7 @@
     enableMcpIntegration = true;
     settings = {
       plugin = [
-        "opencode-atuin-history@1.0.1"
+        "opencode-atuin-history@1.0.2"
         "@dietrichgebert/ponytail@5.3.3"
         "@vectorize-io/hindsight-coding-agents@0.8.6"
       ];
