@@ -9,6 +9,7 @@
     kubectl
     markdownlint-cli
     nixd
+    paseo
     shellcheck
     shfmt
     yaml-language-server
