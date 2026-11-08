@@ -10,6 +10,7 @@
     markdownlint-cli
     nixd
     paseo
+    paseo-desktop
     shellcheck
     shfmt
     yaml-language-server
