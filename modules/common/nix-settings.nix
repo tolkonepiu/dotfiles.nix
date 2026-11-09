@@ -50,10 +50,12 @@
     # use nix-community Cachix for community-maintained packages
     extra-substituters = [
       "https://nix-community.cachix.org"
+      "https://noctalia.cachix.org"
       "https://tolkonepiu.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "tolkonepiu.cachix.org-1:G7pWK5VSW/AkjiZ737/lPVQjOvK4bMcMYZaSJiW5pHQ="
     ];
 
