@@ -22,4 +22,4 @@ runs:
         name: tolkonepiu
         signingKey: ${{ inputs.signingKey }}
         authToken: ${{ inputs.authToken }}
-        extraPullNames: nix-community,noctalia
+        extraPullNames: nix-community,noctalia,niri-epireyn
