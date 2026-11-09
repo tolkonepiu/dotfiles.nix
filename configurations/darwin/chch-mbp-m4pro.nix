@@ -5,7 +5,14 @@
   inherit (inputs) self;
 in {
   imports = [
-    self.darwinModules.default
+    self.darwinModules.base
+    self.darwinModules.desktop
+  ];
+
+  home-manager.users.chch.imports = [
+    self.homeModules.dev
+    self.homeModules.darwin
+    self.homeModules.desktop
   ];
 
   nixpkgs = {

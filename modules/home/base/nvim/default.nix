@@ -3,7 +3,6 @@
 in {
   imports = [
     inputs.nvf.homeManagerModules.default
-    ./languages.nix
     ./theme.nix
   ];
 
@@ -18,11 +17,6 @@ in {
 
         # vim.opts and vim.options are aliased
         opts.expandtab = true;
-
-        lsp = {
-          enable = true;
-          formatOnSave = true;
-        };
       };
     };
   };

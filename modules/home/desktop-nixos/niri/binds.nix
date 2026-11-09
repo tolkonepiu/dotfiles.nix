@@ -22,7 +22,7 @@ in {
     binding // {action = lib.mkDefault binding.action;}) (
     (with actions; {
       # Applications.
-      "Mod+Return".action = spawn (lib.getExe config.programs.alacritty.package);
+      "Mod+Return".action = spawn (lib.getExe config.programs.ghostty.package);
       "Mod+Space".action = spawn noctalia "msg" "panel-toggle" "launcher";
       "Mod+Comma".action = spawn noctalia "msg" "settings-toggle";
 

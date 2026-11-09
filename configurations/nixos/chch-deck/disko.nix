@@ -1,9 +1,11 @@
-let
+{flake, ...}: let
   btrfsOptions = [
     "compress=zstd:3"
     "noatime"
   ];
 in {
+  imports = [flake.inputs.disko.nixosModules.disko];
+
   disko.devices.disk.internal = {
     type = "disk";
     device = "/dev/nvme0n1";
