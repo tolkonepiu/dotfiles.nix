@@ -1,5 +1,5 @@
 let
-  root = "/games/romm-library";
+  root = "/games/rom-library";
   saves = "${root}/saves";
 in {
   inherit root saves;

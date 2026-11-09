@@ -8,7 +8,8 @@ in {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
-    package = lib.mkIf isDarwin pkgs.ghostty-bin;
+    package =
+      lib.mkIf isDarwin pkgs.ghostty-bin;
     settings = {
       confirm-close-surface = false;
       font-family = "MesloLGS NF";

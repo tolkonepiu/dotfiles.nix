@@ -1,8 +1,9 @@
 {
   imports = [
-    ./lsp.nix
     ./oh-my-opencode-slim.nix
   ];
+
+  catppuccin.opencode.enable = true;
 
   programs.opencode = {
     enable = true;

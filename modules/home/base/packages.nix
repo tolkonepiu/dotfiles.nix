@@ -14,9 +14,6 @@
     age
     gopass
     sops
-
-    # Fonts
-    meslo-lgs-nf
   ];
 
   # Programs natively supported by home-manager.

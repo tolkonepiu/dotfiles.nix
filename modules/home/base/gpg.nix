@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
   programs.gpg = {
@@ -7,9 +11,10 @@ in {
 
   services.gpg-agent = {
     enable = true;
-    pinentry.package =
+    pinentry.package = lib.mkDefault (
       if isDarwin
       then pkgs.pinentry_mac
-      else pkgs.pinentry-qt;
+      else pkgs.pinentry-curses
+    );
   };
 }

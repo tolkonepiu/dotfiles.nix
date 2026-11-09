@@ -12,16 +12,13 @@ jobs:
   check-nixpkgs-lock-update:
     runs-on: ubuntu-latest
 
-    env:
-      NIXPKGS_INPUT: nixpkgs
-
     steps:
       - name: ⤵️ Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
-      - name: 🧬 Compare nixpkgs rev in flake.lock
+      - name: 🧬 Compare nixpkgs and nixpkgs-darwin revs in flake.lock
         shell: bash
         run: |
           set -euo pipefail
@@ -30,23 +27,29 @@ jobs:
 
           git show "origin/${{ github.base_ref }}:flake.lock" > "$base_file"
 
-          old_rev="$(
-            jq -er --arg input "$NIXPKGS_INPUT" \
-              '.nodes[$input].locked.rev' "$base_file"
-          )"
+          changed=false
+          for input in nixpkgs nixpkgs-darwin; do
+            old_rev="$(
+              jq -er --arg input "$input" \
+                '.nodes[$input].locked.rev' "$base_file"
+            )"
 
-          new_rev="$(
-            jq -er --arg input "$NIXPKGS_INPUT" \
-              '.nodes[$input].locked.rev' flake.lock
-          )"
+            new_rev="$(
+              jq -er --arg input "$input" \
+                '.nodes[$input].locked.rev' flake.lock
+            )"
 
-          echo "Base nixpkgs rev: $old_rev"
-          echo "PR nixpkgs rev:   $new_rev"
+            echo "Base $input rev: $old_rev"
+            echo "PR $input rev:   $new_rev"
 
-          if [[ "$old_rev" == "$new_rev" ]]; then
-            echo "::error::flake.lock changed, but nixpkgs rev did not change."
+            if [[ "$old_rev" != "$new_rev" ]]; then
+              changed=true
+              echo "$input rev changed: $old_rev -> $new_rev"
+            fi
+          done
+
+          if [[ "$changed" == false ]]; then
+            echo "::error::flake.lock changed, but neither nixpkgs nor nixpkgs-darwin rev changed."
             echo "::error::This Renovate PR appears to update only non-nixpkgs inputs."
             exit 1
           fi
-
-          echo "nixpkgs rev changed: $old_rev -> $new_rev"

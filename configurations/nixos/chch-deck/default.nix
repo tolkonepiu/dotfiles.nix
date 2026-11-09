@@ -1,87 +1,22 @@
-{
-  config,
-  flake,
-  ...
-}: let
-  user = config.jovian.steam.user;
-  group = config.users.users.${user}.group;
+{flake, ...}: let
+  inherit (flake.inputs) self;
 in {
   imports = [
-    flake.inputs.self.nixosModules.default
-    flake.inputs.chaotic.vendored.jovian.nixosModules.default
+    self.nixosModules.base
+    self.nixosModules.desktop
     ./boot.nix
     ./disko.nix
-    ./emulators
+    ./steamdeck.nix
+  ];
+
+  home-manager.users.chch.imports = [
+    self.homeModules.desktop
+    self.homeModules.desktop-nixos
+    ./home.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "chch-deck";
-
-  boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = ["nvme"];
-  };
-
-  jovian = {
-    devices.steamdeck = {
-      enable = true;
-      # Update BIOS and controller firmware at boot, subject to Valve's checks.
-      autoUpdate = true;
-      # Allow Steam to control TDP and GPU clocks.
-      enablePerfControlUdevRules = true;
-      # Use Valve's software-controlled fan curve.
-      enableOsFanControl = true;
-    };
-    steam = {
-      enable = true;
-      autoStart = true;
-      user = "chch";
-      desktopSession = "niri";
-    };
-    # Enable Decky Loader in Steam Gaming Mode.
-    decky-loader = {
-      enable = true;
-      # Match Steam's user for access to its graphical session.
-      user = "chch";
-    };
-  };
-  # Jovian switches between Gaming Mode and the native niri session.
-
-  # Only run the vendor's firmware updaters while connected to external power.
-  systemd.services = {
-    jupiter-biosupdate = {
-      overrideStrategy = "asDropin";
-      unitConfig.ConditionACPower = true;
-    };
-    jupiter-controller-update = {
-      overrideStrategy = "asDropin";
-      unitConfig.ConditionACPower = true;
-    };
-  };
-
-  home-manager.sharedModules = [./niri.nix ./noctalia.nix];
-
-  # Compressed RAM swap for memory-heavy games and emulators.
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50;
-  };
-
   services.openssh.enable = true;
-
-  # Periodically trim unused blocks on the SSD.
-  services.fstrim.enable = true;
-  # Allow games to request temporary performance optimizations.
-  programs.gamemode.enable = true;
-  # Enable Steam Input keyboard/mouse emulation on Wayland (Niri) via uinput
-  programs.steam.extest.enable = true;
-
-  systemd.tmpfiles.rules = [
-    "d /games 0755 ${user} ${group} -"
-    "d /games/SteamLibrary 0755 ${user} ${group} -"
-  ];
-
   system.stateVersion = "26.11";
 }

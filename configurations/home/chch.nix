@@ -3,7 +3,7 @@
   inherit (inputs) self;
 in {
   imports = [
-    self.homeModules.default
+    self.homeModules.base
   ];
 
   me = {
