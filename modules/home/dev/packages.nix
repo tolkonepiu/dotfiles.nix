@@ -7,17 +7,10 @@
     docker
     docker-compose
     kubectl
-    markdownlint-cli
-    nixd
     paseo
-    shellcheck
-    shfmt
-    yaml-language-server
-    yamllint
 
     # Python packages
     pipx
-    pyright
     python3
     virtualenv
 
@@ -30,6 +23,5 @@
     clippy
     rust-analyzer
     rustc
-    rustfmt
   ];
 }
