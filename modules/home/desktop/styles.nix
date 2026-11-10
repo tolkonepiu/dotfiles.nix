@@ -5,8 +5,6 @@
 }: {
   imports = [flake.inputs.stylix.homeModules.stylix];
 
-  catppuccin.autoEnable = true;
-
   stylix = {
     enable = true;
     autoEnable = false;

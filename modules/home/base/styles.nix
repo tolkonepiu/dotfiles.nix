@@ -1,8 +1,4 @@
-{
-  flake,
-  lib,
-  ...
-}: let
+{flake, ...}: let
   inherit (flake) inputs;
 in {
   imports = [
@@ -11,7 +7,7 @@ in {
 
   catppuccin = {
     enable = true;
-    autoEnable = lib.mkDefault false;
+    autoEnable = true;
     flavor = "mocha";
     accent = "mauve";
     atuin.enable = true;
