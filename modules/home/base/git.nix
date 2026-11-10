@@ -29,7 +29,7 @@ in {
 
     signing = {
       format = "openpgp";
-      signByDefault = true;
+      signByDefault = isDarwin;
     };
 
     settings = {

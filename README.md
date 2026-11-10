@@ -35,7 +35,7 @@
 - **Firefox Configuration**: Privacy-focused setup with
   [Betterfox](https://github.com/yokoffing/Betterfox) optimizations and
   extension management
-- **Git**: Signed commits, LFS support, and the
+- **Git**: Signed commits on macOS, LFS support, and the
   [delta](https://github.com/dandavison/delta) diff viewer
 
 ### macOS
