@@ -23,6 +23,11 @@
         default = "https://api.atuin.sh";
         description = "Atuin server address (e.g., https://atuin.example.com)";
       };
+      authorizedKeys = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        description = "SSH public login keys for NixOS";
+      };
     };
   };
   config = {

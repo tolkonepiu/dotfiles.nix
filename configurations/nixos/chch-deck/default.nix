@@ -9,7 +9,7 @@ in {
     ./steamdeck.nix
   ];
 
-  home-manager.users.chch.imports = [
+  home-manager.sharedModules = [
     self.homeModules.desktop
     self.homeModules.desktop-nixos
     ./home.nix
@@ -17,6 +17,6 @@ in {
 
   nixpkgs.hostPlatform = "x86_64-linux";
   networking.hostName = "chch-deck";
-  services.openssh.enable = true;
+  networking.networkmanager.enable = true;
   system.stateVersion = "26.11";
 }

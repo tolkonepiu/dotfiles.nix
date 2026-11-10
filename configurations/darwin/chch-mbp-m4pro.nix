@@ -9,7 +9,7 @@ in {
     self.darwinModules.desktop
   ];
 
-  home-manager.users.chch.imports = [
+  home-manager.sharedModules = [
     self.homeModules.dev
     self.homeModules.darwin
     self.homeModules.desktop

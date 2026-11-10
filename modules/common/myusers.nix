@@ -40,6 +40,7 @@ in {
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           isNormalUser = true;
+          openssh.authorizedKeys.keys = config.home-manager.users.${name}.me.authorizedKeys;
         }
     );
 

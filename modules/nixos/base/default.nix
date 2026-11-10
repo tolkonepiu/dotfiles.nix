@@ -7,12 +7,12 @@
   imports = [
     ../../common
     ./auto-upgrade.nix
+    ./openssh.nix
   ];
 
   # Override nixos-unified's legacy string default with the NixOS list type.
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  networking.networkmanager.enable = true;
   services.fstrim.enable = true;
   zramSwap = {
     enable = true;
