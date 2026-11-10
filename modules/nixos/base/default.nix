@@ -14,6 +14,10 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   services.fstrim.enable = true;
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
   zramSwap = {
     enable = true;
     algorithm = "zstd";
