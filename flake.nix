@@ -98,8 +98,7 @@
       };
     };
     nix-emulators.url = "github:tolkonepiu/nix-emulators";
-    # Keep upstream nixpkgs to use prebuilt packages from its binary cache.
-    # nix-emulators.inputs.nixpkgs.follows = "nixpkgs";
+    nix-emulators.inputs.nixpkgs.follows = "nixpkgs";
 
     # Agent Skills
     agent-skills = {
