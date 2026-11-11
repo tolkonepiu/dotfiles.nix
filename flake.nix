@@ -97,12 +97,10 @@
         import-tree.follows = "import-tree";
       };
     };
-    eden = {
-      url = "github:Nyramu/eden-nix";
+    nix-emulators = {
+      url = "github:tolkonepiu/nix-emulators";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        import-tree.follows = "import-tree";
       };
     };
 
