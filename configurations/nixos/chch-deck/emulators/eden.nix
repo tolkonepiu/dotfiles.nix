@@ -5,13 +5,9 @@
   pkgs,
   ...
 }: let
-  eden = flake.inputs.eden.packages.${pkgs.stdenv.hostPlatform.system}.zen2;
   user = config.jovian.steam.user;
-  group = config.users.users.${user}.group;
-  configHome = config.home-manager.users.${user}.xdg.configHome;
-  configDir = "${configHome}/eden";
 
-  # Eden v0.2.1 uses raw SDL joystick indices and clears GUID CRC bytes 2-3.
+  # Eden uses raw SDL joystick indices and clears GUID CRC bytes 2-3.
   # This is the first Steam Input virtual gamepad; device ordering may require
   # selecting the controller in Eden's GUI.
   sdl = suffix: "engine:sdl,port:0,guid:03000000de280000ff11000001000000,pad:0,${suffix}";
@@ -49,32 +45,25 @@
     motionleft = motion;
     motionright = motion;
   };
-  # v0.2.1 ignores supplied values unless their literal \default flag is false.
-  mkIni = controls:
-    lib.generators.toINI {} {
-      Controls = controls // lib.mapAttrs' (name: _: lib.nameValuePair "${name}\\default" false) controls;
-    };
-  profileSeed = pkgs.writeText "eden-SteamDeck.ini" (mkIni playerControls);
-  globalSeed = pkgs.writeText "eden-qt-config.ini" (mkIni (
-    lib.mapAttrs' (name: value: lib.nameValuePair "player_0_${name}" value) playerControls
-    // {
-      enable_udp_controller = true;
-      udp_input_servers = "127.0.0.1:26760";
-      motion_enabled = true;
-      vibration_enabled = true;
-      player_0_profile_name = "SteamDeck";
-    }
-  ));
 in {
-  environment.systemPackages = [eden];
-  jovian.decky-loader.extraPackages = [eden];
-  jovian.devices.steamdeck.enableGyroDsuService = true;
+  home-manager.users.${user} = {
+    imports = [flake.inputs.nix-emulators.homeManagerModules.eden];
+    programs.eden = {
+      enable = true;
+      package = flake.inputs.nix-emulators.packages.${pkgs.stdenv.hostPlatform.system}.eden-nightly-bin-zen2;
+      settings.Controls =
+        lib.mapAttrs' (name: value: lib.nameValuePair "player_0_${name}" value) playerControls
+        // {
+          enable_udp_controller = true;
+          udp_input_servers = "127.0.0.1:26760";
+          motion_enabled = true;
+          vibration_enabled = true;
+          player_0_profile_name = "SteamDeck";
+        };
+      controllerProfiles.SteamDeck.Controls = playerControls;
+    };
+  };
 
-  # Mutable seed-only copies retain existing configuration and subsequent GUI edits.
-  systemd.tmpfiles.rules = [
-    "d ${configDir} 0755 ${user} ${group} -"
-    "d ${configDir}/input 0755 ${user} ${group} -"
-    "C ${configDir}/qt-config.ini 0644 ${user} ${group} - ${globalSeed}"
-    "C ${configDir}/input/SteamDeck.ini 0644 ${user} ${group} - ${profileSeed}"
-  ];
+  jovian.decky-loader.extraPackages = [config.home-manager.users.${user}.programs.eden.package];
+  jovian.devices.steamdeck.enableGyroDsuService = true;
 }

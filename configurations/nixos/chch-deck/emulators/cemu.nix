@@ -1,105 +1,180 @@
 {
   config,
-  lib,
-  pkgs,
+  flake,
   ...
 }: let
   paths = import ./paths.nix;
   user = config.jovian.steam.user;
   group = config.users.users.${user}.group;
-  configHome = config.home-manager.users.${user}.xdg.configHome;
-  configDir = "${configHome}/Cemu";
   romsDir = "${paths.roms}/wiiu";
-
-  # Use Cemu's default MLC and save locations.
-  settingsSeed = pkgs.writeText "cemu-settings.xml" ''
-    <?xml version="1.0" encoding="UTF-8"?>
-    <content>
-      <GamePaths><Entry>${lib.strings.escapeXML romsDir}</Entry></GamePaths>
-      <Input><DSUC host="127.0.0.1" port="26760"/></Input>
-      <Audio>
-        <api>3</api>
-        <TVChannels>1</TVChannels>
-        <TVVolume>50</TVVolume>
-        <TVDevice>default</TVDevice>
-      </Audio>
-    </content>
-  '';
 
   # Targets Gaming Mode's Steam Input gamepad layout (EmuDeck's standard GUID).
   # Other controller GUIDs must be selected in Cemu's Input settings.
-  controllerSeed = pkgs.writeText "cemu-SteamDeck.xml" ''
-    <?xml version="1.0" encoding="UTF-8"?>
-    <emulated_controller>
-      <type>Wii U GamePad</type>
-      <profile>SteamDeck</profile>
-      <controller>
-        <api>DSUController</api>
-        <uuid>0</uuid>
-        <display_name>Steam Deck Gyroscope</display_name>
-        <motion>true</motion>
-        <mappings/>
-      </controller>
-      <controller>
-        <api>SDLController</api>
-        <uuid>0_030079f6de280000ff11000001000000</uuid>
-        <display_name>Steam Virtual Gamepad</display_name>
-        <motion>false</motion>
-        <rumble>1</rumble>
-        <axis><deadzone>0.1</deadzone><range>1</range></axis>
-        <rotation><deadzone>0.1</deadzone><range>1</range></rotation>
-        <trigger><deadzone>0.1</deadzone><range>1</range></trigger>
-        <mappings>
-          <!-- Nintendo positional face buttons -->
-          <entry><mapping>1</mapping><button>1</button></entry>
-          <entry><mapping>2</mapping><button>0</button></entry>
-          <entry><mapping>3</mapping><button>3</button></entry>
-          <entry><mapping>4</mapping><button>2</button></entry>
-          <!-- Shoulders and triggers -->
-          <entry><mapping>5</mapping><button>9</button></entry>
-          <entry><mapping>6</mapping><button>10</button></entry>
-          <entry><mapping>7</mapping><button>42</button></entry>
-          <entry><mapping>8</mapping><button>43</button></entry>
-          <!-- Plus and minus -->
-          <entry><mapping>9</mapping><button>6</button></entry>
-          <entry><mapping>10</mapping><button>4</button></entry>
-          <!-- D-pad -->
-          <entry><mapping>11</mapping><button>11</button></entry>
-          <entry><mapping>12</mapping><button>12</button></entry>
-          <entry><mapping>13</mapping><button>13</button></entry>
-          <entry><mapping>14</mapping><button>14</button></entry>
-          <!-- Stick clicks -->
-          <entry><mapping>15</mapping><button>7</button></entry>
-          <entry><mapping>16</mapping><button>8</button></entry>
-          <!-- Left stick: up, down, left, right -->
-          <entry><mapping>17</mapping><button>45</button></entry>
-          <entry><mapping>18</mapping><button>39</button></entry>
-          <entry><mapping>19</mapping><button>44</button></entry>
-          <entry><mapping>20</mapping><button>38</button></entry>
-          <!-- Right stick: up, down, left, right -->
-          <entry><mapping>21</mapping><button>47</button></entry>
-          <entry><mapping>22</mapping><button>41</button></entry>
-          <entry><mapping>23</mapping><button>46</button></entry>
-          <entry><mapping>24</mapping><button>40</button></entry>
-        </mappings>
-      </controller>
-    </emulated_controller>
-  '';
+  controller = {
+    type = "Wii U GamePad";
+    profile = "SteamDeck";
+    controller = [
+      {
+        api = "DSUController";
+        uuid = "0";
+        display_name = "Steam Deck Gyroscope";
+        motion = true;
+        mappings = {};
+      }
+      {
+        api = "SDLController";
+        uuid = "0_030079f6de280000ff11000001000000";
+        display_name = "Steam Virtual Gamepad";
+        motion = false;
+        rumble = 1;
+        axis = {
+          deadzone = 0.1;
+          range = 1;
+        };
+        rotation = {
+          deadzone = 0.1;
+          range = 1;
+        };
+        trigger = {
+          deadzone = 0.1;
+          range = 1;
+        };
+        mappings.entry = [
+          # Nintendo positional face buttons
+          {
+            mapping = 1;
+            button = 1;
+          }
+          {
+            mapping = 2;
+            button = 0;
+          }
+          {
+            mapping = 3;
+            button = 3;
+          }
+          {
+            mapping = 4;
+            button = 2;
+          }
+          # Shoulders and triggers
+          {
+            mapping = 5;
+            button = 9;
+          }
+          {
+            mapping = 6;
+            button = 10;
+          }
+          {
+            mapping = 7;
+            button = 42;
+          }
+          {
+            mapping = 8;
+            button = 43;
+          }
+          # Plus and minus
+          {
+            mapping = 9;
+            button = 6;
+          }
+          {
+            mapping = 10;
+            button = 4;
+          }
+          # D-pad
+          {
+            mapping = 11;
+            button = 11;
+          }
+          {
+            mapping = 12;
+            button = 12;
+          }
+          {
+            mapping = 13;
+            button = 13;
+          }
+          {
+            mapping = 14;
+            button = 14;
+          }
+          # Stick clicks
+          {
+            mapping = 15;
+            button = 7;
+          }
+          {
+            mapping = 16;
+            button = 8;
+          }
+          # Left stick: up, down, left, right
+          {
+            mapping = 17;
+            button = 45;
+          }
+          {
+            mapping = 18;
+            button = 39;
+          }
+          {
+            mapping = 19;
+            button = 44;
+          }
+          {
+            mapping = 20;
+            button = 38;
+          }
+          # Right stick: up, down, left, right
+          {
+            mapping = 21;
+            button = 47;
+          }
+          {
+            mapping = 22;
+            button = 41;
+          }
+          {
+            mapping = 23;
+            button = 46;
+          }
+          {
+            mapping = 24;
+            button = 40;
+          }
+        ];
+      }
+    ];
+  };
 in {
-  environment.systemPackages = [pkgs.cemu];
-  jovian.decky-loader.extraPackages = [pkgs.cemu];
+  home-manager.users.${user} = {
+    imports = [flake.inputs.nix-emulators.homeManagerModules.cemu];
+    programs.cemu = {
+      enable = true;
+      # Use Cemu's default MLC and save locations.
+      settings = {
+        GamePaths.Entry = romsDir;
+        Input.DSUC = {
+          "@host" = "127.0.0.1";
+          "@port" = 26760;
+        };
+        Audio = {
+          api = 3;
+          TVChannels = 1;
+          TVVolume = 50;
+          TVDevice = "default";
+        };
+      };
+      controllerProfiles = {
+        controller0 = controller;
+        SteamDeck = controller;
+      };
+    };
+  };
+
+  jovian.decky-loader.extraPackages = [config.home-manager.users.${user}.programs.cemu.package];
   jovian.devices.steamdeck.enableGyroDsuService = true;
 
-  systemd.tmpfiles.rules =
-    map (path: "d ${path} 0755 ${user} ${group} -") [
-      romsDir
-      configDir
-      "${configDir}/controllerProfiles"
-    ]
-    ++ [
-      # Mutable seed-once copies: existing installations require manual adoption.
-      "C ${configDir}/settings.xml 0644 ${user} ${group} - ${settingsSeed}"
-      "C ${configDir}/controllerProfiles/controller0.xml 0644 ${user} ${group} - ${controllerSeed}"
-      "C ${configDir}/controllerProfiles/SteamDeck.xml 0644 ${user} ${group} - ${controllerSeed}"
-    ];
+  systemd.tmpfiles.rules = ["d ${romsDir} 0755 ${user} ${group} -"];
 }

@@ -217,32 +217,6 @@
         "type": "github"
       }
     },
-    "eden": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "import-tree": [
-          "import-tree"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1787680156,
-        "narHash": "sha256-fxS1QiBZ+e1sZB1xIeFD1I4WjN/Vkvz9eetVL+pYKR4=",
-        "owner": "Nyramu",
-        "repo": "eden-nix",
-        "rev": "797c79167ca382dabe1fd2365c924262b78811ac",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Nyramu",
-        "repo": "eden-nix",
-        "type": "github"
-      }
-    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -588,6 +562,26 @@
         "type": "github"
       }
     },
+    "nix-emulators": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794389057,
+        "narHash": "sha256-qQTMLChi1fQkf8SFduO+6JyX+yZlyLV4r8YpLq3o6qY=",
+        "owner": "tolkonepiu",
+        "repo": "nix-emulators",
+        "rev": "f333f530ed2638e23d0da67cdffe981a3fae1550",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tolkonepiu",
+        "repo": "nix-emulators",
+        "type": "github"
+      }
+    },
     "nix-homebrew": {
       "inputs": {
         "brew-src": "brew-src"
@@ -804,7 +798,6 @@
         "catppuccin": "catppuccin",
         "chaotic": "chaotic",
         "disko": "disko",
-        "eden": "eden",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
@@ -817,6 +810,7 @@
         "mcp-servers-nix": "mcp-servers-nix",
         "niri": "niri",
         "nix-darwin": "nix-darwin",
+        "nix-emulators": "nix-emulators",
         "nix-homebrew": "nix-homebrew",
         "nixos-unified": "nixos-unified",
         "nixpkgs": "nixpkgs",

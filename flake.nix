@@ -97,14 +97,8 @@
         import-tree.follows = "import-tree";
       };
     };
-    eden = {
-      url = "github:Nyramu/eden-nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        import-tree.follows = "import-tree";
-      };
-    };
+    nix-emulators.url = "github:tolkonepiu/nix-emulators";
+    nix-emulators.inputs.nixpkgs.follows = "nixpkgs";
 
     # Agent Skills
     agent-skills = {
