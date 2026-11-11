@@ -2,7 +2,10 @@
   programs.vesktop = {
     enable = true;
     vencord = {
-      useSystem = true;
+      # Work around the white screen on macOS with Vesktop 1.6.8.
+      # https://github.com/NixOS/nixpkgs/issues/584740
+      useSystem = false;
+      mutableSettings = true;
       settings = {};
     };
 
