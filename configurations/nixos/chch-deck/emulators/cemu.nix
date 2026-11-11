@@ -1,6 +1,7 @@
 {
   config,
   flake,
+  pkgs,
   ...
 }: let
   paths = import ./paths.nix;
@@ -152,6 +153,8 @@ in {
     imports = [flake.inputs.nix-emulators.homeManagerModules.cemu];
     programs.cemu = {
       enable = true;
+      # Use the upstream package to match its binary cache.
+      package = flake.inputs.nix-emulators.packages.${pkgs.stdenv.hostPlatform.system}.cemu-git;
       # Use Cemu's default MLC and save locations.
       settings = {
         GamePaths.Entry = romsDir;
