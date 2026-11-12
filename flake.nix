@@ -1,6 +1,26 @@
 {
   description = "tolkonepiu's dotfiles.nix for macOS and NixOS";
 
+  # Nix's flake parser requires literal nixConfig, shared with system settings.
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://nix-emulators.cachix.org"
+      "https://noctalia.cachix.org"
+      "https://tolkonepiu.cachix.org"
+      "https://nyx-cache.chaotic.cx/"
+      "https://niri-epireyn.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-emulators.cachix.org-1:8lg5Ku12bMegHXq3KWenzzaR4jnv3ddT5W4r75nyCPA="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "tolkonepiu.cachix.org-1:G7pWK5VSW/AkjiZ737/lPVQjOvK4bMcMYZaSJiW5pHQ="
+      "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk="
+      "niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="
+    ];
+  };
+
   inputs = {
     # Principle inputs (updated by `nix run .#update`)
     systems.url = "github:nix-systems/default";
