@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   check-nixpkgs-lock-update:
+    if: github.head_ref == 'renovate/lock-file-maintenance'
     runs-on: ubuntu-latest
 
     steps:
