@@ -7,72 +7,64 @@
 </h1>
 
 <p align="center">
-  My personal configuration for macOS and NixOS (Steam Deck).
+  <a href="https://nixos.org/"><img src="https://img.shields.io/badge/NixOS-94e2d5?style=for-the-badge&logo=nixos&logoColor=1e1e2e" alt="NixOS"/></a>
+  <a href="https://github.com/nix-darwin/nix-darwin"><img src="https://img.shields.io/badge/nix--darwin-89b4fa?style=for-the-badge&logo=apple&logoColor=1e1e2e" alt="nix-darwin"/></a>
+  <a href="https://github.com/nix-community/home-manager"><img src="https://img.shields.io/badge/Home%20Manager-f5c2e7?style=for-the-badge&logo=nixos&logoColor=1e1e2e" alt="Home Manager"/></a>
+  <a href="https://github.com/catppuccin/catppuccin"><img src="https://img.shields.io/badge/Catppuccin-cba6f7?style=for-the-badge&logo=catppuccin&logoColor=1e1e2e" alt="Catppuccin"/></a>
+  <br/>
+  <a href="https://github.com/karinushka/paneru"><img src="https://img.shields.io/badge/Paneru-fab387?style=for-the-badge&logoColor=1e1e2e" alt="Paneru"/></a>
+  <a href="https://github.com/niri-wm/niri"><img src="https://img.shields.io/badge/niri-eba0ac?style=for-the-badge&logo=niri&logoColor=1e1e2e" alt="niri"/></a>
+  <a href="https://github.com/noctalia-dev/noctalia"><img src="https://img.shields.io/badge/Noctalia-f9e2af?style=for-the-badge" alt="Noctalia"/></a>
+  <a href="https://opencode.dev/"><img src="https://img.shields.io/badge/OpenCode-74c7ec?style=for-the-badge&logo=opencode&logoColor=1e1e2e" alt="OpenCode"/></a>
 </p>
 <p align="center">
   <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
 </p>
 
 <div align="center">
-<img src="https://img.shields.io/badge/26.11-informational.svg?style=for-the-badge&logo=nixos&logoColor=white&color=cba6f7&labelColor=45475a"/>&nbsp;
 <img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles.nix/build.yml?branch=main&style=for-the-badge&labelColor=45475a&label=build"/>&nbsp;
 <img src="https://img.shields.io/github/actions/workflow/status/tolkonepiu/dotfiles.nix/tests.yml?branch=main&style=for-the-badge&labelColor=45475a&label=tests"/>
 
 </div>
 <!-- markdownlint-enable -->
 
+## Hosts
+
+| Host | Configuration | Platform | Role |
+| --- | --- | --- | --- |
+| MacBook Pro M4 Pro | [`chch-mbp-m4pro`](configurations/darwin/chch-mbp-m4pro.nix) | macOS · `aarch64-darwin` | Daily driver and development |
+| Steam Deck | [`chch-deck`](configurations/nixos/chch-deck) | NixOS · `x86_64-linux` | Handheld gaming and desktop |
+| Agent server | [`chch-agent-server`](configurations/nixos/chch-agent-server) | NixOS · `x86_64-linux` | Headless AI agents and development |
+
 ## Features
 
-### Shared
+### Shared development · MacBook & agent server
 
-- **Advanced Shell Configuration**: Custom ZSH setup with my
-  [zdotdir](https://github.com/tolkonepiu/zdotdir) configuration
-- **Modern CLI Tools**: Leveraging tools like `atuin`, `eza`, `fd`, `zoxide`,
-  `bat` and others for an efficient command-line experience
-- **Catppuccin Theme**: Consistent
-  [Catppuccin](https://github.com/catppuccin/catppuccin) 🌿 Mocha flavor theming
-  across all applications
-- **Firefox Configuration**: Privacy-focused setup with
-  [Betterfox](https://github.com/yokoffing/Betterfox) optimizations and
-  extension management
-- **Git**: Signed commits on macOS, LFS support, and the
-  [delta](https://github.com/dandavison/delta) diff viewer
+- **Multi-agent OpenCode**: [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim/)
+  orchestrates specialist agents with dedicated models, tools, and skills;
+  [Hindsight](https://github.com/vectorize-io/hindsight) adds persistent
+  coding-agent memory. The same setup runs locally and on the headless server.
+- **Shared MCP configuration**: OpenCode, Codex, and Claude Code use the same
+  GitHub, Context7, and headless Playwright servers instead of separate
+  per-client definitions.
 
 ### macOS
 
-- **Window Management**: [Paneru](https://github.com/karinushka/paneru) with
-  keyboard bindings and trackpad gestures
-- **Touch ID & Apple Watch for sudo**: Use fingerprint or Apple Watch
-  authentication instead of typing passwords for sudo commands
-- **Homebrew and Mac App Store Integration**: Manages macOS applications via
-  Homebrew casks and Mac App Store
-- **Secretive Integration**: Secure SSH key management with
-  [Apple's Secure Enclave](https://popov.wtf/secure-ssh-keys-with-secure-enclave-on-macos)
-- **Kubernetes & Containers**: `kubectl` with [krew](https://krew.sigs.k8s.io/)
-  plugin management, Docker CLI and Compose,
-  [Colima](https://github.com/abiosoft/colima), and Lima
-- **Dev Environment**: [direnv](https://direnv.net/) with nix-direnv,
-  [devenv](https://devenv.sh/), and Rust, Python, and Node.js toolchains
-- **Neovim**: Declarative editor config built on
-  [nvf](https://github.com/NotAShelf/nvf) with LSP, Treesitter, and
-  multi-language support (Nix, Rust, TypeScript, Python, and more)
-- **OpenCode**: AI-powered terminal IDE via [OpenCode](https://opencode.dev/)
-  with
-  [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim/)
-  multi-agent orchestration, MCP servers, plugins, and skills
-- **Spicetify Spotify**: Custom Spotify theming with Catppuccin colors and
-  useful extensions with the help of [Spicetify](https://spicetify.app/)
+- **Scrollable tiling**: [Paneru](https://github.com/karinushka/paneru) with
+  Vim-style window navigation, virtual workspaces, and continuous
+  three-finger trackpad gestures.
+- **Secretive SSH agent**: SSH uses
+  [Secretive](https://github.com/maxgoedjen/secretive)'s agent socket rather
+  than the default agent.
 
 ### Steam Deck
 
-- **Gaming Mode**: Jovian NixOS starts Steam automatically, with Decky Loader
-  enabled and a separate desktop session
-- **Desktop Mode**: [niri](https://github.com/niri-wm/niri) with
-  [Noctalia](https://github.com/noctalia-dev/noctalia) for the bar, launcher,
-  system controls, and NixOS update status, with desktop control via the
-  Steam Deck gamepad using Steam Input
-- **Hardware Support**: Steam-controlled TDP and GPU clocks, software fan
-  control, and BIOS/controller firmware updates restricted to external power
-- **Memory & SSD**: Zstd-compressed zram swap and periodic SSD trimming
-- **System Updates**: Scheduled updates from this repository's `main` branch
-  and manual updates through Noctalia, without automatic reboots
+- **Gaming ↔ desktop**: Jovian boots into Steam with Decky Loader, while
+  desktop mode runs [niri](https://github.com/niri-wm/niri) and
+  [Noctalia](https://github.com/noctalia-dev/noctalia). A custom session action
+  returns directly to Gaming Mode.
+- **Gamepad-controlled Wayland desktop**: Steam Input keyboard and mouse
+  emulation via `extest` lets the Deck's controls drive the desktop.
+- **NixOS updates in the shell**: A custom Noctalia plugin checks this
+  repository's `main` branch, installs updates, and reports when a reboot is
+  needed. Scheduled updates use the same system service; reboots stay manual.
