@@ -3,6 +3,8 @@
   flake,
   ...
 }: {
+  time.timeZone = "Asia/Singapore";
+
   nixpkgs = {
     config.allowUnfree = true;
     overlays = lib.attrValues flake.inputs.self.overlays;
