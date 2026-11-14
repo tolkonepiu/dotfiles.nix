@@ -6,6 +6,7 @@
     # System tools
     curl
     fastfetch
+    python3
     ripgrep
     watch
     wget
