@@ -569,11 +569,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794663952,
-        "narHash": "sha256-hdU8jHAtXDrWQBRS3uovFryGOqVu7oBNziof7W+zoDQ=",
+        "lastModified": 1794667459,
+        "narHash": "sha256-XUS13W5ob911qnIveC+vj57V+JUWjf4I08sdgmU+wfc=",
         "owner": "tolkonepiu",
         "repo": "nix-emulators",
-        "rev": "1a379890654ab0a9684a9cf3b1b1c3e6f81c54cd",
+        "rev": "d6daaacdcb6e60c4df4cd83d7e1bff8df5a67dc8",
         "type": "github"
       },
       "original": {
