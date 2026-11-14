@@ -7,15 +7,7 @@
 </h1>
 
 <p align="center">
-  <a href="https://nixos.org/"><img src="https://img.shields.io/badge/NixOS-94e2d5?style=for-the-badge&logo=nixos&logoColor=1e1e2e" alt="NixOS"/></a>
-  <a href="https://github.com/nix-darwin/nix-darwin"><img src="https://img.shields.io/badge/nix--darwin-89b4fa?style=for-the-badge&logo=apple&logoColor=1e1e2e" alt="nix-darwin"/></a>
-  <a href="https://github.com/nix-community/home-manager"><img src="https://img.shields.io/badge/Home%20Manager-f5c2e7?style=for-the-badge&logo=nixos&logoColor=1e1e2e" alt="Home Manager"/></a>
-  <a href="https://github.com/catppuccin/catppuccin"><img src="https://img.shields.io/badge/Catppuccin-cba6f7?style=for-the-badge&logo=catppuccin&logoColor=1e1e2e" alt="Catppuccin"/></a>
-  <br/>
-  <a href="https://github.com/karinushka/paneru"><img src="https://img.shields.io/badge/Paneru-fab387?style=for-the-badge&logoColor=1e1e2e" alt="Paneru"/></a>
-  <a href="https://github.com/niri-wm/niri"><img src="https://img.shields.io/badge/niri-eba0ac?style=for-the-badge&logo=niri&logoColor=1e1e2e" alt="niri"/></a>
-  <a href="https://github.com/noctalia-dev/noctalia"><img src="https://img.shields.io/badge/Noctalia-f9e2af?style=for-the-badge" alt="Noctalia"/></a>
-  <a href="https://opencode.dev/"><img src="https://img.shields.io/badge/OpenCode-74c7ec?style=for-the-badge&logo=opencode&logoColor=1e1e2e" alt="OpenCode"/></a>
+  My personal Nix configuration for macOS, Steam Deck, and a headless NixOS agent server.
 </p>
 <p align="center">
   <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
@@ -38,8 +30,15 @@
 
 ## Features
 
-### Shared development · MacBook & agent server
-
+- **Zsh configuration**: Custom shell setup with my
+  [zdotdir](https://github.com/tolkonepiu/zdotdir) configuration and
+  Antidote plugin management.
+- **Catppuccin theme**: Consistent
+  [Catppuccin](https://github.com/catppuccin/catppuccin) Mocha theming
+  across the shell, editor, and desktop applications.
+- **Firefox configuration**: Privacy-focused setup with
+  [Betterfox](https://github.com/yokoffing/Betterfox) optimizations and
+  declaratively managed extensions.
 - **Multi-agent OpenCode**: [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim/)
   orchestrates specialist agents with dedicated models, tools, and skills;
   [Hindsight](https://github.com/vectorize-io/hindsight) adds persistent
@@ -47,18 +46,12 @@
 - **Shared MCP configuration**: OpenCode, Codex, and Claude Code use the same
   GitHub, Context7, and headless Playwright servers instead of separate
   per-client definitions.
-
-### macOS
-
 - **Scrollable tiling**: [Paneru](https://github.com/karinushka/paneru) with
   Vim-style window navigation, virtual workspaces, and continuous
   three-finger trackpad gestures.
 - **Secretive SSH agent**: SSH uses
   [Secretive](https://github.com/maxgoedjen/secretive)'s agent socket rather
   than the default agent.
-
-### Steam Deck
-
 - **Gaming ↔ desktop**: Jovian boots into Steam with Decky Loader, while
   desktop mode runs [niri](https://github.com/niri-wm/niri) and
   [Noctalia](https://github.com/noctalia-dev/noctalia). A custom session action
