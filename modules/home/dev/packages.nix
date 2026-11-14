@@ -11,7 +11,6 @@
 
     # Python packages
     pipx
-    python3
     virtualenv
 
     # Web development tools
