@@ -16,8 +16,6 @@ in {
       paths.root
       paths.bios
       paths.roms
-      paths.saves
-      paths.states
     ])
     ++ ["d ${configHome} - ${user} ${group} -"];
 }
