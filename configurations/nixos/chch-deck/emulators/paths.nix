@@ -1,9 +1,7 @@
 let
   root = "/games/rom-library";
-  saves = "${root}/saves";
 in {
-  inherit root saves;
+  inherit root;
   bios = "${root}/bios";
   roms = "${root}/roms";
-  states = "${saves}/states";
 }
