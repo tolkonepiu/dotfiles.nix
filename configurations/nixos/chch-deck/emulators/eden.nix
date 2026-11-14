@@ -6,6 +6,7 @@
   ...
 }: let
   user = config.jovian.steam.user;
+  emulators = flake.inputs.nix-emulators.packages.${pkgs.stdenv.hostPlatform.system};
 
   # Eden uses raw SDL joystick indices and clears GUID CRC bytes 2-3.
   # This is the first Steam Input virtual gamepad; device ordering may require
@@ -46,12 +47,19 @@
     motionright = motion;
   };
 in {
-  home-manager.users.${user} = {
-    imports = [flake.inputs.nix-emulators.homeManagerModules.eden];
-    programs.eden = {
-      enable = true;
-      package = flake.inputs.nix-emulators.packages.${pkgs.stdenv.hostPlatform.system}.eden-nightly-bin-zen2;
-      settings.Controls =
+  home-manager.users.${user}.programs.eden = {
+    # CLI game paths override saved fullscreen, so the launcher also needs -f.
+    package = emulators.eden-nightly-bin-zen2.overrideAttrs (old: {
+      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.makeWrapper];
+      buildCommand =
+        old.buildCommand
+        + ''
+          wrapProgram "$out/bin/eden" --add-flags "-f"
+        '';
+    });
+    settings = {
+      UI.fullscreen = true;
+      Controls =
         lib.mapAttrs' (name: value: lib.nameValuePair "player_0_${name}" value) playerControls
         // {
           enable_udp_controller = true;
@@ -60,10 +68,9 @@ in {
           vibration_enabled = true;
           player_0_profile_name = "SteamDeck";
         };
-      controllerProfiles.SteamDeck.Controls = playerControls;
     };
+    controllerProfiles.SteamDeck.Controls = playerControls;
   };
 
   jovian.decky-loader.extraPackages = [config.home-manager.users.${user}.programs.eden.package];
-  jovian.devices.steamdeck.enableGyroDsuService = true;
 }
