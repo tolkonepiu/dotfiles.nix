@@ -13,6 +13,12 @@
   # Override nixos-unified's legacy string default with the NixOS list type.
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+  ];
+
   services.fstrim.enable = true;
   services.tailscale = {
     enable = true;
