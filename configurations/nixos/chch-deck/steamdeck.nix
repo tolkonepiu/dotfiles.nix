@@ -1,11 +1,4 @@
-{
-  config,
-  flake,
-  ...
-}: let
-  user = config.jovian.steam.user;
-  group = config.users.users.${user}.group;
-in {
+{flake, ...}: {
   imports = [
     flake.inputs.chaotic.nixosModules.default
     flake.inputs.chaotic.vendored.jovian.nixosModules.default
@@ -51,9 +44,4 @@ in {
       unitConfig.ConditionACPower = true;
     };
   };
-
-  systemd.tmpfiles.rules = [
-    "d /games 0755 ${user} ${group} -"
-    "d /games/SteamLibrary 0755 ${user} ${group} -"
-  ];
 }

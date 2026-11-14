@@ -12,6 +12,7 @@ in {
   home-manager.sharedModules = [
     self.homeModules.desktop
     self.homeModules.desktop-nixos
+    self.homeModules.gaming
     ./home.nix
   ];
 

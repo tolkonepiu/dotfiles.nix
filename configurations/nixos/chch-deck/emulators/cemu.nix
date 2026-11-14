@@ -1,12 +1,8 @@
-{
-  config,
-  flake,
-  ...
-}: let
-  paths = import ./paths.nix;
+{config, ...}: let
+  inherit (import ./paths.nix) roms;
   user = config.jovian.steam.user;
   group = config.users.users.${user}.group;
-  romsDir = "${paths.roms}/wiiu";
+  romsDir = "${roms}/wiiu";
 
   # Targets Gaming Mode's Steam Input gamepad layout (EmuDeck's standard GUID).
   # Other controller GUIDs must be selected in Cemu's Input settings.
@@ -148,33 +144,22 @@
     ];
   };
 in {
-  home-manager.users.${user} = {
-    imports = [flake.inputs.nix-emulators.homeManagerModules.cemu];
-    programs.cemu = {
-      enable = true;
-      # Use Cemu's default MLC and save locations.
-      settings = {
-        GamePaths.Entry = romsDir;
-        Input.DSUC = {
-          "@host" = "127.0.0.1";
-          "@port" = 26760;
-        };
-        Audio = {
-          api = 3;
-          TVChannels = 1;
-          TVVolume = 50;
-          TVDevice = "default";
-        };
+  home-manager.users.${user}.programs.cemu = {
+    settings = {
+      fullscreen = true;
+      GamePaths.Entry = romsDir;
+      Input.DSUC = {
+        "@host" = "127.0.0.1";
+        "@port" = 26760;
       };
-      controllerProfiles = {
-        controller0 = controller;
-        SteamDeck = controller;
-      };
+    };
+    controllerProfiles = {
+      controller0 = controller;
+      SteamDeck = controller;
     };
   };
 
   jovian.decky-loader.extraPackages = [config.home-manager.users.${user}.programs.cemu.package];
-  jovian.devices.steamdeck.enableGyroDsuService = true;
 
   systemd.tmpfiles.rules = ["d ${romsDir} 0755 ${user} ${group} -"];
 }
