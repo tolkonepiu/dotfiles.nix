@@ -6,7 +6,7 @@
 in {
   imports = [
     ./cemu.nix
-    ./xenia-canary.nix
+    ./xenia.nix
     ./eden.nix
     ./retroarch.nix
   ];
