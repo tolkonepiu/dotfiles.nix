@@ -48,15 +48,7 @@
   };
 in {
   home-manager.users.${user}.programs.eden = {
-    # CLI game paths override saved fullscreen, so the launcher also needs -f.
-    package = emulators.eden-nightly-bin-zen2.overrideAttrs (old: {
-      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [pkgs.makeWrapper];
-      buildCommand =
-        old.buildCommand
-        + ''
-          wrapProgram "$out/bin/eden" --add-flags "-f"
-        '';
-    });
+    package = emulators.eden-nightly-bin-zen2;
     settings = {
       UI.fullscreen = true;
       Controls =

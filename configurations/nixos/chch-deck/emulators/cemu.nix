@@ -36,22 +36,22 @@
           range = 1;
         };
         mappings.entry = [
-          # Nintendo positional face buttons
+          # Steam Input already handles the Nintendo face-button swap.
           {
             mapping = 1;
-            button = 1;
-          }
-          {
-            mapping = 2;
             button = 0;
           }
           {
+            mapping = 2;
+            button = 1;
+          }
+          {
             mapping = 3;
-            button = 3;
+            button = 2;
           }
           {
             mapping = 4;
-            button = 2;
+            button = 3;
           }
           # Shoulders and triggers
           {
