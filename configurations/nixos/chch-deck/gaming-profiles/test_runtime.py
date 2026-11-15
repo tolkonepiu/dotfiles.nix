@@ -94,6 +94,7 @@ class RuntimeTests(unittest.TestCase):
         controller = Controller(config(), FakeX())
         controller.power = SimpleNamespace()
         controller.power_watts = 12
+        controller.power_target = 12
         drift = {"caps_uw": {"power1_cap": 15000000, "power2_cap": 15000000}, "errors": []}
         correct = {"caps_uw": {"power1_cap": 12000000, "power2_cap": 12000000}, "errors": []}
         with patch("runtime.request", side_effect=[drift, correct]) as exchange:
@@ -102,7 +103,7 @@ class RuntimeTests(unittest.TestCase):
         with patch("runtime.request", return_value=drift) as exchange:
             self.assertFalse(controller.power_request(12)["confirmed"])
             self.assertFalse(controller.power_request(12)["confirmed"])
-        self.assertEqual([call.args[1] for call in exchange.call_args_list], [{"op": "read"}, {"watts": 12}, {"op": "read"}])
+        self.assertEqual([call.args[1] for call in exchange.call_args_list], [{"op": "read"}, {"op": "read"}])
         self.assertTrue(any("TDP readback" in error for error in controller.errors))
 
     def test_physical_fallback_preserves_independent_game_target(self):

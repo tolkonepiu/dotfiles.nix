@@ -110,6 +110,13 @@ There is no safe way to arbitrate arbitrary root plugins. Steam still owns FPS
 limits; automatic CPU/GPU clocks are untouched. This is neither overclocking nor
 undervolting.
 
+Failed TDP requests and individual display operations retry with capped
+exponential backoff. Successful display submissions are not repeated just because
+another operation failed. Recovery clears the corresponding stale error; resume
+allows the current profile to be reapplied. Repeated TDP drift after a successful
+correction is reported as a competing-writer conflict instead of starting a
+continuous write fight; a target change or resume allows a new correction.
+
 While enabled, only the root broker can write AMDGPU `power1_cap`/`power2_cap`;
 Steam's GPU-control permissions remain available. The broker accepts only bounded
 numeric requests from the Jovian user, converts watts to microwatts, and verifies
@@ -131,6 +138,8 @@ The implementation uses the existing embedded compositor:
 - Physical output: the display's entry in `GAMESCOPE_MODE_SAVE_FILE`, followed
   by `GAMESCOPE_DISPLAY_MODE_NUDGE`. Existing unrelated entries and the optional
   broadcast-RGB field are preserved. This is separate from Xwayland resizing.
+  Display identity follows Gamescope's exact key, including the trailing space
+  in `"ACME "` when the manufacturer is known but the EDID model name is empty.
 - Game display: `GAMESCOPE_XWAYLAND_MODE_CONTROL` with the correct server index.
 - Scaling: Gamescope scaling properties, aspect-preserving fit, and
   `GAMESCOPE_FSR_FEEDBACK` for FSR activity.

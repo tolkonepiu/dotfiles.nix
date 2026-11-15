@@ -153,8 +153,10 @@ class Gamescope:
         info = {}
         if screen == "external":
             output = subprocess.run(["gamescopectl"], capture_output=True, text=True, check=True, timeout=3).stdout
-            for key, value in re.findall(r"^\s*- (Connector Name|Display Make|Display Model):\s*(.*?)\s*$", output, re.M):
-                info[key] = value
+            for line in output.splitlines():
+                match = re.fullmatch(r"[ \t]*- (Connector Name|Display Make|Display Model):[ \t]?(.*)", line)
+                if match:
+                    info[match[1]] = match[2]
         return {"screen": screen, "power": power_source(), "focused": focused, "running": running,
                 "display": display_name, "connector": info,
                 "modes": self.text("GAMESCOPE_DISPLAY_MODE_LIST_EXTERNAL") or "", "mappings": mappings,
@@ -171,12 +173,16 @@ class Controller:
         self.candidate = None
         self.power = None
         self.power_watts = None
+        self.power_target = None
         self.power_drift_retried = False
+        self.power_retry_at = 0
+        self.power_retry_delay = 0
+        self.power_errors = []
         self.requested = None
         self.errors = []
         self.physical_target = None
         self.effective_filter = None
-        self.apply_errors = []
+        self.operations = {}
         self.legacy_serial = 0
         self.suspend_offset = time.clock_gettime(time.CLOCK_BOOTTIME) - time.monotonic()
 
@@ -186,39 +192,59 @@ class Controller:
             self.power = None
 
     def power_request(self, watts=None):
+        self.errors = [error for error in self.errors if error not in self.power_errors]
+        if watts != self.power_target:
+            self.power_target = watts
+            self.power_watts = None
+            self.power_drift_retried = False
+            self.power_retry_at = self.power_retry_delay = 0
+            self.power_errors = []
+        now = time.monotonic()
+        attempted = False
         try:
             if self.power is None:
                 self.power = socket.socket(socket.AF_UNIX)
                 self.power.settimeout(2)
                 self.power.connect("/run/deck-gaming-power/control.sock")
-                self.power_watts = None
-                self.power_drift_retried = False
-            message = {"watts": watts} if watts is not None and watts != self.power_watts else {"op": "read"}
-            if "watts" in message:
-                self.power_watts = watts
-                self.power_drift_retried = False
-            result = request(self.power, message)
-            if not isinstance(result, dict) or not isinstance(result.get("caps_uw"), dict) or not isinstance(result.get("errors"), list):
-                raise ValueError("invalid power broker response")
             desired = {cap: watts * 1_000_000 for cap in ("power1_cap", "power2_cap")} if watts is not None else None
-            if desired is not None and result.get("caps_uw") != desired and "watts" not in message and not self.power_drift_retried:
-                self.power_drift_retried = True
-                result = request(self.power, {"watts": watts})
-                if not isinstance(result, dict):
+
+            def exchange(message):
+                result = request(self.power, message)
+                if not isinstance(result, dict) or not isinstance(result.get("caps_uw"), dict) or not isinstance(result.get("errors"), list):
                     raise ValueError("invalid power broker response")
+                return result
+
+            attempted = desired is not None and watts != self.power_watts and now >= self.power_retry_at
+            result = exchange({"watts": watts} if attempted else {"op": "read"})
+            correction = False
+            if desired is not None and (result["caps_uw"] != desired or result["errors"]) and not attempted and now >= self.power_retry_at and not self.power_drift_retried:
+                attempted = True
+                correction = self.power_watts == watts
+                result = exchange({"watts": watts})
             confirmed = desired is not None and result.get("caps_uw") == desired and not result.get("errors")
             if confirmed:
-                self.power_drift_retried = False
+                self.power_watts = watts
+                # A good read must not replenish the budget for fighting another writer.
+                self.power_drift_retried |= correction
+                self.power_retry_at = self.power_retry_delay = 0
+                self.power_errors = []
             elif desired is not None:
-                self.power_drift_retried = True
-                self.errors.append("TDP readback mismatch/unknown; requested watts not confirmed")
-            if result.get("errors"):
-                self.errors.extend(result["errors"])
+                self.power_errors = ["TDP readback mismatch/unknown; requested watts not confirmed", *result["errors"]]
+                if result["caps_uw"] != desired and self.power_watts == watts and self.power_drift_retried:
+                    self.power_errors.append("TDP competing-writer conflict: corrective write budget exhausted; no further writes until target change or resume")
+                if attempted:
+                    self.power_retry_delay = min(30, self.power_retry_delay * 2 or 1)
+                    self.power_retry_at = now + self.power_retry_delay
+            self.errors.extend(self.power_errors)
             return {**result, "confirmed": confirmed}
         except FAILURES as exc:
             self.close()
-            self.power_watts = None
-            self.errors.append(f"power: {exc}")
+            self.power_watts = None  # Disconnect releases the broker lease and restores its baseline.
+            if now >= self.power_retry_at:
+                self.power_retry_delay = min(30, self.power_retry_delay * 2 or 1)
+                self.power_retry_at = now + self.power_retry_delay
+            self.power_errors = [f"power: {exc}"]
+            self.errors.extend(self.power_errors)
             return None
 
     def physical(self, snapshot, profile):
@@ -230,8 +256,8 @@ class Controller:
         info = snapshot["connector"]
         if not info.get("Connector Name"):
             raise ValueError("active external connector identity unknown")
-        make, model = info.get("Display Make", ""), info.get("Display Model", "")
-        description = f"{make} {model}" if make and model else model or "External screen"
+        make, model = info.get("Display Make"), info.get("Display Model")
+        description = f"{make} {model}" if make is not None and model is not None else "External screen"
         mode = choose_mode(snapshot["modes"], profile["output"])
         if mode is None:
             raise ValueError("no supported physical mode within profile bounds; physical output untouched")
@@ -267,22 +293,32 @@ class Controller:
             # Dimensions come only from validated Nix config, not launch requests.
             self.x.write("GAMESCOPE_XWAYLAND_MODE_CONTROL", [index, profile["game"]["width"], profile["game"]["height"], 1])
         else:
-            self.errors.append("pending-game-resolution: actual game DISPLAY unknown")
+            raise ValueError("pending-game-resolution: actual game DISPLAY unknown")
+
+    def apply_operation(self, name, operation, target=None):
+        state = self.operations.get(name)
+        if state is None or state["target"] != target:
+            state = {"target": target, "done": False, "retry_at": 0, "delay": 0, "errors": []}
+            self.operations[name] = state
+        if not state["done"] and time.monotonic() >= state["retry_at"]:
+            try:
+                operation()
+                state["done"] = True
+                state["errors"] = []
+                state["retry_at"] = state["delay"] = 0
+            except FAILURES as exc:
+                state["errors"] = [f"{name}: {exc}"]
+                state["delay"] = min(30, state["delay"] * 2 or 1)
+                state["retry_at"] = time.monotonic() + state["delay"]
+        self.errors.extend(state["errors"])
 
     def apply(self, snapshot, profile):
-        self.legacy_serial = snapshot.get("legacy_serial", 0)
-        try:
-            self.physical(snapshot, profile)
-        except FAILURES as exc:
-            self.errors.append(str(exc))
-        try:
-            self.apply_virtual(profile)
-        except FAILURES as exc:
-            self.errors.append(f"virtual resolution: {exc}")
+        self.apply_operation("physical", lambda: self.physical(snapshot, profile))
+        self.apply_operation("virtual resolution", lambda: self.apply_virtual(profile))
         output = self.physical_target or profile["output"]
         self.effective_filter = profile["filter"] if profile["game"]["width"] < output["width"] and profile["game"]["height"] < output["height"] else "linear"
-        self.x.write("GAMESCOPE_NEW_SCALING_FILTER", [FILTERS[self.effective_filter]])
-        self.x.write("GAMESCOPE_NEW_SCALING_SCALER", [2])  # FIT, after filter; preserve aspect.
+        self.apply_operation("scaling filter", lambda: self.x.write("GAMESCOPE_NEW_SCALING_FILTER", [FILTERS[self.effective_filter]]), self.effective_filter)
+        self.apply_operation("scaling scaler", lambda: self.x.write("GAMESCOPE_NEW_SCALING_SCALER", [2]))  # FIT, after filter; preserve aspect.
 
     def tick(self, launch=None):
         self.errors = []
@@ -291,6 +327,10 @@ class Controller:
         offset = time.clock_gettime(time.CLOCK_BOOTTIME) - time.monotonic()
         wake = offset - self.suspend_offset > 0.1
         self.suspend_offset = offset
+        if wake:
+            self.power_watts = None
+            self.power_drift_retried = False
+            self.power_retry_at = self.power_retry_delay = 0
         snapshot = self.x.snapshot()
         if launch:
             mapping = display_mapping(launch["mapping"], os.environ["DISPLAY"])
@@ -320,12 +360,13 @@ class Controller:
         key = json.dumps([screen, power, app, self.game_display, self.game_mapping, snapshot["connector"], snapshot["modes"], profile], sort_keys=True)
         event = key != self.last_key or wake
         if event and (launch or wake or self.candidate == key):
-            self.apply(snapshot, profile)
-            self.apply_errors = self.errors.copy()
+            self.operations.clear()
+            self.legacy_serial = snapshot.get("legacy_serial", 0)
             self.last_key = key
             self.requested = profile
         self.candidate = key
-        self.errors.extend(error for error in self.apply_errors if error not in self.errors)
+        if self.last_key == key:
+            self.apply(snapshot, profile)
         if event and self.last_key != key:
             self.errors.append("state debounce pending")
         caps = self.power_request(profile["watts"]) if self.last_key == key else None
