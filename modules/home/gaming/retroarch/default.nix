@@ -28,8 +28,8 @@ in {
         };
     });
     settings = {
+      video_driver = "vulkan";
       input_joypad_driver = "sdl2";
-      sort_savefiles_enable = "true";
       sort_savestates_enable = "true";
       savefiles_in_content_dir = "false";
       savestates_in_content_dir = "false";
