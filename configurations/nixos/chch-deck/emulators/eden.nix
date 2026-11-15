@@ -50,7 +50,7 @@ in {
   home-manager.users.${user}.programs.eden = {
     package = emulators.eden-nightly-bin-zen2-pgo;
     settings = {
-      System.use_docked_mode = 0; # Handheld
+      System.use_docked_mode = 1;
       UI.fullscreen = true;
       Controls =
         lib.mapAttrs' (name: value: lib.nameValuePair "player_0_${name}" value) playerControls
