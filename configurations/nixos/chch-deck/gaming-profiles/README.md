@@ -141,6 +141,12 @@ The implementation uses the existing embedded compositor:
   Display identity follows Gamescope's exact key, including the trailing space
   in `"ACME "` when the manufacturer is known but the EDID model name is empty.
 - Game display: `GAMESCOPE_XWAYLAND_MODE_CONTROL` with the correct server index.
+  Read the index from that display's `GAMESCOPE_XWAYLAND_SERVER_ID` root
+  property and require its `GAMESCOPE_PID` to match the controller's compositor.
+  The pinned Jovian session starts two Xwayland servers. A display number such
+  as `:1`, matching geometry, or a container's Wayland socket name is not proof
+  of its index. Steam display environment variables are not required: Jovian
+  starts Steam separately using a handoff that does not guarantee those values.
 - Scaling: Gamescope scaling properties, aspect-preserving fit, and
   `GAMESCOPE_FSR_FEEDBACK` for FSR activity.
 - Physical confirmation: read-only DRM connector/CRTC query, not the supported
@@ -178,6 +184,11 @@ Status distinguishes detected screen/power/AppID, selected policy, requested
 values, observed physical mode, virtual screen, X11 window size, FSR feedback,
 power readbacks and errors. Unknown values are not confirmations. Always check
 that the controller is running and the status is current.
+An already-matching virtual geometry does not clear pending resolution while
+the display mapping is unverified or the mode submission has failed. A verified
+submission and matching virtual size still do not prove the game's frame size.
+`game_mapping` reports the verified compositor PID and server index;
+`virtual_resolution_submitted` separately reports the matching mode submission.
 
 ## Software and device verification
 

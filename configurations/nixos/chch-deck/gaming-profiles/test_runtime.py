@@ -5,17 +5,32 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-from runtime import Controller, import_environment, launch_game, process_state, property_text
+from runtime import Controller, Gamescope, import_environment, launch_game, process_state, property_text
 from test_policy import config
 
 
-class FakeX:
+class FakeX(Gamescope):
     def __init__(self):
         self.writes = []
         self.screen = "handheld"
         self.focused = [123]
         self.running = {"123"}
         self.size = {"width": 1280, "height": 800}
+        self.Xatom = SimpleNamespace(CARDINAL=6)
+        self.metadata = {
+            ':7': {'GAMESCOPE_PID': self.cardinal([100]), 'GAMESCOPE_XWAYLAND_SERVER_ID': self.cardinal([0])},
+            ':42': {'GAMESCOPE_PID': self.cardinal([100]), 'GAMESCOPE_XWAYLAND_SERVER_ID': self.cardinal([1])},
+        }
+
+    @staticmethod
+    def cardinal(value, property_type=6, format=32):
+        return SimpleNamespace(property_type=property_type, format=format, value=value)
+
+    def prop(self, name):
+        return self.metadata.get(os.environ.get('DISPLAY'), {}).get(name)
+
+    def display_properties(self, display_name):
+        return self.metadata.get(display_name, {})
 
     def snapshot(self):
         return {"screen": self.screen, "power": "battery", "focused": self.focused,
@@ -106,12 +121,13 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual([call.args[1] for call in exchange.call_args_list], [{"op": "read"}, {"op": "read"}])
         self.assertTrue(any("TDP readback" in error for error in controller.errors))
 
+    @patch.dict(os.environ, {"DISPLAY": ":7"}, clear=True)
     def test_physical_fallback_preserves_independent_game_target(self):
         x, controller = self.controller()
         profile = config()["profiles"]["external-ac"]
         controller.requested = profile
         controller.game_display = ":42"
-        controller.game_mapping = {"DISPLAY": ":7", "STEAM_GAME_DISPLAY_0": ":42"}
+        controller.game_mapping = {"STEAM_GAME_DISPLAY_0": ":42"}
         controller.physical_target = {"connector": "HDMI-A-1", "width": 1280, "height": 720, "hz": 60}
         controller.read_physical = lambda: [{"name": "HDMI-A-1", "width": 1280, "height": 720, "hz": 59.94}]
         controller.physical = lambda snapshot, selected: None

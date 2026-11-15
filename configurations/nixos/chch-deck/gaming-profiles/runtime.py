@@ -55,21 +55,20 @@ def process_state(directory="/proc"):
             environment = {}
             for entry in path.read_bytes().split(b"\0"):
                 key, separator, value = entry.partition(b"=")
-                if separator and key in (b"SteamAppId", b"DISPLAY", b"STEAM_GAME_DISPLAY_0", b"STEAM_GAME_DISPLAY_1", b"GAMESCOPE_WAYLAND_DISPLAY"):
+                if separator and key in (b"SteamAppId", b"DISPLAY", b"STEAM_GAME_DISPLAY_0", b"STEAM_GAME_DISPLAY_1"):
                     environment[key.decode("ascii")] = value.decode("utf-8")
             app = environment.get("SteamAppId")
             if app_id(app):
                 apps.add(app)
-                if environment.get("GAMESCOPE_WAYLAND_DISPLAY") == os.environ.get("GAMESCOPE_WAYLAND_DISPLAY") and environment.get("DISPLAY"):
+                if re.fullmatch(r":\d+(?:\.\d+)?", environment.get("DISPLAY", "")):
                     mapping = {key: environment[key] for key in ("STEAM_GAME_DISPLAY_0", "STEAM_GAME_DISPLAY_1") if key in environment}
-                    verified = display_mapping(mapping, os.environ["DISPLAY"])
-                    server_index(environment["DISPLAY"], verified)
+                    display_mapping(mapping, os.environ["DISPLAY"])
                     mappings[app] = {"display": environment["DISPLAY"], "mapping": mapping}
         except (OSError, UnicodeError):
             # Other users' processes and processes which exit during the scan.
             continue
         except ValueError:
-            # A foreign/malformed process environment is not a usable mapping.
+            # Malformed display hints are not a usable candidate.
             continue
     return apps, mappings
 
@@ -117,6 +116,47 @@ class Gamescope:
             self.connection.sync()
         except self.xerrors as exc:
             raise RuntimeError(f"write {name}: {exc}") from exc
+
+    def display_properties(self, display_name):
+        from Xlib import display
+        connection = None
+        try:
+            connection = display.Display(display_name)
+            root = connection.screen().root
+            return {name: root.get_full_property(connection.intern_atom(name), self.X.AnyPropertyType)
+                    for name in ("GAMESCOPE_PID", "GAMESCOPE_XWAYLAND_SERVER_ID")}
+        except (IndexError, *self.xerrors) as exc:
+            raise RuntimeError(f"X mapping {display_name}: {exc}") from exc
+        finally:
+            if connection is not None:
+                connection.close()
+
+    def resolve_display(self, display_name, mapping):
+        if not isinstance(display_name, str) or re.fullmatch(r":\d+(?:\.\d+)?", display_name) is None:
+            raise ValueError("game DISPLAY must be a local X display")
+        hints = display_mapping(mapping, os.environ["DISPLAY"])
+
+        def identity(properties):
+            values = []
+            for name in ("GAMESCOPE_PID", "GAMESCOPE_XWAYLAND_SERVER_ID"):
+                prop = properties.get(name)
+                if (prop is None or prop.property_type != self.Xatom.CARDINAL or prop.format != 32
+                        or len(prop.value) != 1 or type(prop.value[0]) is not int):
+                    raise ValueError(f"unverified Gamescope mapping: invalid {name}")
+                values.append(prop.value[0])
+            pid, index = values
+            # Pinned Jovian starts Gamescope with --xwayland-count 2.
+            if pid <= 0 or index not in (0, 1):
+                raise ValueError("unverified Gamescope mapping: PID/server ID out of range")
+            return pid, index
+
+        controller = identity({name: self.prop(name) for name in ("GAMESCOPE_PID", "GAMESCOPE_XWAYLAND_SERVER_ID")})
+        candidate = identity(self.display_properties(display_name))
+        if controller[1] != 0 or candidate[0] != controller[0]:
+            raise ValueError("unverified Gamescope mapping: foreign compositor/root")
+        if (mapping or display_name == hints["DISPLAY"]) and server_index(display_name, hints) != candidate[1]:
+            raise ValueError("game display mapping contradicts Gamescope server ID")
+        return candidate
 
     def geometry(self, display_name, window=None):
         from Xlib import display
@@ -168,7 +208,8 @@ class Controller:
         self.config, self.x = config, gamescope
         self.game = ActiveGame()
         self.game_display = None
-        self.game_mapping = {"DISPLAY": os.environ.get("DISPLAY")}
+        self.game_mapping = {}
+        self.virtual_submission = None
         self.last_key = None
         self.candidate = None
         self.power = None
@@ -289,9 +330,10 @@ class Controller:
 
     def apply_virtual(self, profile):
         if self.game_display:
-            index = server_index(self.game_display, self.game_mapping)
+            proof = self.x.resolve_display(self.game_display, self.game_mapping)
             # Dimensions come only from validated Nix config, not launch requests.
-            self.x.write("GAMESCOPE_XWAYLAND_MODE_CONTROL", [index, profile["game"]["width"], profile["game"]["height"], 1])
+            self.x.write("GAMESCOPE_XWAYLAND_MODE_CONTROL", [proof[1], profile["game"]["width"], profile["game"]["height"], 1])
+            self.virtual_submission = (self.game_display, profile, proof)
         else:
             raise ValueError("pending-game-resolution: actual game DISPLAY unknown")
 
@@ -333,18 +375,19 @@ class Controller:
             self.power_retry_at = self.power_retry_delay = 0
         snapshot = self.x.snapshot()
         if launch:
-            mapping = display_mapping(launch["mapping"], os.environ["DISPLAY"])
-            server_index(launch["display"], mapping)
+            self.x.resolve_display(launch["display"], launch["mapping"])
             self.game.launch(launch["app"], now)
             self.game_display = launch["display"]
-            self.game_mapping = mapping
+            self.game_mapping = launch["mapping"]
         previous_app = self.game.app
         app = self.game.observe(snapshot["focused"], snapshot["running"], now)
         if app != previous_app:
             self.game_display = None
+            self.game_mapping = {}
+            self.virtual_submission = None
         process_mapping = snapshot.get("mappings", {}).get(app)
         if process_mapping and self.game_display is None:
-            self.game_mapping = display_mapping(process_mapping["mapping"], os.environ["DISPLAY"])
+            self.game_mapping = process_mapping["mapping"]
             self.game_display = process_mapping["display"]
         focused = [str(v) for v in snapshot["focused"]]
         if app and app in focused and snapshot["display"]:
@@ -361,6 +404,7 @@ class Controller:
         event = key != self.last_key or wake
         if event and (launch or wake or self.candidate == key):
             self.operations.clear()
+            self.virtual_submission = None
             self.legacy_serial = snapshot.get("legacy_serial", 0)
             self.last_key = key
             self.requested = profile
@@ -402,12 +446,23 @@ class Controller:
             self.errors.append("scaling filter conflict: compositor/Steam changed requested filter")
         if self.requested and scaler_value and scaler_value != [2]:
             self.errors.append("scaling scaler conflict: compositor/Steam changed FIT")
-        pending = bool(profile and virtual != profile["game"])
+        proof = None
+        if self.game_display:
+            try:
+                proof = self.x.resolve_display(self.game_display, self.game_mapping)
+            except FAILURES as exc:
+                self.errors.append(f"virtual mapping: {exc}")
+        submitted = bool(profile and proof is not None and self.virtual_submission == (self.game_display, profile, proof))
+        if not submitted and self.operations.get("virtual resolution", {}).get("done"):
+            self.operations.pop("virtual resolution")
+        pending = bool(profile and (not submitted or virtual != profile["game"]))
         return {"screen": snapshot["screen"], "power": snapshot["power"], "active_app_id": app,
                 "selected_profile": name, "requested": profile, "physical_target": self.physical_target,
                 "confirmed_drm_physical_modes": physical, "physical_confirmation": confirmation, "virtual_root_size": virtual,
-                "observed_x11_window_size": window, "actual_game_frame": None,
-                "game_display": self.game_display, "pending_game_resolution": pending,
+                 "observed_x11_window_size": window, "actual_game_frame": None,
+                 "game_display": self.game_display, "pending_game_resolution": pending,
+                 "game_mapping": {"source": "gamescope-root-properties", "compositor_pid": proof[0], "server_index": proof[1]} if proof else None,
+                 "virtual_resolution_submitted": submitted,
                 "fsr_active": bool(feedback[0]) if feedback else None,
                 "scaling_filter_confirmation": "fsr-active" if feedback and feedback[0] else "unknown",
                 "legacy_scaling_filter": legacy_value,
