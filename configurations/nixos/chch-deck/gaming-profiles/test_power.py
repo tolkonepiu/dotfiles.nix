@@ -46,6 +46,45 @@ class PowerTests(unittest.TestCase):
         self.assertEqual(self.power.read(), self.baseline)
         self.assertFalse(self.state.exists())
 
+    def test_apply_and_restore_events_use_only_existing_reads(self):
+        with self.assertLogs("deck-gaming-power", level="INFO") as logs, patch.object(
+                self.power, "read", wraps=self.power.read) as read, patch(
+                    "power.time.monotonic", return_value=123.5):
+            self.assertEqual(self.power.request({"watts": 10})["errors"], [])
+            self.assertEqual(read.call_count, 3)
+            self.assertEqual(self.power.restore(reason="startup"), [])
+            self.assertEqual(read.call_count, 4)
+        messages = [record.getMessage() for record in logs.records]
+        self.assertTrue(all("monotonic=123.500000" in message for message in messages))
+        self.assertIn(f"snapshot-created monotonic=123.500000 caps_uw={self.baseline}", messages)
+        for operation, values in (("apply", dict.fromkeys(CAPS, 10_000_000)),
+                                  ("restore reason=startup", self.baseline)):
+            for cap, value in values.items():
+                for event in ("cap-write-intent", "cap-write-success"):
+                    before = (f"before_uw={self.baseline[cap]} "
+                              if operation == "apply" and event == "cap-write-intent" else "")
+                    self.assertIn(f"{event} monotonic=123.500000 operation={operation} "
+                                  f"cap={cap} {before}requested_uw={value}", messages)
+            self.assertIn(f"cap-readback monotonic=123.500000 operation={operation} "
+                          f"caps_uw={values} matched=True", messages)
+        self.assertIn("restore-result monotonic=123.500000 reason=startup success=True errors=[]",
+                      messages)
+
+    def test_idle_reads_and_noops_do_not_log_or_write(self):
+        with self.assertNoLogs("deck-gaming-power", level="INFO"), patch.object(
+                self.power, "write", wraps=self.power.write) as write:
+            for _ in range(3):
+                self.assertEqual(self.power.request({"op": "read"})["errors"], [])
+                self.assertEqual(self.power.restore(), [])
+            write.assert_not_called()
+        self.power.apply(10)
+        with self.assertNoLogs("deck-gaming-power", level="INFO"), patch.object(
+                self.power, "write", wraps=self.power.write) as write:
+            for _ in range(3):
+                self.assertEqual(self.power.request({"op": "read"})["errors"], [])
+                self.assertEqual(self.power.request({"watts": 10})["errors"], [])
+            write.assert_not_called()
+
     def test_partial_write_rolls_back_original_snapshot(self):
         self.power.apply(10)
         write = self.power.write
@@ -55,8 +94,16 @@ class PowerTests(unittest.TestCase):
                 raise OSError("injected failure")
             write(cap, value)
 
-        with patch.object(self.power, "write", side_effect=fail_second):
+        with patch.object(self.power, "write", side_effect=fail_second), self.assertLogs(
+                "deck-gaming-power", level="INFO") as logs:
             self.assertTrue(self.power.request({"watts": 8})["errors"])
+        messages = "\n".join(record.getMessage() for record in logs.records)
+        self.assertIn("operation=apply cap=power2_cap before_uw=10000000 requested_uw=8000000", messages)
+        self.assertFalse(any("cap-write-success" in record.getMessage()
+                             and "operation=apply cap=power2_cap" in record.getMessage()
+                             for record in logs.records))
+        self.assertIn(f"operation=restore reason=rollback caps_uw={self.baseline} matched=True", messages)
+        self.assertIn("reason=rollback success=True errors=[]", messages)
         self.assertEqual(self.power.read(), self.baseline)
         self.assertFalse(self.state.exists())
 
@@ -124,8 +171,11 @@ class PowerTests(unittest.TestCase):
         self.assertEqual(self.power.restore(), [])
 
     def test_mismatch_not_confirmed_and_failed_restore_retained(self):
-        with patch.object(self.power, "write"):
+        with patch.object(self.power, "write"), self.assertLogs(
+                "deck-gaming-power", level="INFO") as logs:
             self.assertTrue(self.power.request({"watts": 10})["errors"])
+        self.assertTrue(any(f"operation=apply caps_uw={self.baseline} matched=False"
+                            in record.getMessage() for record in logs.records))
         self.power.apply(10)
         with patch.object(self.power, "write"):
             self.assertTrue(self.power.restore())
@@ -159,12 +209,15 @@ class PowerTests(unittest.TestCase):
     def test_socket_controller_lifecycle(self):
         timeout = 30
         path = self.root / "control.sock"
+        log = tempfile.TemporaryFile(mode="w+")
+        self.addCleanup(log.close)
         child = subprocess.Popen([
             sys.executable, "-c",
-            "import sys; from power import Power, daemon; "
+            "import sys, logging; logging.basicConfig(level=logging.INFO); "
+            "from power import Power, daemon; "
             "daemon(Power(sys.argv[1], sys.argv[2]), sys.argv[3], sys.argv[4])",
             str(self.state), str(self.root), str(path), pwd.getpwuid(os.getuid()).pw_name,
-        ], cwd=Path(__file__).parent)
+        ], cwd=Path(__file__).parent, stderr=log)
         try:
             with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as controller:
                 controller.settimeout(timeout)
@@ -191,9 +244,32 @@ class PowerTests(unittest.TestCase):
                     self.assertEqual(responses.read(1), b"")
             self.assertFalse(self.state.exists())
             self.assertEqual(self.power.read(), self.baseline)
-            child.terminate()
-            self.assertEqual(child.wait(timeout=timeout), 0)
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as controller:
+                controller.settimeout(timeout)
+                controller.connect(str(path))
+                controller.sendall(b"x" * 4097)
+                self.assertEqual(controller.recv(1), b"")
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as controller:
+                controller.settimeout(timeout)
+                controller.connect(str(path))
+                with controller.makefile("rb") as responses:
+                    controller.sendall(b'{"op":"read"}\n')
+                    self.assertEqual(json.loads(responses.readline()), {
+                        "caps_uw": self.baseline, "errors": []})
+                    child.terminate()
+                    self.assertEqual(responses.read(1), b"")
+                self.assertEqual(child.wait(timeout=timeout), 0)
             self.assertFalse(path.exists())
+            log.seek(0)
+            messages = log.read()
+            self.assertRegex(messages, rf"lease-accepted monotonic=\d+\.\d+ lease_id=1 peer_pid={os.getpid()} peer_uid={os.getuid()}")
+            self.assertRegex(messages, r"lease-closed monotonic=\d+\.\d+ lease_id=1 reason=EOF")
+            self.assertRegex(messages, r"lease-closed monotonic=\d+\.\d+ lease_id=2 reason=error")
+            self.assertRegex(messages, r"lease-closed monotonic=\d+\.\d+ lease_id=3 reason=shutdown")
+            self.assertEqual(messages.count("lease-accepted"), 3)
+            self.assertIn("reason=disconnect success=True errors=[]", messages)
+            self.assertEqual(messages.count("snapshot-created"), 1)
+            self.assertEqual(messages.count("cap-write-intent"), 4)
         finally:
             if child.poll() is None:
                 child.kill()

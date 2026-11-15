@@ -219,6 +219,8 @@ class Controller:
         self.power_retry_at = 0
         self.power_retry_delay = 0
         self.power_errors = []
+        self.power_guard_logged = False
+        self.power_connected_once = False
         self.requested = None
         self.errors = []
         self.physical_target = None
@@ -234,19 +236,27 @@ class Controller:
 
     def power_request(self, watts=None):
         self.errors = [error for error in self.errors if error not in self.power_errors]
-        if watts != self.power_target:
+        target_changed = watts != self.power_target
+        if target_changed:
             self.power_target = watts
             self.power_watts = None
             self.power_drift_retried = False
             self.power_retry_at = self.power_retry_delay = 0
             self.power_errors = []
+            self.power_guard_logged = False
         now = time.monotonic()
         attempted = False
+        reason = None
+        connected = self.power is not None
         try:
             if self.power is None:
                 self.power = socket.socket(socket.AF_UNIX)
                 self.power.settimeout(2)
                 self.power.connect("/run/deck-gaming-power/control.sock")
+                connected = True
+                log("power-connected", monotonic=time.monotonic(), requested_watts=watts,
+                    reconnect=self.power_connected_once, retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
+                self.power_connected_once = True
             desired = {cap: watts * 1_000_000 for cap in ("power1_cap", "power2_cap")} if watts is not None else None
 
             def exchange(message):
@@ -256,11 +266,20 @@ class Controller:
                 return result
 
             attempted = desired is not None and watts != self.power_watts and now >= self.power_retry_at
+            if attempted:
+                reason = "target" if target_changed else "retry" if self.power_retry_delay else "initial"
+                log("power-apply", phase="request", reason=reason, monotonic=time.monotonic(), requested_watts=watts,
+                    observed_caps_uw=None, correction_used=self.power_drift_retried,
+                    retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
             result = exchange({"watts": watts} if attempted else {"op": "read"})
             correction = False
             if desired is not None and (result["caps_uw"] != desired or result["errors"]) and not attempted and now >= self.power_retry_at and not self.power_drift_retried:
                 attempted = True
                 correction = self.power_watts == watts
+                reason = "corrective" if correction else "retry"
+                log("power-apply", phase="request", reason=reason, monotonic=time.monotonic(), requested_watts=watts,
+                    observed_caps_uw=result["caps_uw"], correction_used=self.power_drift_retried,
+                    retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
                 result = exchange({"watts": watts})
             confirmed = desired is not None and result.get("caps_uw") == desired and not result.get("errors")
             if confirmed:
@@ -273,9 +292,18 @@ class Controller:
                 self.power_errors = ["TDP readback mismatch/unknown; requested watts not confirmed", *result["errors"]]
                 if result["caps_uw"] != desired and self.power_watts == watts and self.power_drift_retried:
                     self.power_errors.append("TDP competing-writer conflict: corrective write budget exhausted; no further writes until target change or resume")
+                    if not self.power_guard_logged:
+                        log("power-guard-exhausted", monotonic=time.monotonic(), requested_watts=watts,
+                            observed_caps_uw=result["caps_uw"], confirmed=False, errors=self.power_errors.copy(),
+                            correction_used=self.power_drift_retried, retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
+                        self.power_guard_logged = True
                 if attempted:
                     self.power_retry_delay = min(30, self.power_retry_delay * 2 or 1)
                     self.power_retry_at = now + self.power_retry_delay
+            if attempted:
+                log("power-apply", phase="result", reason=reason, monotonic=time.monotonic(), requested_watts=watts,
+                    observed_caps_uw=result["caps_uw"], confirmed=confirmed, errors=result["errors"],
+                    correction_used=self.power_drift_retried, retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
             self.errors.extend(self.power_errors)
             return {**result, "confirmed": confirmed}
         except FAILURES as exc:
@@ -284,7 +312,16 @@ class Controller:
             if now >= self.power_retry_at:
                 self.power_retry_delay = min(30, self.power_retry_delay * 2 or 1)
                 self.power_retry_at = now + self.power_retry_delay
+            connection_changed = self.power_errors != [f"power: {exc}"]
             self.power_errors = [f"power: {exc}"]
+            if attempted:
+                log("power-apply", phase="result", reason=reason, monotonic=time.monotonic(), requested_watts=watts,
+                    observed_caps_uw=None, confirmed=False, errors=self.power_errors.copy(),
+                    correction_used=self.power_drift_retried, retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
+            if connected or connection_changed:
+                log("power-connection-lost" if connected else "power-connection-failed", monotonic=time.monotonic(),
+                    requested_watts=watts, errors=self.power_errors.copy(), correction_used=self.power_drift_retried,
+                    retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
             self.errors.extend(self.power_errors)
             return None
 
@@ -370,8 +407,11 @@ class Controller:
         wake = offset - self.suspend_offset > 0.1
         self.suspend_offset = offset
         if wake:
+            log("power-resume-reset", monotonic=time.monotonic(), requested_watts=self.power_target,
+                correction_used=self.power_drift_retried, retry_at=self.power_retry_at, retry_delay=self.power_retry_delay)
             self.power_watts = None
             self.power_drift_retried = False
+            self.power_guard_logged = False
             self.power_retry_at = self.power_retry_delay = 0
         snapshot = self.x.snapshot()
         if launch:

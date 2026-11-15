@@ -117,15 +117,21 @@ allows the current profile to be reapplied. Repeated TDP drift after a successfu
 correction is reported as a competing-writer conflict instead of starting a
 continuous write fight; a target change or resume allows a new correction.
 
-While enabled, only the root broker can write AMDGPU `power1_cap`/`power2_cap`;
-Steam's GPU-control permissions remain available. The broker accepts only bounded
+The correction budget belongs to the numeric watt target: switching between two
+12 W profiles does not replenish it. The conflict message reports repeated drift,
+not proof of a particular writer.
+
+While enabled, unprivileged direct writes to AMDGPU `power1_cap`/`power2_cap` are
+blocked; Steam's GPU-control permissions remain available. These permissions do
+not exclude other root services or privileged D-Bus setters such as SteamOS
+Manager's TDP interface. The broker accepts only bounded
 numeric requests from the Jovian user, converts watts to microwatts, and verifies
 both cap readbacks. Before its first change it saves the existing values. On
 controller disconnect/Game Mode exit it restores those values, **not an assumed
 maximum**. Root service cleanup also attempts recovery after failure. Niri thus
 does not inherit a battery cap set by this controller. Read restoration errors
 in the root service journal; a failed restoration is not reported as success.
-Steam's direct TDP control remains blocked in Niri while this module is enabled;
+Unprivileged direct TDP writes remain blocked in Niri while this module is enabled;
 restoration returns the previous budget, not Steam's write permissions.
 
 ## Pinned Gamescope interfaces
@@ -189,6 +195,34 @@ the display mapping is unverified or the mode submission has failed. A verified
 submission and matching virtual size still do not prove the game's frame size.
 `game_mapping` reports the verified compositor PID and server index;
 `virtual_resolution_submitted` separately reports the matching mode submission.
+
+### Diagnosing unexplained TDP drift
+
+Power diagnostics record events rather than every unchanged poll. The root
+broker records authorized connection identity, snapshots, cap-write attempts and
+readbacks, and restoration reasons/results. The controller records apply/retry/
+correction decisions, connection changes and correction-budget exhaustion. Use
+their monotonic timestamps and boot-scoped journals to correlate events:
+
+```sh
+journalctl --user -u deck-gaming-profiles.service -b -o short-monotonic
+sudo journalctl -u deck-gaming-power.service -b -o short-monotonic
+```
+
+A write request or `cap-write-success` only establishes intent or a completed
+write call, respectively; use `cap-readback` to check the observed values. The
+broker can restore a baseline on connection loss without either service
+restarting. Stable PIDs and an empty error journal therefore do not exclude
+lease churn. These logs
+can expose our own writes/restores, but cannot identify every external writer or
+prove a firmware reset. Do not reset the guard or disable a service solely to
+turn a failing acceptance result into a pass.
+
+Deploying instrumentation and reproducing dock-power changes on a device require
+separate approval. During an approved reproduction, retain both journals from
+before the transition, current status and independent reads of both caps; keep
+the existing correction policy unchanged. Narrow privileged writer/D-Bus tracing
+is a separate diagnostic step if broker/controller events remain inconclusive.
 
 ## Software and device verification
 

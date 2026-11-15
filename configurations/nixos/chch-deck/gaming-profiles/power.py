@@ -11,6 +11,7 @@ import socket
 import stat
 import struct
 import tempfile
+import time
 
 
 CAPS = ("power1_cap", "power2_cap")
@@ -60,13 +61,15 @@ class Power:
                 stream.flush()
                 os.fsync(stream.fileno())
             os.replace(name, self.state)
+            LOG.info("snapshot-created monotonic=%.6f caps_uw=%s", time.monotonic(), values)
         finally:
             if os.path.exists(name):
                 os.unlink(name)
 
-    def restore(self):
+    def restore(self, reason="manual"):
         if not self.state.exists():
             return []
+        LOG.info("restore-start monotonic=%.6f reason=%s", time.monotonic(), reason)
         try:
             self.discover()
             info = self.state.lstat()
@@ -79,15 +82,24 @@ class Power:
                 raise ValueError("invalid snapshot")
         except (OSError, ValueError) as error:
             LOG.error("snapshot restore: %s", error)
+            LOG.info("restore-result monotonic=%.6f reason=%s success=False errors=%s",
+                     time.monotonic(), reason, [str(error)])
             return [str(error)]
         errors = []
         for cap, value in values.items():
             try:
+                LOG.info("cap-write-intent monotonic=%.6f operation=restore reason=%s cap=%s requested_uw=%s",
+                         time.monotonic(), reason, cap, value)
                 self.write(cap, value)
+                LOG.info("cap-write-success monotonic=%.6f operation=restore reason=%s cap=%s requested_uw=%s",
+                         time.monotonic(), reason, cap, value)
             except OSError as error:
                 errors.append(f"restore {cap}: {error}")
         try:
-            if self.read() != values:
+            readback = self.read()
+            LOG.info("cap-readback monotonic=%.6f operation=restore reason=%s caps_uw=%s matched=%s",
+                     time.monotonic(), reason, readback, readback == values)
+            if readback != values:
                 errors.append("restore readback mismatch")
         except (OSError, ValueError) as error:
             errors.append(f"restore readback: {error}")
@@ -98,6 +110,8 @@ class Power:
                 errors.append(f"remove snapshot: {error}")
         for error in errors:
             LOG.error("%s", error)
+        LOG.info("restore-result monotonic=%.6f reason=%s success=%s errors=%s",
+                 time.monotonic(), reason, not errors, errors)
         return errors
 
     def apply(self, watts):
@@ -120,11 +134,18 @@ class Power:
         try:
             for cap in CAPS:
                 if before[cap] != value:
+                    LOG.info("cap-write-intent monotonic=%.6f operation=apply cap=%s before_uw=%s requested_uw=%s",
+                             time.monotonic(), cap, before[cap], value)
                     self.write(cap, value)
-            if self.read() != desired:
+                    LOG.info("cap-write-success monotonic=%.6f operation=apply cap=%s requested_uw=%s",
+                             time.monotonic(), cap, value)
+            readback = self.read()
+            LOG.info("cap-readback monotonic=%.6f operation=apply caps_uw=%s matched=%s",
+                     time.monotonic(), readback, readback == desired)
+            if readback != desired:
                 raise ValueError("power-cap readback mismatch")
         except (OSError, ValueError) as error:
-            errors = self.restore()
+            errors = self.restore(reason="rollback")
             if errors:
                 raise ValueError(f"{error}; rollback failed: {'; '.join(errors)}") from error
             raise
@@ -155,9 +176,10 @@ class Power:
 
 def daemon(power, path, user):
     uid = pwd.getpwnam(user).pw_uid
-    if power.restore():
+    if power.restore(reason="startup"):
         raise RuntimeError("stale snapshot could not be restored; refusing service")
     stopping = False
+    lease_id = 0
 
     def stop(_signum, _frame):
         nonlocal stopping
@@ -186,11 +208,16 @@ def daemon(power, path, user):
                     continue
                 with connection:
                     peer = connection.getsockopt(socket.SOL_SOCKET, socket.SO_PEERCRED, 12)
-                    if struct.unpack("3i", peer)[1] != uid:
+                    peer_pid, peer_uid, _ = struct.unpack("3i", peer)
+                    if peer_uid != uid:
                         LOG.error("rejected unauthorized power broker peer")
                         continue
+                    lease_id += 1
+                    LOG.info("lease-accepted monotonic=%.6f lease_id=%s peer_pid=%s peer_uid=%s",
+                             time.monotonic(), lease_id, peer_pid, peer_uid)
                     connection.settimeout(0.5)
                     pending = b""
+                    close_reason = "shutdown"
                     try:
                         while not stopping:
                             try:
@@ -198,6 +225,7 @@ def daemon(power, path, user):
                             except socket.timeout:
                                 continue
                             if not data:
+                                close_reason = "EOF"
                                 break
                             pending += data
                             if len(pending) > 4096:
@@ -210,12 +238,15 @@ def daemon(power, path, user):
                                     response = {"caps_uw": {}, "errors": [str(error)]}
                                 connection.sendall(json.dumps(response).encode() + b"\n")
                     except (OSError, ValueError) as error:
+                        close_reason = "error"
                         LOG.error("controller connection: %s", error)
                     finally:
-                        if power.restore():
+                        LOG.info("lease-closed monotonic=%.6f lease_id=%s reason=%s",
+                                 time.monotonic(), lease_id, close_reason)
+                        if power.restore(reason="shutdown" if stopping else "disconnect"):
                             raise RuntimeError("disconnect restore failed; refusing service")
     finally:
-        power.restore()
+        power.restore(reason="shutdown")
         path.unlink(missing_ok=True)
 
 
@@ -240,7 +271,7 @@ def main():
             lock_caps()
         power = Power(args.state)
         if args.command == "restore":
-            return int(bool(power.restore()))
+            return int(bool(power.restore(reason="CLI-cleanup")))
         daemon(power, args.socket, args.user)
     except (OSError, ValueError, RuntimeError) as error:
         LOG.error("%s", error)

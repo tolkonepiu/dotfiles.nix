@@ -20,6 +20,7 @@ class RecoveryTests(unittest.TestCase):
         self.boot = 100.0
         self.enterContext(patch("runtime.time.monotonic", side_effect=lambda: self.now))
         self.enterContext(patch("runtime.time.clock_gettime", side_effect=lambda _: self.boot))
+        self.log = self.enterContext(patch("runtime.log"))
         self.enterContext(patch.dict(os.environ, {"DISPLAY": ":7"}))
         self.x = FakeX()
         self.controller = Controller(config(), self.x)
@@ -49,6 +50,165 @@ class RecoveryTests(unittest.TestCase):
 
     def sets(self):
         return [m["watts"] for m in self.messages if "watts" in m]
+
+    def events(self, event, phase=None):
+        return [call.kwargs for call in self.log.call_args_list
+                if call.args == (event,) and (phase is None or call.kwargs.get("phase") == phase)]
+
+    def test_power_diagnostics_timestamp_io_without_moving_backoff_origin(self):
+        def delayed_exchange(_stream, message):
+            self.messages.append(message)
+            self.advance(0.5)
+            return caps(15, ["busy"])
+
+        with patch("runtime.request", side_effect=delayed_exchange):
+            self.assertFalse(self.controller.power_request(12)["confirmed"])
+        request, = self.events("power-apply", "request")
+        result, = self.events("power-apply", "result")
+        self.assertEqual(request["monotonic"], 100.0)
+        self.assertEqual(result["monotonic"], 100.5)
+        self.assertEqual(result["retry_at"], 101.0)
+        self.assertEqual(self.controller.power_retry_at, 101.0)
+        self.controller.power_request(12)
+        self.advance(0.5)
+        self.assertTrue(self.controller.power_request(12)["confirmed"])
+        self.assertEqual(self.messages, [{"watts": 12}, {"op": "read"}, {"watts": 12}])
+
+    def test_power_diagnostics_deduplicate_connection_failures_not_attempts(self):
+        stream = Mock()
+        stream.connect.side_effect = [OSError("unavailable"), OSError("unavailable"),
+                                      OSError("unavailable"), OSError("permission denied"), None, None]
+        self.controller.power = None
+        with patch("runtime.socket.socket", return_value=stream):
+            for _ in range(4):
+                self.assertIsNone(self.controller.power_request(12))
+            failures = self.events("power-connection-failed")
+            self.assertEqual([e["errors"] for e in failures],
+                             [["power: unavailable"], ["power: permission denied"]])
+            self.assertEqual(self.messages, [])
+            self.assertEqual(self.controller.power_retry_at, 101.0)
+            self.controller.power_request(12)
+            self.advance(1)
+            self.assertTrue(self.controller.power_request(12)["confirmed"])
+            self.failures = [OSError("permission denied")]
+            self.assertIsNone(self.controller.power_request(10))
+            self.controller.power_request(10)
+            self.advance(1)
+            self.assertTrue(self.controller.power_request(10)["confirmed"])
+        self.assertEqual(stream.connect.call_count, 6)
+        self.assertEqual([e["reconnect"] for e in self.events("power-connected")], [False, True])
+        lost, = self.events("power-connection-lost")
+        self.assertEqual(lost["errors"], ["power: permission denied"])
+        self.assertEqual(len(self.events("power-connection-failed")), 2)
+        self.assertEqual(self.messages, [{"op": "read"}, {"watts": 12}, {"watts": 10},
+                                        {"op": "read"}, {"watts": 10}])
+
+    def test_power_diagnostics_show_invisible_correction_and_guard_once(self):
+        initial = self.controller.power_request(12)
+        self.controller.power_request(12)
+        quiet_count = self.log.call_count
+        self.controller.power_request(12)
+        self.assertEqual(self.log.call_count, quiet_count)
+        self.actual = 15
+        self.assertEqual(self.controller.power_request(12), initial)
+        self.controller.power_request(12)
+        self.actual = 15
+        for _ in range(4):
+            self.advance(30)
+            self.assertFalse(self.controller.power_request(12)["confirmed"])
+        self.assertEqual(self.messages, [{"watts": 12}, {"op": "read"}, {"op": "read"},
+                                        {"op": "read"}, {"watts": 12}, {"op": "read"},
+                                        *[{"op": "read"}] * 4])
+        requests = self.events("power-apply", "request")
+        outcomes = self.events("power-apply", "result")
+        self.assertEqual([e["reason"] for e in requests], ["target", "corrective"])
+        self.assertIsNone(requests[0]["observed_caps_uw"])
+        self.assertEqual(requests[1]["observed_caps_uw"], caps(15)["caps_uw"])
+        for outcome in outcomes:
+            self.assertEqual(outcome["monotonic"], 100.0)
+            self.assertEqual(outcome["requested_watts"], 12)
+            self.assertEqual(outcome["observed_caps_uw"], caps(12)["caps_uw"])
+            self.assertTrue(outcome["confirmed"])
+            self.assertEqual(outcome["errors"], [])
+        self.assertTrue(outcomes[-1]["correction_used"])
+        exhausted, = self.events("power-guard-exhausted")
+        self.assertEqual(exhausted["monotonic"], 130.0)
+        self.assertEqual(exhausted["observed_caps_uw"], caps(15)["caps_uw"])
+        self.assertFalse(exhausted["confirmed"])
+        self.assertTrue(any("budget exhausted" in error for error in exhausted["errors"]))
+        self.assertEqual(self.log.call_count, 5)
+
+    def test_power_diagnostics_target_change_and_resume_reset_only_existing_budget(self):
+        self.launch()
+        target = self.sets()[-1]
+        other = 15 if target != 15 else 12
+        self.actual = other
+        self.controller.power_request(target)
+        self.actual = other
+        self.controller.power_request(target)
+        self.assertEqual(len(self.events("power-guard-exhausted")), 1)
+        # Resume reapplies the selected profile even when the clock has not advanced.
+        self.boot += 1
+        self.assertTrue(self.controller.tick()["tdp"]["confirmed"])
+        reset, = self.events("power-resume-reset")
+        self.assertEqual(reset["requested_watts"], target)
+        self.assertTrue(reset["correction_used"])
+        self.actual = other
+        self.controller.power_request(target)
+        self.actual = other
+        self.controller.power_request(target)
+        self.controller.power_request(target)
+        self.assertEqual(len(self.events("power-guard-exhausted")), 2)
+        self.controller.power_request(other)
+        self.actual = target
+        self.controller.power_request(other)
+        self.actual = target
+        self.controller.power_request(other)
+        self.assertEqual(len(self.events("power-guard-exhausted")), 3)
+        self.assertEqual(self.messages, [{"watts": target}, {"op": "read"}, {"watts": target},
+                                        {"op": "read"}, {"watts": target}, {"op": "read"},
+                                        {"watts": target}, {"op": "read"}, {"op": "read"},
+                                        {"watts": other}, {"op": "read"}, {"watts": other}, {"op": "read"}])
+
+    def test_power_diagnostics_reconnect_preserves_read_during_backoff(self):
+        self.controller.power = None
+        self.controller.power_request(12)
+        self.failures = [OSError("disconnected")]
+        self.assertIsNone(self.controller.power_request(10))
+        self.controller.power_request(10)
+        self.advance(1)
+        self.assertTrue(self.controller.power_request(10)["confirmed"])
+        self.assertEqual(self.messages, [{"watts": 12}, {"watts": 10}, {"op": "read"}, {"watts": 10}])
+        self.assertEqual([e["reconnect"] for e in self.events("power-connected")], [False, True])
+        lost, = self.events("power-connection-lost")
+        self.assertEqual(lost["requested_watts"], 10)
+        self.assertEqual(lost["retry_at"], 101.0)
+        self.assertEqual(lost["retry_delay"], 1)
+        outcomes = self.events("power-apply", "result")
+        self.assertEqual([e["confirmed"] for e in outcomes], [True, False, True])
+        self.assertIsNone(outcomes[1]["observed_caps_uw"])
+        self.assertEqual(outcomes[1]["errors"], ["power: disconnected"])
+        self.assertEqual(outcomes[-1]["reason"], "retry")
+
+    def test_power_diagnostics_failed_correction_reports_backoff_without_poll_spam(self):
+        self.controller.power_request(12)
+        self.actual = 15
+        self.failures = ["busy"]
+        self.controller.power_request(12)
+        count = self.log.call_count
+        self.controller.power_request(12)
+        self.assertEqual(self.log.call_count, count)
+        self.advance(1)
+        self.controller.power_request(12)
+        self.assertEqual(self.messages, [{"watts": 12}, {"op": "read"}, {"watts": 12},
+                                        {"op": "read"}, {"op": "read"}, {"watts": 12}])
+        outcomes = self.events("power-apply", "result")
+        self.assertEqual([e["confirmed"] for e in outcomes], [True, False, True])
+        self.assertEqual(outcomes[1]["errors"], ["busy"])
+        self.assertEqual(outcomes[1]["retry_at"], 101.0)
+        self.assertEqual(outcomes[1]["retry_delay"], 1)
+        self.assertFalse(outcomes[1]["correction_used"])
+        self.assertTrue(outcomes[2]["correction_used"])
 
     def test_transient_set_retries_same_target_and_clears_error(self):
         self.assertTrue(self.controller.power_request(15)["confirmed"])
