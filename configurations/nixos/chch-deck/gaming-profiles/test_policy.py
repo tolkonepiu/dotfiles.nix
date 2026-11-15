@@ -10,9 +10,9 @@ from policy import ActiveGame, choose_mode, mode_text, power_source, select, ser
 
 def config():
     return {"profiles": {f"{screen}-{power}": {
-        "game": {"width": 1600 if screen == "external" and power == "ac" else 1280,
-                 "height": (900 if power == "ac" else 720) if screen == "external" else 800},
-        "output": {"width": 1920 if screen == "external" else 1280, "height": 1080 if screen == "external" else 800, "hz": 60},
+        "game": {"width": 1600 if screen == "external" else 1280,
+                 "height": 900 if screen == "external" else 800},
+        "output": {"width": 3840 if screen == "external" else 1280, "height": 2160 if screen == "external" else 800, "hz": 60},
         "filter": "fsr" if screen == "external" else "linear", "watts": 12 if power == "battery" else 15,
     } for screen in ("handheld", "external") for power in ("battery", "ac")}, "games": {}}
 
@@ -35,11 +35,39 @@ class PolicyTests(unittest.TestCase):
         self.assertEqual(settings, before)
 
     def test_native_filter_is_linear(self):
-        self.assertEqual(select(config(), "handheld", "battery")[1]["filter"], "linear")
+        for power, watts in (("battery", 12), ("ac", 15)):
+            with self.subTest(power=power):
+                profile = select(config(), "handheld", power)[1]
+                self.assertEqual(profile, {"game": {"width": 1280, "height": 800},
+                                          "output": {"width": 1280, "height": 800, "hz": 60},
+                                          "filter": "linear", "watts": watts})
+
+    def test_external_900p_fsr_to_supported_4k60_both_power_sources(self):
+        settings = validate(config())
+        for power, watts in (("battery", 12), ("ac", 15)):
+            with self.subTest(power=power):
+                profile = select(settings, "external", power)[1]
+                self.assertEqual(profile, {"game": {"width": 1600, "height": 900},
+                                          "output": {"width": 3840, "height": 2160, "hz": 60},
+                                          "filter": "fsr", "watts": watts})
+                self.assertEqual(choose_mode("1920x1080@60 3840x2160@30 3840x2160@60", profile["output"]),
+                                 profile["output"])
+
+    def test_external_4k_fallback_preserves_900p_game_target(self):
+        for power in ("battery", "ac"):
+            for modes, expected in (("3840x2160@30 1920x1080@60", {"width": 3840, "height": 2160, "hz": 30}),
+                                    ("1920x1080@60 1280x720@60", {"width": 1920, "height": 1080, "hz": 60}),
+                                    ("1280x720@60", {"width": 1280, "height": 720, "hz": 60})):
+                with self.subTest(power=power, modes=modes):
+                    profile = select(config(), "external", power)[1]
+                    before = copy.deepcopy(profile)
+                    self.assertEqual(choose_mode(modes, profile["output"]), expected)
+                    self.assertEqual(profile["game"], {"width": 1600, "height": 900})
+                    self.assertEqual(profile, before)
 
     def test_letterboxed_one_to_one_is_not_upscale(self):
         settings = config()
-        settings["games"]["123"] = {"resolution": {"handheld": {"height": 720}, "external": {"width": 1920, "height": 900}}}
+        settings["games"]["123"] = {"resolution": {"handheld": {"height": 720}, "external": {"width": 3840, "height": 900}}}
         self.assertEqual(select(settings, "handheld", "battery", "123")[1]["filter"], "linear")
         self.assertEqual(select(settings, "external", "battery", "123")[1]["filter"], "linear")
 
@@ -72,7 +100,7 @@ class PolicyTests(unittest.TestCase):
             (Path(directory) / "AC/online").write_text("0")
             self.assertEqual(power_source(directory), "battery")
 
-    def test_mode_fallback_cannot_choose_4k(self):
+    def test_mode_fallback_respects_custom_1080p60_bounds(self):
         wanted = {"width": 1920, "height": 1080, "hz": 60}
         self.assertEqual(choose_mode("3840x2160@60 1920x1080@60", wanted), wanted)
         self.assertEqual(choose_mode("3840x2160@60 1280x720@60 1920x1080@120", wanted)["width"], 1280)

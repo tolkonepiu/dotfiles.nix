@@ -28,12 +28,12 @@
     };
     external-battery = {
       game = {
-        width = 1280;
-        height = 720;
+        width = 1600;
+        height = 900;
       };
       output = {
-        width = 1920;
-        height = 1080;
+        width = 3840;
+        height = 2160;
         hz = 60;
       };
       filter = "fsr";
@@ -45,8 +45,8 @@
         height = 900;
       };
       output = {
-        width = 1920;
-        height = 1080;
+        width = 3840;
+        height = 2160;
         hz = 60;
       };
       filter = "fsr";

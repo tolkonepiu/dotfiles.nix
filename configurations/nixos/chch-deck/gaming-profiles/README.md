@@ -12,8 +12,12 @@ Defaults live in [profiles.nix](profiles.nix); application code is separate.
 | --- | --- | --- | --- | --- | --- |
 | Internal | Battery | 1280×800 | 1280×800 | Linear, no enlargement | 12 W |
 | Internal | External | 1280×800 | 1280×800 | Linear, no enlargement | 15 W |
-| External | Battery | 1280×720 | 1920×1080, 60 Hz | Gamescope FSR | 12 W |
-| External | External | 1600×900 | 1920×1080, 60 Hz | Gamescope FSR | 15 W |
+| External | Battery | 1600×900 | 3840×2160, 60 Hz | Gamescope FSR | 12 W |
+| External | External | 1600×900 | 3840×2160, 60 Hz | Gamescope FSR | 15 W |
+
+External game/output targets stay the same when power is connected or removed;
+only the APU cap changes. The 4K physical target does not request 4K game
+rendering.
 
 Override individual fields in the host's NixOS configuration:
 
@@ -159,15 +163,17 @@ The implementation uses the existing embedded compositor:
   mode list or virtual desktop dimensions.
 
 The external mode selector prefers the requested mode, otherwise a supported
-mode within the configured width, height and refresh limits. It never chooses
-4K just because a TV supports it. An unavailable safe mode is an error, not
-permission to claim that 1080p was applied. Mode fallback and unconfirmed results
+mode within the configured width, height and refresh limits. The external
+defaults explicitly request 4K60; a custom 1080p target still cannot select 4K.
+Fallback prefers pixel area, then refresh rate, so it can select 4K30 over
+1080p60 when 4K60 is absent. An unavailable safe mode is an error, not permission
+to claim that the target was applied. Mode fallback and unconfirmed results
 are visible in status/journal. Steam can also write compositor properties: avoid
 conflicting settings rather than relying on a continuous write fight.
 If a fallback output is smaller than the requested game mode, the virtual game
 mode stays independent: FIT can downscale it without FSR. Only explicitly
-configured game dimensions are requested; this never introduces an automatic
-4K game target.
+configured game dimensions are requested; the external default remains 900p even
+when the physical output falls back or successfully reaches 4K.
 
 Source references for the current lock: Jovian
 [`6d21db8`](https://github.com/Jovian-Experiments/Jovian-NixOS/tree/6d21db8ad755a73cc5df076e80fa80b714f555a6),
@@ -244,18 +250,20 @@ above, then keep status and both journals open:
 1. Internal/battery: expect game target 1280×800, both caps 12,000,000 µW.
 2. Attach only power: same target, both caps 15,000,000 µW. Repeat at full charge
    or a charge threshold; the source must remain external power.
-3. Attach a powered dock: confirm DRM output 1920×1080 near 60 Hz, target
-   1600×900 and active FSR while a smaller frame is presented. Independently
-   confirm the compatible game's actual output frame is 1600×900.
-4. Remove power while keeping the screen: target 1280×720 / 12 W; verify a
-   compatible game adapts. A non-adapting game must continue; exit and relaunch
-   it through the wrapper and verify the new mode.
+3. Attach a powered dock supporting 4K60. Confirm DRM output at 3840×2160 near
+   60 Hz, virtual target 1600×900 and active FSR with a smaller presented frame.
+   Independently confirm the compatible game's actual output frame is 1600×900;
+   check internal rendering separately and compare FPS/latency with 1080p.
+4. Remove power while keeping the screen: retain the 900p virtual target and
+   4K60 physical target, with both caps 12,000,000 µW. Confirm neither target
+   changes solely because of the power transition; observe the game separately.
 5. Remove the screen with and without power: expect handheld 800p with 15/12 W
    respectively. Repeat with an AppID override and after the game exits.
 6. Open Steam's overlay; the running game's exception must not disappear.
    Start Game Mode already docked, suspend/resume, and repeat hotplug bursts.
-7. Try a display lacking 1080p/60: inspect the supported fallback and actual
-   DRM readback. A 4K TV must not cause 4K selection.
+7. Try a display/link lacking 4K60: inspect the supported fallback and actual
+   DRM readback; the game target must remain 900p. With an explicit 1080p output
+   override, a 4K TV must not cause 4K selection.
 8. Record caps before entering Game Mode; exit to Niri and confirm controller
    stopped and both original values restored. Test stopping/restarting the
    controller and inspect restoration after a controller failure.
