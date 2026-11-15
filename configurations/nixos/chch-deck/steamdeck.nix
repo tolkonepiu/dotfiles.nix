@@ -3,6 +3,7 @@
     flake.inputs.chaotic.nixosModules.default
     flake.inputs.chaotic.vendored.jovian.nixosModules.default
     ./emulators
+    ./gaming-profiles
   ];
 
   jovian = {
@@ -10,7 +11,7 @@
       enable = true;
       # Update BIOS and controller firmware at boot, subject to Valve's checks.
       autoUpdate = true;
-      # Allow Steam to control TDP and GPU clocks.
+      # Gaming profiles replace TDP access; retain vendor rules when disabled.
       enablePerfControlUdevRules = true;
       # Use Valve's software-controlled fan curve.
       enableOsFanControl = true;
