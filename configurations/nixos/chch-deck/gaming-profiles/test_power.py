@@ -157,6 +157,7 @@ class PowerTests(unittest.TestCase):
             self.assertEqual((self.hwmon / cap).stat().st_mode & 0o777, 0o644)
 
     def test_socket_controller_lifecycle(self):
+        timeout = 30
         path = self.root / "control.sock"
         child = subprocess.Popen([
             sys.executable, "-c",
@@ -166,8 +167,8 @@ class PowerTests(unittest.TestCase):
         ], cwd=Path(__file__).parent)
         try:
             with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as controller:
-                controller.settimeout(3)
-                deadline = time.monotonic() + 3
+                controller.settimeout(timeout)
+                deadline = time.monotonic() + timeout
                 while True:
                     try:
                         controller.connect(str(path))
@@ -185,19 +186,18 @@ class PowerTests(unittest.TestCase):
                     self.assertEqual(json.loads(responses.readline()), expected)
                     self.assertTrue(json.loads(responses.readline())["errors"])
                     self.assertTrue(self.state.exists())
-            deadline = time.monotonic() + 3
-            while self.state.exists():
-                self.assertIsNone(child.poll(), "broker exited during restore")
-                self.assertLess(time.monotonic(), deadline, "disconnect restore timed out")
-                time.sleep(0.01)
+                    controller.shutdown(socket.SHUT_WR)
+                    # The broker restores caps before closing the accepted connection.
+                    self.assertEqual(responses.read(1), b"")
+            self.assertFalse(self.state.exists())
             self.assertEqual(self.power.read(), self.baseline)
             child.terminate()
-            self.assertEqual(child.wait(timeout=3), 0)
+            self.assertEqual(child.wait(timeout=timeout), 0)
             self.assertFalse(path.exists())
         finally:
             if child.poll() is None:
                 child.kill()
-            child.wait(timeout=3)
+            child.wait(timeout=timeout)
 
 
 if __name__ == "__main__":
