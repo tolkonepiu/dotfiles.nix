@@ -3,6 +3,5 @@
     colima
     lima-full
     mole-cleaner
-    paseo-desktop
   ];
 }

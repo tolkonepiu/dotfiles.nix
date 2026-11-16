@@ -14,6 +14,7 @@
 
     # AI tools
     "chatgpt"
+    "paseo"
 
     # Productivity and note-taking
     "obsidian"
