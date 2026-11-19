@@ -2,7 +2,7 @@
   inherit (flake) inputs;
 in {
   imports = [
-    inputs.nvf.homeManagerModules.default
+    inputs.nvf.homeModules.default
     ./theme.nix
   ];
 
