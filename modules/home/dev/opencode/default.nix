@@ -41,7 +41,7 @@ in {
       plugin = [
         "opencode-atuin-history@1.1.0"
         "@dietrichgebert/ponytail@5.3.3"
-        "@vectorize-io/hindsight-coding-agents@0.8.7"
+        "@vectorize-io/hindsight-coding-agents@0.8.8"
       ];
     };
     cli = {
