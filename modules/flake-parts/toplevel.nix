@@ -9,6 +9,8 @@
     inputs.nixos-unified.flakeModules.default
     inputs.nixos-unified.flakeModules.autoWire
   ];
+  flake.overlays.llm-agents = inputs.llm-agents.overlays.shared-nixpkgs;
+
   perSystem = {
     self',
     system,

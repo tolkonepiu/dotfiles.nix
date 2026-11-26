@@ -7,7 +7,7 @@
     docker
     docker-compose
     kubectl
-    paseo
+    llm-agents.paseo
 
     # Python packages
     pipx
