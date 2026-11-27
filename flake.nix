@@ -10,6 +10,7 @@
       "https://tolkonepiu.cachix.org"
       "https://nyx-cache.chaotic.cx/"
       "https://niri-epireyn.cachix.org"
+      "https://cache.numtide.com"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -18,6 +19,7 @@
       "tolkonepiu.cachix.org-1:G7pWK5VSW/AkjiZ737/lPVQjOvK4bMcMYZaSJiW5pHQ="
       "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk="
       "niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
 
@@ -119,6 +121,15 @@
     };
     nix-emulators.url = "github:tolkonepiu/nix-emulators";
     nix-emulators.inputs.nixpkgs.follows = "nixpkgs";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+        treefmt-nix.follows = "treefmt-nix";
+      };
+    };
 
     # Agent Skills
     agent-skills = {
